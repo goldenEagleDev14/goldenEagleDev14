@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="interest_certificate_template_main">  
+		<t t-call="dev_loan_management.dev_loan_external_layout">
+			<div class="page" style="font-size:15px;">
+			    <style>
+                    .main_table{
+                        width:100%;
+                    }
+                    .right_table td{
+                            padding:3px;
+                            text-transform: capitalize;
+                            font-size:15px;
+                        }
+                    .main_table th{
+                        padding:5px;
+                        background:#e3e4e5;
+                        border-bottom:1px solid black;
+                    }
+                    .main_table .group{
+                        background:#f7f9fa;
+                    }
+                    .main_table .group2{
+                        background:#666666;
+                        color:#FFF;
+                    }
+                    
+                    
+                    .main_table td{
+                        padding:5px;
+                    }
+                    .main_table .success{
+                        background:#7adbb0;
+                    }
+                </style>
+			    <div class="row">
+			        <div class="col-12 text-center" style="font-size:22px">
+			           <b> Interest Certificate </b>
+			        </div>
+			    </div>
+			    <div class="row mt16 mb16">
+			        <div class="col-6" style="font-size:15px">
+                        <b>Borrower Detail</b>
+                        <div t-field="o.loan_id.client_id"
+                            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                    </div>
+                    <div class="col-6" style="font-size:15px">
+                        <table class="right_table" style="border:0px solid #FFF">
+                            <t t-if="o.loan_id.request_date">
+                            <tr>
+                                <td style="width:43%"><b>Loan</b></td>
+                                <td style="width:2%"> : </td>
+                                <td style="width:55%">
+                                    <span t-esc="o.loan_id.name"/>
+                                </td>
+                            </tr>
+                            </t>
+                            <t t-if="o.loan_id.disbursement_date">
+                                <tr>
+                                    <td><b>Disbursement Date</b></td>
+                                    <td> : </td>
+                                    <td>
+                                        <span t-field="o.loan_id.disbursement_date" t-options ='{"format": "dd-MM-yyyy"}' />
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td><b>Loan Amount</b></td>
+                                <td> : </td>
+                                <td><span t-esc="o.loan_id.loan_amount" t-esc-options="{'widget': 'monetary', 'display_currency': o.loan_id.currency_id}"/></td>
+                            </tr>
+                            <tr>
+                                <td><b>Loan Type</b></td>
+                                <td> : </td>
+                                <td><span t-esc="o.loan_id.loan_type_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><b>Loan Term</b></td>
+                                <td> : </td>
+                                <td><span t-esc="o.loan_id.loan_term"/> <span t-esc="o.loan_id.installment_type"/></td>
+                            </tr>
+                        </table>
+                    </div>
+			    </div>
+			    <t t-set="t_pri_amount" t-value="0"/>
+                <t t-set="t_int_amount" t-value="0"/>
+                <t t-set="t_emi_amount" t-value="0"/>
+                <t t-foreach="o.get_lines()" t-as="val">
+                    <t t-set="t_pri_amount" t-value="t_pri_amount + val.get('pri_amount')"/>
+                    <t t-set="t_int_amount" t-value="t_int_amount + val.get('interest')"/>
+                    <t t-set="t_emi_amount" t-value="t_emi_amount + val.get('emi')"/>
+                </t>
+                    
+			    <div class="row mt16 mb16">
+			        <div class="col-12" style="font-size:15px">
+			            The total amount of EMIs payable from <b><span t-field="o.start_date" t-options ='{"format": "dd-MM-yyyy"}' /></b> to <b><span t-field="o.end_date" t-options ='{"format": "dd-MM-yyyy"}' /></b> is <b><span t-esc="t_emi_amount" t-options="{'widget': 'monetary', 'display_currency': o.loan_id.currency_id}"/></b> .
+The breakup of this amount into principal and interest is as follows:-
+			        </div>
+			    </div>
+			    
+			    <div class="row mt16 mb16">
+                    <div class="col-12">
+			        <table class="main_table" style="font-size:15px">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th class="text-right">Principal Amount</th>
+                                <th class="text-right">Interest Amount</th>
+                                <th class="text-right">Installment</th>
+                            </tr>
+                       </thead>
+                       <tbody>
+                            <t t-foreach="o.get_lines()" t-as="val">
+                                <tr style="page-break-inside: avoid">
+                                    <td><span t-esc="val.get('name')"/></td>
+                                    <td><span t-esc="val.get('date')"/></td>
+                                    <td class="text-right">
+                                        <span t-esc="val.get('pri_amount')" t-options="{'widget': 'monetary', 'display_currency': val.get('currency_id')}"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="val.get('interest')" t-options="{'widget': 'monetary', 'display_currency': val.get('currency_id')}"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="val.get('emi')" t-options="{'widget': 'monetary', 'display_currency': val.get('currency_id')}"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    </div>
+			    </div>
+			    <div class="row mt16 mb16">
+			        <div class="col-12" style="font-size:15px">
+			           <b> Pricipal Amount</b> : <span t-esc="t_pri_amount" t-options="{'widget': 'monetary', 'display_currency': o.loan_id.currency_id}" /> <br/>
+			            
+			            <b>Interest Amount</b> : <span t-esc="t_int_amount" t-options="{'widget': 'monetary', 'display_currency': o.loan_id.currency_id}" /> <br/>
+			        </div>
+			    </div>
+			</div>
+		</t>
+	</template>
+	
+	<template id="interest_certificate_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="dev_loan_management.interest_certificate_template_main" />
+            </t>
+        </t>
+    </template>
+    
+    
+</odoo>
+

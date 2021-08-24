@@ -1,0 +1,89 @@
+<odoo>
+  <data>
+    <!-- Inherit Form View to Modify it -->
+    <record id="project_phase_inherited" model="ir.ui.view">
+        <field name="name">project.phase.inherited</field>
+        <field name="model">project.phase</field>
+        <field name="inherit_id" ref="add_real_estate.phase_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='project_id']" position="after">
+              <field name="company"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="property_exception_inherit" model="ir.ui.view">
+        <field name="name">property.exception.inherited</field>
+        <field name="model">property.exception</field>
+        <field name="inherit_id" ref="add_real_estate.property_exception_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="after">
+              <field name="company"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="property_category_inherit" model="ir.ui.view">
+        <field name="name">property.category.inherited</field>
+        <field name="model">property.category</field>
+        <field name="inherit_id" ref="add_real_estate.property_category_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="after">
+              <field name="company"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="property_type_inherit" model="ir.ui.view">
+        <field name="name">property.type.inherited</field>
+        <field name="model">property.type</field>
+        <field name="inherit_id" ref="add_real_estate.property_type_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='multi_image']" position="after">
+              <field name="company"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="property_location_inherit" model="ir.ui.view">
+        <field name="name">property.location.inherited</field>
+        <field name="model">property.location</field>
+        <field name="inherit_id" ref="add_real_estate.property_location_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="after">
+              <field name="company"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="property_finished_inherit" model="ir.ui.view">
+        <field name="name">property.finished.type.inherited</field>
+        <field name="model">property.finished.type</field>
+        <field name="inherit_id" ref="add_real_estate.property_finishing_type_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="after">
+              <field name="company"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="property_design_inherit" model="ir.ui.view">
+        <field name="name">property.design.inherited</field>
+        <field name="model">property.design</field>
+        <field name="inherit_id" ref="add_real_estate.property_design_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="after">
+              <field name="company"/>
+            </xpath>
+
+        </field>
+    </record>
+  </data>
+</odoo>

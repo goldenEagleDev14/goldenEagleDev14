@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+    
+    <record id="view_dev_installment_summary_form" model="ir.ui.view">
+         <field name="name">view.dev.installment.summary.form</field>
+         <field name="model">dev.installment.summary</field>
+         <field name="arch" type="xml">
+            <form string="Installment Summary">
+                <group>
+                    <group>
+                        <field name="start_date"/>
+                    </group>
+                    <group>
+                        <field name="end_date"/>
+                    </group>
+                    <group>
+                        <field name="state" widget="radio"/>
+                    </group>
+                    <group>
+                        <field name="group_by" widget="radio"/>
+                    </group>
+                </group>
+                
+                <footer>
+                    <button name="action_print_pdf" string="Print PDF" type="object" class="btn-primary"/>
+                    or
+                    <button name="action_view_summary" string="On Screen" type="object" class="btn-primary"/>
+                    or
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+         </field>
+    </record>
+    
+    <record id="action_dev_installment_summary" model="ir.actions.act_window">
+        <field name="name">Installment Summary</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dev.installment.summary</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    
+    <menuitem name="Installment Summary" id="menu_dev_installment_summary" parent="dev_loan_management.menu_dev_installment_report" action="action_dev_installment_summary" sequence="1"/>
+
+</odoo>

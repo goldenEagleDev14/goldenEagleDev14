@@ -1,0 +1,95 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="account_journal_view_id" model="ir.ui.view">
+            <field name="name">account journal view</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_bank_journal_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='bank_id']" position="after">
+                    <!-- Add your fields or attributes here -->
+
+                    <label for="book_prefix"/>
+                    <div name="book_prefix">
+                        <field name="book_prefix" string="Book Prefix"/>
+                    </div>
+                    <label for="multi_cheque_book" string="Activate Multi Check Book"/>
+                    <div name="multi_cheque">
+                        <field name="multi_cheque_book" />
+                    </div>
+
+
+                    <label for="is_notes_receivable" string="Is Notes Receivable Journal "/>
+                    <div name="is_notes_receivable">
+                        <field name="is_notes_receivable"
+
+                               string="Is Notes Receivable"/>
+                    </div>
+
+
+                </xpath>
+                <xpath expr="//sheet" position="inside">
+                    <!-- Add your fields or attributes here -->
+
+                    <notebook>
+                        <page string="Check Book">
+                            <field name="cheque_books_ids">
+                                <tree delete='false' editable="bottom">
+                                    <field name="name"/>
+                                    <field name="start_from"/>
+                                    <field name="end_in"/>
+                                    <field name="last_use" readonly="1"/>
+                                    <field name="used_book" readonly="1"/>
+                                    <field name="activate" attrs="{'readonly':[('read_only_data','=',True)]}"/>
+                                    <button name="delete_line" type="object" icon="fa-archive"/>
+                                    <field name="read_only_data" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Followers Accounts">
+                            <group>
+                                <group>
+                                    <label for="notes_payable" string="Notes Payable Account"/>
+                                    <div name="notes_payable">
+                                        <field name="notes_payable"/>
+                                    </div>
+                                    <label for="deliver_account" string="Payable Under Collection Account"/>
+                                    <div name="deliver_account">
+                                        <field name="deliver_account"/>
+                                    </div>
+
+                                </group>
+                                <group>
+                                    <label for="reveivable_under_collection"
+                                           string="Receivable Under Collection Account"/>
+
+                                    <div name="reveivable_under_collection">
+                                        <field name="reveivable_under_collection"
+                                               domain="[('is_batch_deposit','=',True)]"
+                                               string="recievable under collection"/>
+                                    </div>
+                                    <label for="discount_check_account" string="Discount Check Account"/>
+
+                                    <div name="discount_check_account">
+                                        <field name="discount_check_account" domain="[('is_batch_deposit','=',True)]"
+                                               string="Discount Check Account"/>
+                                    </div>
+
+                                    <label for="loan_account" string="Loan Account"/>
+                                    <div name="loan_account">
+                                        <field name="loan_account"
+                                               string="Loan Account"/>
+                                    </div>
+
+                                </group>
+                            </group>
+                        </page>
+
+                    </notebook>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

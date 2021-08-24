@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="golden_eoi_form_tmpl">
+            <t t-call="golden_template.golden_logo"/>
+
+            <t t-call="web.external_layout">
+
+                <style>
+                    p, span, div, tr, td {color:#000 !important}
+                    .dir-rtl{direction:rtl;text-align:right}
+                    table td, table th{border: 1px solid; padding:5px}
+                    .under-line{text-decoration: underline;}
+                    #reserve-no{text-align:right;}
+                    #reserve-no span{border:1px solid; padding:5px 10px;}
+                    .footer-table tr td:first-child {width:50%}
+                </style>
+
+                <div class="page pt-1" style="direction:rtl !important;text-align:right">
+                    <div id="reserve-no">
+                        <span>EOI NO</span>
+                        <span t-field="o.reservation_code"/>
+                    </div>
+                    <div class="static-data text-center">
+                        <h1>Central 33</h1>
+                        <h4>New Capital</h4>
+                        <h5>Expression of interest</h5>
+                        <h5 class="under-line">طلب ابداء رغبه في الشراء في مشروع – (33 Central)</h5>
+                    </div>
+                    <div>
+                        <span>السادة- شركة ايجل للتطوير العقار بموجب هذا الطلب اتقدم بــإبداء رغبه فى الشراء فى
+                            مشروع "33 Central " الكائن بمنطقة الداون تاون بالعاصمه ال داريه الجديدة .
+                        </span>
+
+                    </div>
+                    <div name="customer-info" class="dir-rtl">
+                        <h4 class="under-line">أولا :- بيانات العميل:</h4>
+                        <table class="w-100">
+                            <tr>
+                                <td>ألاسم:</td>
+                                <td>
+                                    <span t-esc="o.customer_id.name"/>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>العنوان:</td>
+                                <td>
+                                    <span t-esc="o.address"/>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>رقم البطاقة :</td>
+                                <td>
+                                    <span t-esc="o.id_def"/>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>رقم التليفون:</td>
+                                <td>
+                                    <span t-esc="o.phone"/>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <br></br>
+                    <div class="dir-rtl">
+                        <h4 class="under-line">ثانيا :- بيانات الوحدة:</h4>
+                        <table class="w-100">
+                            <tr>
+                                <td>نموذج الوحدة (ادارى /تجارى):</td>
+                                <td>
+                                    <p t-if = "normal_cycle==True">
+                                        <span t-esc="o.property_id.type_of_property_id.name"/>
+                                    </p>
+                                    <p t-else="">
+                                        <span t-esc="o.type_of_property_id.name"/>
+                                    </p>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>المساحه:</td>
+                                <td>
+                                    <p t-if = "normal_cycle==True">
+                                    <span t-esc="o.property_id.sellable"/>
+                                    </p>
+                                    <p t-else="">
+                                        <span t-esc="o.sellable2"/>
+                                    </p>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+                    <br></br>
+                    <div class="dir-rtl">
+                        <h4 class="under-line">ثالثا:- طريقة وشروط السداد:</h4>
+                        <t t-set="paid" t-value="0.0"/>
+                        <t t-set="by_peroid" t-value=""/>
+                        <!--                                <t t-set="period" t-value="0"/>-->
+                        <t t-set="payment_method" t-value=""/>
+                        <t t-set="method_param" t-value=""/>
+
+                        <t t-foreach="o.payment_strg_ids" t-as="line">
+                            <t t-if="line.deposite">
+                                <t t-set="paid" t-value="paid + line.amount"/>
+                                <t t-set="payment_method" t-value="line.state_payment"/>
+
+                                <t t-if="line.state_payment == 'cheque'">
+                                    <t t-set="method_param" t-value="line.cheque"/>
+                                </t>
+                                <t t-elif="line.state_payment == 'bank'">
+                                    <t t-set="method_param" t-value="line.bank_name.name"/>
+                                </t>
+
+
+                            </t>
+                        </t>
+
+                        <div>
+                            <span>وقد قمت عند توقيعى على هذا الطلب بدفع مبلغ وقدرة :</span>
+                            <span t-esc="o.company_id.currency_id.ar_amount_to_text(paid)"/>
+                            <span style='margin-right:1.5em; display:inline-block;'>للشركه وذلك كجديه تعاقد .</span>
+                            <table class="w-100">
+                                <tr>
+                                    <td>المبلغ المسدد</td>
+                                    <td colspan="5">
+                                        <span t-esc="o.company_id.currency_id.ar_amount_to_text(paid)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>طريقة السداد</td>
+                                    <td>
+                                        نقدا
+                                        <t t-if="payment_method == 'cash'">
+                                            &#10004;
+                                        </t>
+                                    </td>
+                                    <td>
+                                        شيك رقم
+                                        <t t-if="payment_method == 'cheque'">
+                                            &#10004;
+                                            <br/>
+                                            <span t-esc="method_param"/>
+                                        </t>
+                                    </td>
+                                    <td>فيزا رقم
+                                        <t t-if="payment_method == 'visa'">
+                                            &#10004;
+                                        </t>
+                                    </td>
+                                    <td>
+                                        إيداع بنكي
+                                        <t t-if="payment_method == 'bank'">
+                                            &#10004;
+                                            <span t-esc="method_param"/>
+                                        </t>
+                                    </td>
+                                    <td>تحويل بنكي
+                                        <t t-if="payment_method == 'bank'">
+                                            &#10004;
+                                            <span t-esc="method_param"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="dir-rtl">
+                        <h4 class="under-line">رابعاً:-يتم تخصيص الوحدات باسبقية الحجز:</h4>
+                        <div>
+                            <t t-esc="o.project_id.condition_request"/>
+                        </div>
+                    </div>
+                    <br></br>
+                    <div class="dir-rtl" style="page-break-inside: avoid;">
+                        <table class="w-50 footer-table">
+                            <tr>
+                                <td>
+                                    توقيع العميل
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>مسؤول المبيعات</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>شركة الوسيط العقاري</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>مدير المبيعات</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>التاريخ</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="golden_eoi_form_tmpl_base">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="golden_eoi_form_pdf.golden_eoi_form_tmpl"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

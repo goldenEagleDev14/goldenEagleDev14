@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    
+    
+    <record id="view_dev_res_partner_allow_loan_form" model="ir.ui.view">
+         <field name="name">view.dev.res.partner.allow.loan.form</field>
+         <field name="model">res.partner</field>
+         <field name="inherit_id" ref="base.view_partner_form"/>
+         <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="is_allow_loan"/>
+                <field name="loan_request" attrs="{'invisible':[('is_allow_loan','=',False)],'required':[('is_allow_loan','!=',False)]}"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_loan" type="object" class="oe_stat_button" icon="fa-book" attrs="{'invisible':[('is_allow_loan','=',False)]}">
+                    <field string="View Loan" name="count_loan" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_installment" type="object" class="oe_stat_button" icon="fa-book" attrs="{'invisible':[('is_allow_loan','=',False)]}">
+                    View Installment
+                </button>
+            </xpath>
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page string='Loans' attrs="{'invisible':[('is_allow_loan','=',False)]}">
+                    <field name="loan_ids" readonly="1"/>
+                </page>
+            </xpath>
+         </field>
+    </record>
+    
+    
+    <record id="action_dev_loan_partner_form" model="ir.actions.act_window">
+        <field name="name">Borrower</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{"default_is_allow_loan":1}</field>
+        <field name="domain">[('is_allow_loan','=',True)]</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a Borrower in your address book.
+          </p>
+        </field>
+    </record>
+    
+        <record id="action_dev_loan_partner_form_view1" model="ir.actions.act_window.view">
+            <field eval="0" name="sequence"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="base.res_partner_kanban_view"/>
+            <field name="act_window_id" ref="action_dev_loan_partner_form"/>
+        </record>
+        <record id="action_dev_loan_partner_form_view2" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="base.view_partner_form"/>
+            <field name="act_window_id" ref="action_dev_loan_partner_form"/>
+        </record>
+        <record id="action_dev_loan_partner_form_view3" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="base.view_partner_tree"/>
+            <field name="act_window_id" ref="action_dev_loan_partner_form"/>
+        </record>
+        
+        
+        <menuitem name="Borrower" parent="menu_dev_loan_main" id="menu_dev_loan_borrower_main" sequence="1"/>
+        <menuitem name="Borrower" id="menu_dev_loan_borrower" parent="menu_dev_loan_borrower_main" action="action_dev_loan_partner_form" sequence="1"/>
+    
+    
+    
+    
+    
+</data>
+</openerp>

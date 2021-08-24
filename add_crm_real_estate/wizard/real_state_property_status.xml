@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="change_property_status_form_view" model="ir.ui.view">
+            <field name="name">change property status</field>
+            <field name="model">change.property.status</field>
+            <field name="arch" type="xml">
+                <form string="Change Property Status">
+                    <group>
+                        <div class="oe_title">
+                            <label for="product_id"/>
+                            <h3>
+                                <field name="product_id" readonly="1"/>
+                            </h3>
+                        </div>
+                    </group>
+                    <group>
+                        <field name="user_id" placeholder="Select User" required="1"/>
+                    </group>
+                    <div class="alert alert-info" role="alert" style="margin-bottom:0px;">
+                        <strong>
+                            <p>Select one user so that this user would be the only user who capable of create
+                                reservation for this property
+                            </p>
+                        </strong>
+                    </div>
+                    <footer>
+                        <button name="action_done" string="Confirm" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="change_property_status_action" model="ir.actions.act_window">
+            <field name="name">Change Property Status</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">change.property.status</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</openerp>

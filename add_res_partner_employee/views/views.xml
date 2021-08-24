@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_partner_form_is_emp" model="ir.ui.view">
+            <field name="name">res.partner</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='category_id']" position="after">
+                  <field name="is_employee"/>
+                </xpath>
+
+            </field>
+        </record>
+  </data>
+</odoo>

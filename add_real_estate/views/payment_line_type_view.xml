@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+                        <!--Payment Line Type-->
+        <record model="ir.ui.view" id="payment_line_type_form_view">
+            <field name="name">Payment Lines Type</field>
+            <field name="model">payment.line.type</field>
+            <field name="arch" type="xml">
+                <form string="Unit Type">
+
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="payment_line_type_list_view">
+            <field name="name">Payment Lines Type</field>
+            <field name="model">payment.line.type</field>
+            <field name="arch" type="xml">
+                <tree string="Exceptions">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="payment_line_type_action">
+            <field name="name">Payment Lines Type</field>
+            <field name="res_model">payment.line.type</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+<!--        menu-->
+
+         <menuitem id="payment_line_type"
+                  name="Payment Lines Type"
+                  parent="configuration_sub"
+                  action="payment_line_type_action"
+                   sequence="2"
+         />
+
+    </data>
+</odoo>

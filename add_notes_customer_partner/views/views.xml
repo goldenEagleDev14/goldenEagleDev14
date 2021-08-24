@@ -1,0 +1,22 @@
+<odoo>
+  <data>
+          <!-- Inherit Form View to Modify it -->
+          <record id="customer_payment_form_view_notes" model="ir.ui.view">
+              <field name="name">customer.payment.notes</field>
+              <field name="model">customer.payment</field>
+              <field name="inherit_id" ref="add_real_estate.customer_payment_form_view"/>
+              <field name="arch" type="xml">
+
+                  <xpath expr="//field[@name='is_select_all']" position="after">
+                    <field name="note" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                  </xpath>
+
+                <xpath expr="//field[@name='loan_line']/tree/field[@name='amount_due']" position="after">
+                  <field name="note"/>
+                </xpath>
+
+              </field>
+          </record>
+
+  </data>
+</odoo>

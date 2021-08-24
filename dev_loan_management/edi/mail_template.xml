@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<odoo>
+        <!--Email template -->
+        <record id="dev_loan_loan_request" model="mail.template">
+            <field name="name">Request to Loan Manager</field>
+            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.company_id.name, object.user_id.email) or '')|safe}</field>
+            <field name="subject">Loan ${object.name} Request form ${object.client_id.name}</field>
+            <field name="partner_to"></field>
+            <field name="model_id" ref="dev_loan_management.model_dev_loan_loan"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+            	<p><b>To Manager</b>,</p>
+            	<p></p>
+            	<p> Loan request from <b><i>${object.client_id.name}</i></b></p>
+            	
+            	${object.get_loan_detail_template(object) |safe}
+            	
+            	<p>You can access Loan From Bellow URL</p>
+            	<p><a href="${object.loan_url}" style="background-color: #0DAC9E; padding: 8px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;" class="o_default_snippet_text">View Loan</a><p>
+            	
+            	<b>Regards,</b><br/>
+            	${object.user_id.name}
+                ]]></field>
+         </record>
+         
+         <record id="dev_loan_loan_request_reject" model="mail.template">
+            <field name="name">Loan Request Rejected Manager</field>
+            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.company_id.name, object.user_id.email) or '')|safe}</field>
+            <field name="subject">Loan ${object.name} has been Rejected</field>
+            <field name="partner_to">${object.user_id.partner_id.id}</field>
+            <field name="model_id" ref="dev_loan_management.model_dev_loan_loan"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+            	<p><b>To ${object.user_id.name}</b>,</p>
+            	<p> Your loan request <b>${object.name}</b> has been Rejected</p>
+            	<p><b>Reject Reason</b> : ${object.reject_reason}</p>
+            	<p>You can access Loan From Bellow URL</p>
+            	<p><a href="${object.loan_url}" style="background-color: #0DAC9E; padding: 8px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;" class="o_default_snippet_text">View Loan</a><p>
+            	<b>Regards,</b><br/>
+            	${object.reject_user_id.name}
+                ]]></field>
+         </record>
+         
+         
+         <record id="installment_reminder_email_template" model="mail.template">
+            <field name="name">Loan  Installment Reminder</field>
+            <field name="email_from">${(object.loan_id.company_id.email and '%s &lt;%s&gt;' % (object.loan_id.company_id.name, object.loan_id.company_id.email) or '')|safe}</field>
+            <field name="subject">Installment ${object.name} is Due on ${object.date}</field>
+            <field name="partner_to">${object.client_id.id}</field>
+            <field name="model_id" ref="dev_loan_management.model_dev_loan_installment"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+            	<p><b>Dear ${object.client_id.name}</b>,</p>
+            	<p> Your loan ${object.loan_id.name} of installment ${object.name} due on <b>${object.date}</b> </p>
+            	<p>Please Pay immediately, Ignore if already paid.</p>
+
+            	<b>Regards,</b><br/>
+            	${object.loan_id.company_id.name}
+                ]]></field>
+         </record>
+
+</odoo>
+        
+        
+        
+      
+        
+        
+    

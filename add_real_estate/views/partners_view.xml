@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <record id='inherit_view_partner_form' model='ir.ui.view'>
+            <field name='name'>view.partner.form</field>
+            <field name='model'>res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="nationality"/>
+                    <field name="id_def"/>
+                    <field name="social_status"/>
+                    <!-- Add your fields or attributes here -->
+                </xpath>
+                <xpath expr="//notebook/page[2]/group/group/field[@name='property_supplier_payment_term_id']" position="after">
+                    <field name="is_broker"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_res_partner_filter_tfproperty_account_prepayableree_search" model="ir.ui.view">
+            <field name="name">res.partner.inherit.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                   <field name="mobile" string="Mobile" filter_domain="[('mobile','ilike', self)]"/>
+                </field>
+            </field>
+        </record>
+
+
+
+        <record id="action_broker_form" model="ir.actions.act_window">
+            <field name="name">Brokers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="domain">[('is_broker','=',1)]</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{'default_is_broker':1,'default_customer':0}</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Click to add a Broker.</p>
+                <p>
+                    Odoo helps you easily track all activities related to a Brokers
+                </p>
+            </field>
+        </record>
+
+
+                    <menuitem parent="configuration_sub"
+                  id="menu_brokers"
+                  name="Brokers"
+                  action="add_real_estate.action_broker_form"/>
+    </data>
+</openerp>

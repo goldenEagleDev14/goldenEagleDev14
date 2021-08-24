@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data >
+
+        <record forcecreate="1" id="real_estate_reservation_no_seq" model="ir.sequence">
+            <field name="name">Request Reservation ID Sequence</field>
+            <field name="code">real.estate.reservation.id.seq</field>
+            <field eval="1" name="number_increment"/>
+            <field name="prefix">EOI/</field>
+            <!--<field name="suffix">%(user_id)s</field>-->
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <record forcecreate="1" id="real_estate_Accessories_no_seq_2" model="ir.sequence">
+            <field name="name">Accessories ID Sequence</field>
+            <field name="code">real.estate.Accessories.id.seq.finish</field>
+            <field eval="1" name="number_increment"/>
+            <field name="prefix">Amen/</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <record forcecreate="1" id="real_estate_reservation_no_seq_2" model="ir.sequence">
+            <field name="name">Reservation ID Sequence</field>
+            <field name="code">real.estate.reservation.id.seq.finish</field>
+            <field eval="1" name="number_increment"/>
+            <field name="prefix">Res/</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+        <record forcecreate="1" id="customer_payment_seq" model="ir.sequence">
+            <field name="name">Customer Payment Sequence</field>
+            <field name="code">customer.payment.seq</field>
+            <field eval="1" name="number_increment"/>
+            <field name="prefix">CP/</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+        <record forcecreate="1" id="release_unit_seq" model="ir.sequence">
+            <field name="name">Release Unit Sequence</field>
+            <field name="code">release.unit.seq</field>
+            <field eval="1" name="number_increment"/>
+            <field name="prefix">RU/</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+        <record forcecreate="1" id="transfer_unit_seq" model="ir.sequence">
+            <field name="name">Transfer Unit Sequence</field>
+            <field name="code">transfer.unit.seq</field>
+            <field eval="1" name="number_increment"/>
+            <field name="prefix">TR/</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+                <record forcecreate="1" id="vendor_normal_deposit_seq" model="ir.sequence">
+            <field name="name">Vendor Normal Deposit Sequence</field>
+            <field name="code">vendor.normal.deposit.seq</field>
+            <field eval="1" name="number_increment"/>
+            <field name="prefix">VNormalDe/</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <record forcecreate="1" id="payment_cheque_seq" model="ir.sequence">
+            <field name="name">Payment Cheque Sequence</field>
+            <field name="code">payment.cheque.seq</field>
+            <field eval="1" name="number_increment"/>
+            <field name="prefix">Cheques/</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+<!--        lines -->
+        <record forcecreate="1" id="pay_cash_seq" model="ir.sequence">
+            <field name="name">Pay Cash Sequence</field>
+            <field name="code">pay.cash.seq</field>
+            <field eval="1" name="number_increment"/>
+            <field name="prefix">Pay/Cash/</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+        <record forcecreate="1" id="pay_visa_seq" model="ir.sequence">
+            <field name="name">Pay Visa Sequence</field>
+            <field name="code">pay.visa.seq</field>
+            <field eval="1" name="number_increment"/>
+            <field name="prefix">Pay/Visa/</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <record forcecreate="1" id="pay_cheque_seq" model="ir.sequence">
+            <field name="name">Pay Cheque Sequence</field>
+            <field name="code">pay.cheque.seq</field>
+            <field eval="1" name="number_increment"/>
+            <field name="prefix">Pay/Cheque/</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+        <record forcecreate="1" id="pay_bank_seq" model="ir.sequence">
+            <field name="name">Pay Bank Sequence</field>
+            <field name="code">pay.Bank.seq</field>
+            <field eval="1" name="number_increment"/>
+            <field name="prefix">Pay/Bank/</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+    </data>
+</odoo>

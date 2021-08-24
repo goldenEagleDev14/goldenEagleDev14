@@ -1,0 +1,21 @@
+<odoo>
+  <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_company_form_name_arabic" model="ir.ui.view">
+            <field name="name">res.company.arabic</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//label[@for='name']" position="before">
+                    <label for="name_arabic" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name_arabic"/>
+                        </h1>
+                </xpath>
+
+            </field>
+        </record>
+
+  </data>
+</odoo>

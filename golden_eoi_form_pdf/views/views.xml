@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="edit_project_inherit_condition_request" model="ir.ui.view">
+            <field name="name">edit.project.inherit.condition.request</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='condition_terms_broker']" position="after">
+                    <field name="condition_request"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_add__national_issue_date_partner_add__national_issue_date_partner,add__national_issue_date_partner.add__national_issue_date_partner,model_add__national_issue_date_partner_add__national_issue_date_partner,base.group_user,1,1,1,1

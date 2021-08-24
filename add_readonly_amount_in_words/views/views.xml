@@ -1,0 +1,16 @@
+<odoo>
+  <data>
+          <!-- Inherit Form View to Modify it -->
+          <record id="view_account_payment_form_readonly_word" model="ir.ui.view">
+              <field name="name">account.payment.readonly</field>
+              <field name="model">account.payment</field>
+              <field name="inherit_id" ref="account.view_account_payment_form"/>
+              <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='check_amount_in_words']" position="attributes">
+                  <attribute name="readonly">1</attribute>
+                </xpath>
+              </field>
+          </record>
+  </data>
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+                <template id="header_template">
+            <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+            </div>
+
+            <div class="footer o_standard_footer">
+
+
+            </div>
+
+
+
+        </template>
+
+                <template id="header_footer_template">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+            <t t-call="add_real_estate.header_template">
+                <t t-raw="0"/>
+            </t>
+
+
+        </template>
+	</data>
+</odoo>

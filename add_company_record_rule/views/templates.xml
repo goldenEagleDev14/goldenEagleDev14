@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <record id="own_project_phase" model="ir.rule">
+            <field name="name">Own project phase</field>
+            <field ref="add_real_estate.model_project_phase" name="model_id"/>
+            <field name="domain_force">['|',('company','=',False),('company', '=', company_id)]</field>
+        </record>
+        <record id="own_property_exception" model="ir.rule">
+            <field name="name">Own property exception</field>
+            <field ref="add_real_estate.model_property_exception" name="model_id"/>
+            <field name="domain_force">['|',('company','=',False),('company', '=', company_id)]</field>
+        </record>
+        <record id="own_property_category" model="ir.rule">
+            <field name="name">Own property category</field>
+            <field ref="add_real_estate.model_property_category" name="model_id"/>
+            <field name="domain_force">['|',('company','=',False),('company', '=', company_id)]</field>
+        </record>
+        <record id="own_property_type" model="ir.rule">
+            <field name="name">Own property type</field>
+            <field ref="add_real_estate.model_property_type" name="model_id"/>
+            <field name="domain_force">['|',('company','=',False),('company', '=', company_id)]</field>
+        </record>
+        <record id="own_property_location" model="ir.rule">
+            <field name="name">Own property location</field>
+            <field ref="add_real_estate.model_property_location" name="model_id"/>
+            <field name="domain_force">['|',('company','=',False),('company', '=', company_id)]</field>
+        </record>
+        <record id="own_property_finished_type" model="ir.rule">
+            <field name="name">Own property_finished_type</field>
+            <field ref="add_real_estate.model_property_finished_type" name="model_id"/>
+            <field name="domain_force">['|',('company','=',False),('company', '=', company_id)]</field>
+        </record>
+        <record id="own_property_design" model="ir.rule">
+            <field name="name">Own property design</field>
+            <field ref="add_real_estate.model_property_design" name="model_id"/>
+            <field name="domain_force">['|',('company','=',False),('company', '=', company_id)]</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="report_customer_payment_document">
+
+			            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600')
+            </style>
+			                                <t t-call="add_real_estate.header_footer_template"/>
+
+			<t t-call="web.external_layout">
+<!--			<t t-set="o" t-value="o.with_context(lang=o.customer_id.lang)"/>-->
+				<div class="page" style="font-size: 14px;font-family: 'Cairo';" dir="rtl">
+
+					<div class="text-right">
+						<h3>
+							<span t-field="o.create_uid.company_id.name_arabic"/>
+						</h3>
+						<h5>
+							<span t-field="o.create_uid.name_Branch"/>
+						</h5>
+					</div>
+					<br/>
+					<div class="text-center" style="font-size: 14px;text-align:right;">
+                        <!--						<h3>استمارة حجز وحدة بمشروع <span t-field="o.project_id"/> </h3>-->
+                        <span style="border-bottom: 1px solid black;padding-bottom: 3px;font-weight: bolder;">
+							ايصال استلام شيكات
+                        </span>
+
+                    </div>
+					<br/>
+					<div class="container part1 text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                التاريخ :-
+                                <span t-field="o.date"/>
+                            </div>
+                            <div class="col-6 text-left">
+                                مبلغ :-
+                                # <span t-field="o.total_amount"/> #
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container part2 text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                استلمت من السيد /
+                                <span t-field="o.partner_id.name"/>
+                            </div>
+                            <div class="col-6 text-left">
+                                عدد :-
+                                <span t-field="o.number_ins"/>
+								شيك
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container part3 text-right">
+                        <div class="row">
+                            <div class="col-12">
+                                مبلغ و قدره :
+                                <span t-esc="o.create_uid.company_id.currency_id.ar_amount_to_text(o.total_amount)"/>
+                            </div>
+                        </div>
+                    </div>
+					<div class="container part4 text-right">
+                        <div class="row">
+                            <div class="col-4">
+                                وذلك قيمة :
+                                اقساط الوحدة
+                            </div>
+                            <div class="col-4">
+                                عن الوحده :
+                                 <span t-field="o.reservation_id.property_id.name"/>
+
+                            </div>
+                            <div class="col-4 text-left">
+                                رقم  :
+                                 <span t-field="o.reservation_id.property_id.name"/>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container part5 text-right">
+                        <div class="row">
+                            <div class="col-12">
+                                بمشروع :
+                                 <span t-field="o.reservation_id.project_id.name"/>
+
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+
+                <table class="table table-bordered" style="border-collapse: collapse; border: 2px solid black;">
+                    <thead style="border-collapse: collapse; border: 2px solid black;">
+                        <th class="text-center"><strong>م</strong></th>
+                        <th class="text-center"><strong>رقم الشيك</strong></th>
+                        <th class="text-center"><strong>قيمة الشيك</strong></th>
+                        <th class="text-center"><strong>استحقاق الشيك</strong></th>
+                        <th  class="text-center"><strong>البنك المحسوب عليه</strong></th>
+                        <th class="text-center"><strong>ملاحظات</strong></th>
+                    </thead>
+                    <tbody style="border-collapse: collapse; border: 2px solid black;">
+
+                        <tr t-foreach="o.loan_line" t-as="line">
+                             <td>
+                                <span t-esc="line_index+1"/>
+                            </td>
+                            <td>
+                                <span t-esc="line.cheque"/>
+                            </td>
+							<td>
+                                <span t-esc="line.amount"/>
+                            </td>
+							<td>
+                                <span t-esc="line.payment_date"/>
+                            </td>
+							<td>
+                                <span t-esc="line.bank_name.name"/>
+                            </td>
+							<td>
+								<t t-if="line.is_pay == True">
+																	<span>&#10004;</span>
+
+								</t>
+								<t t-if="line.is_pay == False">
+																									<span >&#10539;</span>
+
+
+								</t>
+<!--                                <span t-esc="line.journal_id"/>-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                    <br/>
+                    <hr/>
+
+                    <div class="container last text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                محاسب :
+                            </div>
+                            <div class="col-6">
+اعتماد :
+
+
+                            </div>
+                        </div>
+                    </div>
+
+					</div>
+			</t>
+		</template>
+
+		<template id="report_customer_payment">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="add_real_estate.report_customer_payment_document" />
+				</t>
+			</t>
+		</template>
+
+	</data>
+</odoo>
+
+
+
+<!--<td>-->
+<!--                                <span t-esc="line.payment_date"/>-->
+<!--                            </td>-->
+<!--							<td>-->
+<!--                                <span t-esc="line.description"/>-->
+<!--                            </td>-->
+
+<!--							<td>-->
+<!--                                <span t-esc="line.amount"/>-->
+<!--                            </td>-->
+<!--							<td>-->
+<!--                                <span t-esc="line.amount_due"/>-->
+<!--                            </td>-->
+<!--							<td>-->
+<!--                                <span t-esc="line.journal_id.name"/>-->
+<!--                            </td>-->
+<!--							<td>-->
+
+<!--								<t t-foreach="line.bank_ids" t-as="l">-->
+<!--									<span t-esc="l.name"/> /-->
+<!--								</t>-->
+
+<!--                            </td>-->
+<!--							<td>-->
+<!--								<t t-if="line.is_pay == True">-->
+<!--																	<span>&#10004;</span>-->
+
+<!--								</t>-->
+<!--								<t t-if="line.is_pay == False">-->
+<!--																									<span >&#10539;</span>-->
+
+
+<!--								</t>-->
+<!--&lt;!&ndash;                                <span t-esc="line.journal_id"/>&ndash;&gt;-->
+<!--                            </td>-->

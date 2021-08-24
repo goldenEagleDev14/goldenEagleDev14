@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_hr_department_inherit">
+            <field name="name">hr.department.view</field>
+            <field name="model">hr.department</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_department_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                        <field name="is_project_owner"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

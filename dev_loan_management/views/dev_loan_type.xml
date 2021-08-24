@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+    <record id="view_dev_loan_type_form" model="ir.ui.view">
+        <field name="name">view.dev.loan.type.form</field>
+        <field name="model">dev.loan.type</field>
+        <field name="arch" type="xml">
+            <form string="Loan Type">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="loan_amount"/>
+                            <field name="loan_term_by_month"/>
+                            <field name="loan_term_by_quanter"/>
+                        </group>
+                        <group>
+                            <field name="is_interest_apply"/>
+                            <field name="interest_mode" attrs="{'invisible':[('is_interest_apply','=',False)], 'required':[('is_interest_apply','=',True)]}"/>
+                            <field name="rate" attrs="{'invisible':[('is_interest_apply','=',False)], 'required':[('is_interest_apply','=',True)]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="loan_account_id"/>
+                            <field name="installment_account_id"/>
+                            <field name="interest_account_id"/>
+                        </group>
+                        <group>
+                            <field name="disburse_journal_id"/>
+                            <field name="loan_payment_journal_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="proof_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_dev_loan_type_tree" model="ir.ui.view">
+        <field name="name">view.dev.loan.type.tree</field>
+        <field name="model">dev.loan.type</field>
+        <field name="arch" type="xml">
+            <tree string="Loan Proofs">
+                <field name="name"/>
+                <field name="is_interest_apply"/>
+                <field name="interest_mode"/>
+                <field name="rate"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_dev_loan_type" model="ir.actions.act_window">
+        <field name="name">Loan Type</field>
+        <field name="res_model">dev.loan.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+	<!--  Menu Items-->
+    
+    
+    <menuitem name="Loan Type" id="menu_dev_loan_type" parent="dev_loan_management.menu_dev_loan_configration" action="action_dev_loan_type" sequence="2"/>
+</odoo>

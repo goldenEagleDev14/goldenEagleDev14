@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<odoo>
+    <!--   history Unit Price  -->
+        <record id="history_property_area_price_tree" model="ir.ui.view">
+            <field name="name">history.property.area.price</field>
+            <field name="model">history.property.area.price</field>
+            <field name="arch" type="xml">
+                <tree string="Area Price">
+                                    <field name="date"/>
+                                    <field name="area_price"/>
+                                    <field name="product_id"/>
+                                    <field name="type_of_property_id"/>
+                                    <field name="plot_area"/>
+                                    <field name="price_m_a"/>
+                                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="history_property_area_price_action">
+            <field name="name">History Area Price</field>
+            <field name="res_model">history.property.area.price</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="history_property_area_price_menu"
+            name="History Area Price"
+            parent="add_real_estate.history_sub"
+            action="history_property_area_price_action"
+            sequence="1"/>
+<!--   history Unit Price  -->
+        <record id="history_property_unit_price_tree" model="ir.ui.view">
+            <field name="name">history.property.unit.price</field>
+            <field name="model">history.property.unit.price</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                                    <field name="date"/>
+                                    <field name="unit_price"/>
+                                    <field name="product_id"/>
+                                    <field name="type_of_property_id"/>
+                                    <field name="sellable"/>
+                                    <field name="price_m"/>
+                                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="history_property_unit_price_action">
+            <field name="name">History Unit Price</field>
+            <field name="res_model">history.property.unit.price</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="history_property_unit_price_menu"
+            name="History Unit Price"
+            parent="add_real_estate.history_sub"
+            action="history_property_unit_price_action"
+            sequence="2"/>
+
+    <!--   history finishing Price  -->
+        <record id="history_property_finishing_price_tree" model="ir.ui.view">
+            <field name="name">history.property.finishing.price</field>
+            <field name="model">history.property.finishing.price</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="date"/>
+                                    <field name="finishing_price"/>
+                                    <field name="product_id"/>
+                                    <field name="type_of_property_id"/>
+                                    <field name="sellable"/>
+                                    <field name="is_finish"/>
+                                    <field name="finish_of_property_id"/>
+                                    <field name="price_finishing_for_m"/>
+                                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="history_property_finishing_price_action">
+            <field name="name">History Finishing Price</field>
+            <field name="res_model">history.property.finishing.price</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="history_property_finishing_price_menu"
+            name="History Finishing Price"
+            parent="add_real_estate.history_sub"
+            action="history_property_finishing_price_action"
+            sequence="3"/>
+
+        <!--   history Garden Price  -->
+        <record id="history_property_garden_price_tree" model="ir.ui.view">
+            <field name="name">history.property.garden.price</field>
+            <field name="model">history.property.garden.price</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="date"/>
+                                    <field name="garden_price"/>
+                                    <field name="product_id"/>
+                                    <field name="type_of_property_id"/>
+                                    <field name="total_garden_area"/>
+                                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="history_property_garden_price_action">
+            <field name="name">History Garden Price</field>
+            <field name="res_model">history.property.garden.price</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="history_property_garden_price_menu"
+            name="History Garden Price"
+            parent="add_real_estate.history_sub"
+            action="history_property_garden_price_action"
+            sequence="4"/>
+            <!--   history garage Price  -->
+        <record id="history_property_garage_price_tree" model="ir.ui.view">
+            <field name="name">history.property.garage.price</field>
+            <field name="model">history.property.garage.price</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="date"/>
+                                    <field name="garage_price"/>
+                                    <field name="product_id"/>
+                                    <field name="type_of_property_id"/>
+                                    <field name="is_garage"/>
+                                    <field name="price_garage_for_one"/>
+                                    <field name="number_of_garage"/>
+                                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="history_property_garage_price_action">
+            <field name="name">History Garage Price</field>
+            <field name="res_model">history.property.garage.price</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="history_property_garage_price_menu"
+            name="History Garage Price"
+            parent="add_real_estate.history_sub"
+            action="history_property_garage_price_action"
+            sequence="5"/>
+        <!--   history Pool Price  -->
+        <record id="history_property_pool_price_tree" model="ir.ui.view">
+            <field name="name">history.property.pool.price</field>
+            <field name="model">history.property.pool.price</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="date"/>
+                                    <field name="pool_price"/>
+                                    <field name="product_id"/>
+                                    <field name="type_of_property_id"/>
+                                    <field name="is_pool"/>
+                                    <field name="price_pool_for_one"/>
+                                    <field name="number_of_pool"/>
+                                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="history_property_pool_price_action">
+            <field name="name">History Pool Price</field>
+            <field name="res_model">history.property.pool.price</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="history_property_pool_price_menu"
+            name="History Pool Price"
+            parent="add_real_estate.history_sub"
+            action="history_property_pool_price_action"
+            sequence="6"/>
+
+
+</odoo>

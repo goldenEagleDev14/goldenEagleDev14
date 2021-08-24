@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="report_reservation_document">
+			<t t-call="web.external_layout">
+				<div class="page">
+					<table class="report_table">
+						<tr>
+							<th align="center">
+								Request Reservation # <span  t-field="o.name"/>
+							</th>
+						</tr>
+					</table>
+					<br/>
+					<div> Date : <span t-field="o.date"/>  </div>
+										<div class="container">
+					  <div class="row">
+						<div class="col-3">
+client Information :
+						</div>
+						<div class="col-7">
+
+						</div>
+						<div class="col-3 float-right" style="direction: rtl;padding-left: 50px;">
+  بيانات العميل :
+						</div>
+					  </div>
+					</div>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3">
+Name
+						</div>
+						<div class="col-7">
+......................................................................................................................
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 100px;">
+ الاسم
+						</div>
+					  </div>
+					</div>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3">
+Mobile No
+						</div>
+						<div class="col-7">
+......................................................................................................................
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 50px;">
+  رقم التليفون
+						</div>
+					  </div>
+					</div>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3">
+E-mail
+						</div>
+						<div class="col-7">
+.................................................................................................................
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 40px;">
+  البريد الالكترونى
+						</div>
+					  </div>
+					</div>
+
+					<br/>
+										<div class="container">
+					  <div class="row">
+						<div class="col-3">
+Unit Information :
+						</div>
+						<div class="col-7">
+
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 40px;">
+ : بيانات الوحدة
+						</div>
+					  </div>
+					</div>
+
+<!--															<div class="container">-->
+<!--					  <div class="row">-->
+<!--						<div class="col-3">-->
+<!--Unit No.-->
+<!--						</div>-->
+<!--						<div class="col-7">-->
+
+<!--						</div>-->
+<!--						<div class="col-3" style="direction: rtl;padding-left: 40px;">-->
+<!--رقم الوحدة-->
+<!--						</div>-->
+<!--					  </div>-->
+<!--					</div>-->
+
+<!--				</div>-->
+<!--														<div class="container">-->
+<!--					  <div class="row">-->
+<!--						<div class="col-3">-->
+<!-- Type-->
+<!--						</div>-->
+<!--						<div class="col-7">-->
+
+<!--						</div>-->
+<!--						<div class="col-3" style="direction: rtl;padding-left: 40px;">-->
+<!--نموذج الوحدة-->
+<!--						</div>-->
+<!--					  </div>-->
+<!--					</div>-->
+
+<!--														<div class="container">-->
+<!--					  <div class="row">-->
+<!--						<div class="col-3">-->
+<!--Unit Price-->
+<!--						</div>-->
+<!--						<div class="col-7">-->
+
+<!--						</div>-->
+<!--						<div class="col-3" style="direction: rtl;padding-left: 40px;">-->
+<!--سعر الوحدة-->
+<!--						</div>-->
+<!--					  </div>-->
+<!--					</div>-->
+<!--&lt;!&ndash;Finishing&ndash;&gt;-->
+<!--														<div class="container">-->
+<!--					  <div class="row">-->
+<!--						<div class="col-3">-->
+<!--Finishing-->
+<!--						</div>-->
+<!--						<div class="col-7">-->
+
+<!--						</div>-->
+<!--						<div class="col-3" style="direction: rtl;padding-left: 40px;">-->
+<!--التشطيب-->
+<!--						</div>-->
+<!--					  </div>-->
+<!--					</div>-->
+
+<!--														<div class="container">-->
+<!--					  <div class="row">-->
+<!--						<div class="col-3">-->
+<!--Fully Finished-->
+<!--						</div>-->
+<!--						<div class="col-7">-->
+
+<!--						</div>-->
+<!--						<div class="col-3" style="direction: rtl;padding-left: 40px;">-->
+<!--التشطيب الكامل-->
+<!--						</div>-->
+<!--					  </div>-->
+<!--					</div>-->
+<!--														<div class="container">-->
+<!--					  <div class="row">-->
+<!--						<div class="col-3">-->
+<!--Care & Shell-->
+<!--						</div>-->
+<!--						<div class="col-7">-->
+
+<!--						</div>-->
+<!--						<div class="col-3" style="direction: rtl;padding-left: 40px;">-->
+<!--بدون تشطيب-->
+<!--						</div>-->
+<!--					  </div>-->
+<!--					</div>-->
+<!--														<div class="container">-->
+<!--					  <div class="row">-->
+<!--						<div class="col-3">-->
+<!--Pool-->
+<!--						</div>-->
+<!--						<div class="col-7">-->
+
+<!--						</div>-->
+<!--						<div class="col-3" style="direction: rtl;padding-left: 40px;">-->
+<!--حمام السباحة-->
+<!--						</div>-->
+<!--					  </div>-->
+<!--					</div>-->
+
+<!--&lt;!&ndash;		Last		&ndash;&gt;-->
+<!--														<div class="container">-->
+<!--					  <div class="row">-->
+<!--						<div class="col-4">-->
+<!--Client-->
+<!--						</div>-->
+<!--						<div class="col-4">-->
+<!--Sales-->
+<!--						</div>-->
+<!--						<div class="col-4" >-->
+<!--Broker-->
+<!--						</div>-->
+<!--					  </div>-->
+<!--					</div>-->
+			</t>
+		</template>
+
+		<template id="report_reservation">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="add_real_estate.report_reservation_document" />
+				</t>
+			</t>
+		</template>
+
+	</data>
+</odoo>

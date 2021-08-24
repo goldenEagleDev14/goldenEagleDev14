@@ -1,0 +1,15 @@
+<odoo>
+  <data>
+              <record model="ir.actions.server" id="action_hr_employee_create_partner">
+        <field name="name">Create Partner</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                records.create_partner_new()
+        </field>
+    </record>
+  </data>
+</odoo>

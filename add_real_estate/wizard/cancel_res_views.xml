@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+
+        <record id="view_cancel_res" model="ir.ui.view">
+            <field name="name">ccancel.res.form</field>
+            <field name="model">cancel.res</field>
+            <field name="arch" type="xml">
+                <form string="cancel">
+                    <group name="name">
+                        <field name="reason" />
+                    </group>
+                    <footer>
+                        <button name="action_apply" string="Cancel Order" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_cancel_res" model="ir.actions.act_window">
+            <field name="name">Cancel</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cancel.res</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_cancel_res"/>
+            <field name="target">new</field>
+        </record>
+
+
+
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_hr_payslip_filter_inherit" model="ir.ui.view">
+        <field name="name">view_hr_payslip_filter</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_filter"/>
+        <field name="arch" type="xml">
+
+
+
+            <xpath expr="//filter[@name='done']" position="after">
+
+                                <filter string="Archived Employees" name="archived_employees" domain="[('archived_employee', '=', True)]" help="Payslips for Archived Employees"/>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

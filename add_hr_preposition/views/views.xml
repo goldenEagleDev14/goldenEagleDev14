@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <record id="view_hr_employee_form_custom" model="ir.ui.view">
+            <field name="name">view hr employee form custom</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='personal_information']" position="after">
+                    <page name="prepositions" string="Prepositions">
+                        <field name="preposition_ids" readonly="1" force_save="1">
+                            <tree>
+                                <field name="date_from"/>
+                                <field name="job_id"/>
+                                <field name="department_id"/>
+                                <field name="parent_id"/>
+                                <field name="coach_id"/>
+                                <field name="franchise"/>
+                                <field name="company_id"/>
+                            </tree>
+                        </field>
+                    </page>
+
+
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

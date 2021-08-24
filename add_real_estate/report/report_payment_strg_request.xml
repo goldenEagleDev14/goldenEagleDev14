@@ -1,0 +1,30 @@
+
+<odoo>
+    <data>
+<!--        <template id="expense_analysis_layout">-->
+<!--            <t t-if="o and 'company_id' in o">-->
+<!--                <t t-set="company" t-value="o.company_id"/>-->
+<!--            </t>-->
+<!--            <t t-if="not o or not 'company_id' in o">-->
+<!--                <t t-set="company" t-value="res_company"/>-->
+<!--            </t>-->
+<!--            <div class="article">-->
+<!--                <t t-raw="0"/>-->
+<!--            </div>-->
+<!--        </template>-->
+        <template id="payment_report_request">
+            <t t-call="web.html_container">
+                    <div class="page container" style="page-break-inside: avoid;padding-top:10px">
+		                    <t t-foreach="docs" t-as="o">
+
+                        <h4 class="text-center" style="border: 1px solid;padding: 5px;border-radius: 5px;">
+                            Product Production Planning
+                        </h4>
+                        <br/>
+						<span t-esc="o.date"/>
+							</t>
+                    </div>
+            </t>
+        </template>
+    </data>
+</odoo>

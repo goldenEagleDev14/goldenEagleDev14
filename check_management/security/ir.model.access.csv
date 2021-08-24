@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_check_type,check_type,model_check_type,account.group_account_invoice,1,1,1,1
+access_cheque_books,cheque_books,model_cheque_books,account.group_account_user,1,1,1,1
+access_cheque_books_company,cheque_books_company,base.model_res_company,account.group_account_user,1,1,1,1

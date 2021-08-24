@@ -1,0 +1,156 @@
+<odoo>
+    <data>
+<!--payment-->
+
+
+
+
+        <!--
+-->
+
+        <record id="transfer_unit_form_view" model="ir.ui.view">
+            <field name="name">transfer.unit</field>
+            <field name="model">transfer.unit</field>
+            <field name="arch" type="xml">
+                <form string="Transfer Unit">
+                    <header>
+                        <button name="approved" type="object" string="Approved" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+<!--                        <div class="oe_button_box" name="button_box">-->
+<!--                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_payment"-->
+<!--                                >-->
+<!--                                <div class="o_form_field o_stat_info">-->
+<!--                                    <field name="payments_count" class="o_stat_value"/>-->
+<!--&lt;!&ndash;                                    <span class="o_stat_value">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </span>&ndash;&gt;-->
+<!--                                    <span class="o_stat_text">Payments</span>-->
+<!--                                </div>-->
+<!--                            </button>-->
+<!--                        </div>-->
+
+                        <div class="oe_title" >
+
+                            <h2><field name="name" placeholder="Transfer Name" readonly="1"/></h2>
+                    </div>
+                        <group>
+                            <group colspan="2" >
+                            <field name="date"/>
+                            <field name="partner_id"/>
+                            <field name="reservation_id" domain="[ ('customer_id', '=', partner_id)]"/>
+                            <field name="property_id" />
+                            <field name="reservation_id_2" domain="[ ('customer_id', '=', partner_id)]"/>
+                            <field name="property_id_2" />
+                                <br/>
+
+                        </group>
+
+
+                        </group>
+
+                        <notebook>
+                            <page name="reservation_info" string="Post Payment Reservation Release">
+                                <group>
+                                                                    <field name="payments_post_res1_ids" widget="many2many_tags" domain="[ ('reservation_id', '=', reservation_id_2),('state', '=', 'posted')]"/>
+
+
+                                </group>
+                                <group>
+                                                                                                    <field name="amount_post"/>
+                                                                                                        <field name="payments_post_ids"
+                                       widget="section_and_note_one2many"
+                                       mode="tree,kanban"
+                                >
+                                    <tree string="payment">
+
+                                        <field name="name"   />
+                                        <field name="amount"   />
+                                        <field name="state"   />
+
+                                    </tree>
+                                </field>
+
+                                </group>
+                                <br/>
+
+                            </page>
+                            <page name="reservation_info" string="Collected Payment Reservation">
+                                <group>
+                                                                    <field name="payments_collected_res2_ids" widget="many2many_tags" domain="[ ('reservation_id', '=', reservation_id),('state', '=', 'collected')]"/>
+
+                                </group>
+<!--                                <field name="payments_post_res1_ids" widget="one2many" nolabel="1" />-->
+                                <br/>
+                                <group>
+                                                                    <field name="amount_collected"/>
+                                                                                                        <field name="payments_collected_ids"
+                                       widget="section_and_note_one2many"
+                                       mode="tree,kanban"
+                                >
+                                    <tree string="payment">
+
+                                        <field name="name"   />
+                                        <field name="amount"   />
+                                        <field name="state"   />
+
+                                    </tree>
+                                </field>
+
+                                </group>
+
+
+                            </page>
+                            <page name="data_Enter" string="Data Enter">
+<group>
+                                    <group string="Post Payment">
+                                        <field name="post_data"/>
+                                    </group>
+                                    <group string="Under Collection Payment">
+                                        <field name="post_data_2"/>
+                                        <field name="collect_data"/>
+                                    </group>
+                                    <group string="Move">
+                                        <field name="journal_miscellaneous_id"/>
+                                    </group>
+                                </group>
+
+                            </page>
+                                                    </notebook>
+                        <group class="oe_right">
+                                    <group class="oe_subtotal_footer"
+                                       >
+                                    </group>
+
+                                </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="transfer_unit_tree_view" model="ir.ui.view">
+            <field name="name">transfer.unit.reservation.reservation.tree view</field>
+            <field name="model">transfer.unit</field>
+            <field name="arch" type="xml">
+                <tree string="Customer Payment">
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="partner_id"/>
+                            <field name="reservation_id"/>
+
+                            <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="transfer_unit_list_action">
+            <field name="name">Transfer Unit</field>
+            <field name="res_model">transfer.unit</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="transfer_unit_menu_item"
+                  name="Transfer Unit"
+                  parent="transfer_unit_sub"
+                  action="transfer_unit_list_action" sequence="1"/>
+
+    </data>
+</odoo>

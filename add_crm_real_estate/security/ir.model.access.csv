@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_market_plan,market.plan.market.plan,model_market_plan,,1,1,1,1
+access_platform_plan,platform.plan,model_platform_plan,,1,1,1,1
+access_category_plan,category_plan,model_category_plan,,1,1,1,1
+access_type_plan,type_plan,model_type_plan,,1,1,1,1
+access_target_plan,target_plan,model_target_plan,,1,1,1,1
+access_lead_type_plan,lead_type_plan,model_lead_type_plan,,1,1,1,1
+access_lead_notes,lead_notes,model_lead_notes,,1,1,1,1

@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<odoo>
+            <record id="view_crm_lead2opportunity_partner" model="ir.ui.view">
+            <field name="name">crm.lead2opportunity.partner.form</field>
+            <field name="model">crm.lead2opportunity.partner</field>
+            <field name="inherit_id" ref="crm.view_crm_lead2opportunity_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="replace">
+                    <form string="Convert to Lead">
+                    <group name="name">
+                        <field name="name" widget="radio"/>
+                    </group>
+                    <group string="Assign this opportunity to">
+                        <field name="user_id" domain="[('share', '=', False)]"/>
+                        <field name="team_id" widget="selection"/>
+                    </group>
+                    <group string="Opportunities" attrs="{'invisible': [('name', '!=', 'merge')]}">
+                        <field name="opportunity_ids" nolabel="1">
+                            <tree>
+                                <field name="create_date"/>
+                                <field name="name"/>
+                                <field name="type"/>
+                                <field name="contact_name"/>
+                                <field name="country_id" invisible="context.get('invisible_country', True)"/>
+                                <field name="email_from"/>
+                                <field name="phone"/>
+                                <field name="stage_id"/>
+                                <field name="user_id"/>
+                                <field name="team_id" kanban_view_ref="%(sales_team.crm_team_view_kanban)s"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group name="action" attrs="{'invisible': [('name', '!=', 'convert')]}" string="Customer" col="1">
+                        <field name="action" nolabel="1" widget="radio"/>
+                        <group col="2">
+                            <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_vat': True}" attrs="{'required': [('action', '=', 'exist')], 'invisible':[('action','!=','exist')]}"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_apply" string="Create Lead" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+                </xpath>
+            </field>
+        </record>
+           <record id="view_crm_lead2opportunity_partner_mass_int" model="ir.ui.view">
+            <field name="name">crm.lead2opportunity.partner.mass.form.inh</field>
+            <field name="model">crm.lead2opportunity.partner.mass</field>
+               <field name="inherit_id" ref="crm.view_crm_lead2opportunity_partner_mass"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="replace">
+                    <form string="Convert to lead">
+                    <separator string="Conversion Options"/>
+                    <group>
+                        <field name="name" class="oe_inline" widget="radio" readonly="1"/>
+                    </group>
+                    <group string="Assign these opportunities to">
+                        <field name="team_id" kanban_view_ref="%(sales_team.crm_team_view_kanban)s"/>
+                        <field name="user_ids" widget="many2many_tags" domain="[('share', '=', False)]"/>
+                    </group>
+
+                    <group attrs="{'invisible': [('name', '!=', 'convert')]}" string="Customers" col="1">
+                        <field name="action" class="oe_inline" widget="radio"/>
+                        <group col="2">
+                            <field name="partner_id"
+                                widget="res_partner_many2one"
+                                attrs="{'required': [('action', '=', 'exist')], 'invisible':[('action','!=','exist')]}"
+                                context="{'show_vat': True}"
+                                class="oe_inline"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="mass_convert" string="Convert to lead" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+
+                </xpath>
+            </field>
+        </record>
+        <act_window
+            id="crm.action_crm_send_mass_convert"
+            name="Convert to Leads"
+            res_model="crm.lead2opportunity.partner.mass"
+            binding_model="crm.lead" binding_views="list"
+            view_mode="form" target="new"
+            context="{'mass_convert' : True}"
+            view_id="crm.view_crm_lead2opportunity_partner_mass"
+            groups="sales_team.group_sale_salesman"
+        />
+        <record id="crm.action_crm_lead2opportunity_partner" model="ir.actions.act_window">
+            <field name="name">Convert to lead</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.lead2opportunity.partner</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="crm.view_crm_lead2opportunity_partner"/>
+            <field name="target">new</field>
+        </record>
+
+</odoo>

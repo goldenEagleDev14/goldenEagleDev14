@@ -1,0 +1,5 @@
+<odoo>
+  <data noupdate="1">
+            <function model="res.config.settings" name="set_setting_batch_parameters"/>
+  </data>
+</odoo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!--        base menuitem-->
+        <menuitem name="Real Estate"
+                  id="menu_real_estate" web_icon="add_real_estate,static/description/icon.png"
+        groups="add_real_estate.group_real_state_menuitem"/>
+        <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+
+        <menuitem id="building_structure_sub"
+                  name="Building Structure"
+                  parent="menu_real_estate"
+                    sequence="2" />
+
+        <menuitem id="history_sub"
+                  name="History"
+                  parent="menu_real_estate"
+        sequence="3"/>
+        <menuitem id="transaction_sub"
+                  name="Transactions"
+                  parent="menu_real_estate"
+
+        sequence="4"/>
+
+        <menuitem id="payment_sub"
+                  name="Payment"
+                  parent="menu_real_estate"
+        sequence="5"/>
+            <menuitem id="contract_sub"
+                  name="Contacts"
+                  parent="menu_real_estate"
+        sequence="6"/>
+        <menuitem id="release_unit_sub"
+                  name="Change Customer"
+                  parent="menu_real_estate"
+        sequence="7"/>
+        <menuitem id="transfer_unit_sub"
+                  name="Transfer Unit"
+                  parent="menu_real_estate"
+        sequence="7"/>
+        <menuitem id="configuration_sub"
+                  name="Configuration"
+                  parent="menu_real_estate"
+        sequence="10"/>
+             <menuitem action="account.action_payment_term_form"
+            id="menu_action_payment_term_form_custom" parent="configuration_sub" sequence="1"/>
+<!--configuration_sub -->
+
+
+<!--    Building Unit    -->
+
+
+<!--            Transactions-->
+            <!--    Building Unit    -->
+
+    </data>
+</openerp>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+        <report 
+            id="action_print_loan_report"
+            string="Loan"
+            model="dev.loan.loan" 
+            report_type="qweb-pdf"
+            name="dev_loan_management.report_print_loan_template"
+            file="dev_loan_management.report_print_loan_template"
+        />
+        
+        <report id="print_installment_summary"
+		            model="dev.installment.summary"
+		            string="Installment Summary"
+		            report_type="qweb-pdf"
+		            name="dev_loan_management.installment_summary_template"  
+		            file="dev_loan_management.installment_summary_template"/>
+		            
+		<report id="print_interest_certificate"
+		            model="dev.interest.certificate"
+		            string="Interest Certificate"
+		            report_type="qweb-pdf"
+		            name="dev_loan_management.interest_certificate_template"  
+		            file="dev_loan_management.interest_certificate_template"/>
+		            
+        
+        <record id="paperformat_dev_loan_man" model="report.paperformat">
+            <field name="name">Dev loan Report Paper</field>
+            <field name="default" eval="True" />
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">47</field>
+            <field name="margin_bottom">22</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">42</field>
+            <field name="dpi">90</field>
+        </record>
+        
+        <record id="dev_loan_management.action_print_loan_report" model="ir.actions.report">
+			<field name="paperformat_id" ref="dev_loan_management.paperformat_dev_loan_man" />
+		</record>   
+		
+		<record id="dev_loan_management.print_installment_summary" model="ir.actions.report">
+			<field name="paperformat_id" ref="dev_loan_management.paperformat_dev_loan_man" />
+		</record> 
+		
+		<record id="dev_loan_management.print_interest_certificate" model="ir.actions.report">
+			<field name="paperformat_id" ref="dev_loan_management.paperformat_dev_loan_man" />
+		</record>   
+		
+		
+</odoo>

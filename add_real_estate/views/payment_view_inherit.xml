@@ -1,0 +1,134 @@
+ <odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="account_payment_inherit_form_id_res" model="ir.ui.view">
+            <field name="name">account payment</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[1]" position="before">
+                    <button name="%(add_real_estate.merge_customer_wizard_action)d" id="merge_customer_payment_btn"
+                                type="action" class="oe_highlight"
+                                context="{'search_default_parent_id': active_id,
+                                 'default_parent_id': active_id,
+                                 'default_partner_id': partner_id,
+                                 'default_date': payment_date,
+                                 'default_amount_duo': split_amount,
+                                 'default_journal_id': journal_id,
+                                 'default_reservation_id': reservation_id,
+                                 'default_amount': amount
+                                 }"
+                                string="Split Customer"
+                    attrs="{'invisible': ['|',('payment_type','!=','inbound'),('state', 'not in', ['posted','refunded_under_collection','deliver'])]}"/>
+                    <button name="%(add_real_estate.merge_vendor_wizard_action)d" id="merge_vendor_payment_btn"
+                                type="action" class="oe_highlight"
+                            context="{'search_default_parent_id': active_id,
+                                 'default_parent_id': active_id,
+                                 'default_amount_duo': split_amount,
+                                 'default_date': payment_date,
+                                 'default_partner_id': partner_id,
+                                 'default_journal_id': journal_id,
+                                 'default_reservation_id': reservation_id,
+                                 'default_amount': amount
+                                 }"
+                                string="Split Vendor"
+                    attrs="{'invisible': ['|',('payment_type','!=','outbound'),('state', 'not in', ['posted','refunded_under_collection','deliver'])]}"/>
+
+                </xpath>
+                <xpath expr="//field[@name='journal_id']" position="after">
+
+                    <field name="reservation_id" />
+                    <field name="custoemr_payment_id" />
+                    <field name="payment_strg_id" />
+                    <field name="request_id" />
+                    <field name="is_main" />
+                    <field name="is_payment_lines" />
+                    <field name="split_amount"  invisible="1"/>
+                    <field name="remaining_amount"  invisible="1"/>
+                                        <field name="parent_id_split"/>
+
+
+                </xpath>
+
+
+
+            </field>
+        </record>
+
+                <record id="view_sepa_cheque_search" model="ir.ui.view">
+            <field name="name">account.sepa.credit.transfer.search</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="check_number" string="Cheque Number ( Customer )"/>
+                    <field name="cheque_number" string="Cheque Number ( Vendor )"/>
+
+                </xpath>
+            </field>
+        </record>
+
+<!--        <record id="view_account_supplier_payment_tree_inhert" model="ir.ui.view">-->
+<!--            <field name="name">account.payment.new</field>-->
+<!--            <field name="model">account.payment</field>-->
+<!--            <field name="inherit_id" ref="account.view_account_supplier_payment_tree"/>-->
+<!--            <field name="arch" type="xml">-->
+
+<!--            <xpath expr="//field[@name='cheque_number_rel']" position="after">-->
+<!--                    <field name="cheque_number"/>-->
+<!--                </xpath>-->
+
+
+<!--            </field>-->
+<!--        </record>-->
+        <record id="account_payment_property" model="ir.ui.view">
+            <field name="name">account.payment.new</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_tree"/>
+            <field name="arch" type="xml">
+
+<!--                <xpath expr="//field[@name='split_amount']" position="after">-->
+<!--                    <field name="remaining_amount"/>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="property_id"/>
+                    <field name="collected_by"/>
+                    <field name="state_property_id"/>
+                </xpath>
+                <xpath expr="//field[@name='check_number']" position="after">
+                    <field name="cheque_books_id"/>
+                    <field name="cheque_number_rel"/>
+                    <field name="cheque_number"/>
+                    <field name="is_main"/>
+                    <field name="parent_id_split"/>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="Contract_payment_list_action" model="ir.actions.act_window">
+            <field name="name">Payments</field>
+            <field name="res_model">account.payment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'default_payment_type': 'inbound',
+                'default_partner_type': 'customer',
+                'search_default_inbound_filter': 1,
+                'res_partner_search_mode': 'customer',
+            }</field>
+                                <field name="domain">[('is_contract', '=', True)]</field>
+
+            <field name="view_id" ref="account.view_account_payment_tree"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Register a payment
+                </p><p>
+                  Payments are used to register liquidity movements. You can process those payments by your own means or by using installed facilities.
+                </p>
+            </field>
+        </record>
+        <menuitem id="payment_contract_menu_item"
+                  name="Payments"
+                  parent="payment_sub"
+                  action="Contract_payment_list_action" sequence="3"/>
+    </data>
+</odoo>

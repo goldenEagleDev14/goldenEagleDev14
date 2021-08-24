@@ -1,0 +1,483 @@
+<?xml version="1.0"?>
+<odoo>
+
+<!--    units -->
+            <record id="act_project_units_all" model="ir.actions.act_window">
+            <field name="name">Units</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_project_id': [active_id],
+                'default_project_id': active_id,
+                "default_type":"service"
+                ,"default_is_property":True
+            }</field>
+
+                            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('rs_property_product2_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('rs_property_product2_form_view2')})]"/>
+                <field name="domain">[('project_id','=',active_id)]</field>
+<!--            <field name="search_view_id" ref="view_task_search_form"/>-->
+<!--            <field name="help" type="html">-->
+<!--                <p class="o_view_nocontent_smiling_face">-->
+<!--                    Click <i>Create</i> to start a new task.-->
+<!--                </p><p>-->
+<!--                    To get things done, use activities and status on tasks.<br/>-->
+<!--                    Chat in real time or by email to collaborate efficiently.-->
+<!--                </p>-->
+<!--            </field>-->
+        </record>
+    <!--    units Draft -->
+            <record id="act_project_units_draft" model="ir.actions.act_window">
+            <field name="name">Draft Units </field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_project_id': [active_id],
+                'default_project_id': active_id,
+                "default_type":"service"
+                ,"default_is_property":True
+            }</field>
+                            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('rs_property_product2_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('rs_property_product2_form_view2')})]"/>
+                <field name="domain">[('project_id','=',active_id),('state','=','draft')]</field>
+        </record>
+    <!--    units Request Available -->
+            <record id="act_project_units_request_available" model="ir.actions.act_window">
+            <field name="name">Request Available Units </field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_project_id': [active_id],
+                'default_project_id': active_id,
+                "default_type":"service"
+                ,"default_is_property":True
+            }</field>
+                            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('rs_property_product2_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('rs_property_product2_form_view2')})]"/>
+                <field name="domain">[('project_id','=',active_id),('state','=','request_available')]</field>
+        </record>
+    <!--    units Approve -->
+            <record id="act_project_units_approve" model="ir.actions.act_window">
+            <field name="name">Approve Units </field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_project_id': [active_id],
+                'default_project_id': active_id,
+                "default_type":"service"
+                ,"default_is_property":True
+            }</field>
+                            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('rs_property_product2_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('rs_property_product2_form_view2')})]"/>
+                <field name="domain">[('project_id','=',active_id),('state','=','approve')]</field>
+        </record>
+<!--    units available -->
+            <record id="act_project_units_available" model="ir.actions.act_window">
+            <field name="name">Available Units </field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_project_id': [active_id],
+                'default_project_id': active_id,
+                "default_type":"service"
+                ,"default_is_property":True
+            }</field>
+                            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('rs_property_product2_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('rs_property_product2_form_view2')})]"/>
+                <field name="domain">[('project_id','=',active_id),('state','=','available')]</field>
+        </record>
+    <!--    units reserved -->
+            <record id="act_project_units_reserved" model="ir.actions.act_window">
+            <field name="name">Reserved Units </field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_project_id': [active_id],
+                'default_project_id': active_id,
+                "default_type":"service"
+                ,"default_is_property":True
+            }</field>
+                            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('rs_property_product2_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('rs_property_product2_form_view2')})]"/>
+                <field name="domain">[('project_id','=',active_id),('state','=','reserved')]</field>
+<!--            <field name="search_view_id" ref="view_task_search_form"/>-->
+<!--            <field name="help" type="html">-->
+<!--                <p class="o_view_nocontent_smiling_face">-->
+<!--                    Click <i>Create</i> to start a new task.-->
+<!--                </p><p>-->
+<!--                    To get things done, use activities and status on tasks.<br/>-->
+<!--                    Chat in real time or by email to collaborate efficiently.-->
+<!--                </p>-->
+<!--            </field>-->
+        </record>
+     <!--    units contracted -->
+            <record id="act_project_units_contracted" model="ir.actions.act_window">
+            <field name="name">Contracted Units </field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_project_id': [active_id],
+                'default_project_id': active_id,
+                "default_type":"service"
+                ,"default_is_property":True
+            }</field>
+                            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('rs_property_product2_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('rs_property_product2_form_view2')})]"/>
+                <field name="domain">[('project_id','=',active_id),('state','=','contracted')]</field>
+<!--            <field name="search_view_id" ref="view_task_search_form"/>-->
+<!--            <field name="help" type="html">-->
+<!--                <p class="o_view_nocontent_smiling_face">-->
+<!--                    Click <i>Create</i> to start a new task.-->
+<!--                </p><p>-->
+<!--                    To get things done, use activities and status on tasks.<br/>-->
+<!--                    Chat in real time or by email to collaborate efficiently.-->
+<!--                </p>-->
+<!--            </field>-->
+        </record>
+         <!--    units blocked -->
+            <record id="act_project_units_blocked" model="ir.actions.act_window">
+            <field name="name">Blocked Units </field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_project_id': [active_id],
+                'default_project_id': active_id,
+                "default_type":"service"
+                ,"default_is_property":True
+            }</field>
+                            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('rs_property_product2_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('rs_property_product2_form_view2')})]"/>
+                <field name="domain">[('project_id','=',active_id),('state','=','blocked')]</field>
+<!--            <field name="search_view_id" ref="view_task_search_form"/>-->
+<!--            <field name="help" type="html">-->
+<!--                <p class="o_view_nocontent_smiling_face">-->
+<!--                    Click <i>Create</i> to start a new task.-->
+<!--                </p><p>-->
+<!--                    To get things done, use activities and status on tasks.<br/>-->
+<!--                    Chat in real time or by email to collaborate efficiently.-->
+<!--                </p>-->
+<!--            </field>-->
+        </record>
+     <!--    units exception -->
+            <record id="act_project_units_exception" model="ir.actions.act_window">
+            <field name="name">Exception Units </field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_project_id': [active_id],
+                'default_project_id': active_id,
+                "default_type":"service"
+                ,"default_is_property":True
+            }</field>
+                            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('rs_property_product2_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('rs_property_product2_form_view2')})]"/>
+                <field name="domain">[('project_id','=',active_id),('state','=','exception')]</field>
+<!--            <field name="search_view_id" ref="view_task_search_form"/>-->
+<!--            <field name="help" type="html">-->
+<!--                <p class="o_view_nocontent_smiling_face">-->
+<!--                    Click <i>Create</i> to start a new task.-->
+<!--                </p><p>-->
+<!--                    To get things done, use activities and status on tasks.<br/>-->
+<!--                    Chat in real time or by email to collaborate efficiently.-->
+<!--                </p>-->
+<!--            </field>-->
+        </record>
+        <record model="ir.ui.view" id="view_project_kanban_2">
+            <field name="name">project.project.kanban</field>
+            <field name="model">project.project</field>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey o_kanban_dashboard o_project_kanban o_emphasize_colors">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="color"/>
+                    <field name="task_count"/>
+                    <field name="label_tasks"/>
+                    <field name="alias_id"/>
+                    <field name="alias_name"/>
+                    <field name="alias_domain"/>
+                    <field name="is_favorite"/>
+                    <field name="rating_percentage_satisfaction"/>
+                    <field name="rating_status"/>
+                    <field name="analytic_account_id"/>
+                    <field name="units_count"/>
+                    <field name="label_units"/>
+                    <field name="units_available_count"/>
+                    <field name="label_available"/>
+                    <field name="units_reserved_count"/>
+                    <field name="label_reserved"/>
+                    <field name="units_contracted_count"/>
+                    <field name="label_contracted"/>
+                    <field name="units_blocked_count"/>
+                    <field name="label_blocked"/>
+                    <field name="units_draft_count"/>
+                    <field name="label_draft"/>
+                    <field name="units_request_count"/>
+                    <field name="label_request"/>
+                    <field name="units_approve_count"/>
+                    <field name="label_approve"/>
+                    <field name="units_exception_count"/>
+                    <field name="label_exception"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon">
+                                <div class="o_project_kanban_main">
+                                    <div class="o_kanban_card_content">
+                                        <div class="o_kanban_primary_left">
+                                            <div class="o_primary">
+                                                <span><t t-esc="record.name.value"/></span>
+                                                <span t-if="record.partner_id.value">
+                                                    <strong><t t-esc="record.partner_id.value"/></strong>
+                                                </span>
+                                            </div>
+                                            <div t-if="record.alias_name.value and record.alias_domain.value">
+                                                <span><i class="fa fa-envelope" role="img" aria-label="Domain Alias" title="Domain Alias"></i> <t t-esc="record.alias_id.value"/></span>
+                                            </div>
+                                            <div t-if="record.rating_status.raw_value != 'no'" class="mt8 text-primary" title="Percentage of happy ratings over the past 30 days. Get rating details from the More menu." groups="project.group_project_rating">
+                                                <b>
+                                                    <t t-if="record.rating_percentage_satisfaction.value == -1">
+                                                        <i class="fa fa-smile-o"/> No rating yet
+                                                    </t>
+                                                    <t t-if="record.rating_percentage_satisfaction.value != -1">
+                                                        <a name="action_view_all_rating" type="object" context="{'search_default_rating_last_30_days':1}">
+                                                            <i class="fa fa-smile-o" role="img" aria-label="Percentage of satisfaction" title="Percentage of satisfaction"/> <t t-esc="record.rating_percentage_satisfaction.value"/>%
+                                                        </a>
+                                                    </t>
+                                                </b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_card_manage_pane dropdown-menu" groups="project.group_project_manager" role="menu">
+                                        <div class="o_kanban_card_manage_section o_kanban_manage_reports">
+                                            <div role="menuitem">
+                                                <a name="%(portal.portal_share_action)d" type="action">Share</a>
+                                            </div>
+                                            <div role="menuitem">
+                                                <a type="edit">Edit</a>
+                                            </div>
+                                            <div role="menuitem" t-if="record.rating_status.raw_value != 'no'">
+                                                <a name="action_view_all_rating" type="object">Customer Ratings</a>
+                                            </div>
+                                        </div>
+                                        <div role="menuitem" aria-haspopup="true" class="o_no_padding_kanban_colorpicker">
+                                            <ul class="oe_kanban_colorpicker" data-field="color" role="popup"/>
+                                        </div>
+                                    </div>
+                                    <a class="o_kanban_manage_toggle_button o_left" href="#" groups="project.group_project_manager"><i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/></a>
+                                    <span class="o_right"><field name="is_favorite" widget="boolean_favorite" nolabel="1" force_save="1" /></span>
+                                </div>
+
+                                <div >
+                                    <a  name="%(add_real_estate.act_project_units_all)d" type="action">
+                                        <div>
+                                            <span class="o_value"><t t-esc="record.units_count.value"/></span>
+                                            <span class="o_label"><t t-esc="record.label_units.value"/></span>
+                                        </div>
+                                    </a>
+
+                                    <a  name="%(add_real_estate.act_project_units_draft)d" type="action">
+                                        <div>
+                                            <span class="o_value"><t t-esc="record.units_draft_count.value"/></span>
+                                            <span class="o_label"><t t-esc="record.label_draft.value"/></span>
+                                        </div>
+                                    </a>
+                                    <a  name="%(add_real_estate.act_project_units_request_available)d" type="action">
+                                        <div>
+                                            <span class="o_value"><t t-esc="record.units_request_count.value"/></span>
+                                            <span class="o_label"><t t-esc="record.label_request.value"/></span>
+                                        </div>
+                                    </a>
+                                    <a  name="%(add_real_estate.act_project_units_approve)d" type="action">
+                                        <div>
+                                            <span class="o_value"><t t-esc="record.units_approve_count.value"/></span>
+                                            <span class="o_label"><t t-esc="record.label_approve.value"/></span>
+                                        </div>
+                                    </a>
+                                     <a  name="%(add_real_estate.act_project_units_available)d" type="action">
+                                        <div>
+                                            <span class="o_value"><t t-esc="record.units_available_count.value"/></span>
+                                            <span class="o_label"><t t-esc="record.label_available.value"/></span>
+                                        </div>
+                                    </a>
+
+                                    <a  name="%(add_real_estate.act_project_units_reserved)d" type="action">
+                                        <div>
+                                            <span class="o_value"><t t-esc="record.units_reserved_count.value"/></span>
+                                            <span class="o_label"><t t-esc="record.label_reserved.value"/></span>
+                                        </div>
+                                    </a>
+
+                                    <a  name="%(add_real_estate.act_project_units_contracted)d" type="action">
+                                        <div>
+                                            <span class="o_value"><t t-esc="record.units_contracted_count.value"/></span>
+                                            <span class="o_label"><t t-esc="record.label_contracted.value"/></span>
+                                        </div>
+                                    </a>
+                                    <a  name="%(add_real_estate.act_project_units_blocked)d" type="action">
+                                        <div>
+                                            <span class="o_value"><t t-esc="record.units_blocked_count.value"/></span>
+                                            <span class="o_label"><t t-esc="record.label_blocked.value"/></span>
+                                        </div>
+                                    </a>
+                                    <a  name="%(add_real_estate.act_project_units_exception)d" type="action">
+                                        <div>
+                                            <span class="o_value"><t t-esc="record.units_exception_count.value"/></span>
+                                            <span class="o_label"><t t-esc="record.label_exception.value"/></span>
+                                        </div>
+                                    </a>
+                                    <a t-if="record.analytic_account_id.raw_value" class="o_project_kanban_box o_project_timesheet_box" name="action_view_account_analytic_line" type="object" groups="analytic.group_analytic_accounting">
+                                        <div>
+                                            <span class="o_label">Profitability</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+
+        <record id="open_view_project_all_2" model="ir.actions.act_window">
+            <field name="name">Projects</field>
+            <field name="res_model">project.project</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_project_kanban_2')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('project.edit_project')})]"/>            <field name="search_view_id" ref="project.view_project_project_filter"/>
+            <field name="target">main</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new project
+                </p><p>
+                    Or <a type="action" name="%(project.ir_actions_server_project_sample)d" tabindex="-1">activate a sample project</a> to play with.
+                </p>
+            </field>
+        </record>
+
+
+            <menuitem id="projects_sub"
+                  name="Dashboard"
+                  parent="menu_real_estate"
+                  action="open_view_project_all_2"
+
+                    sequence="1" />
+    <record id="project_project_terms" model="ir.ui.view">
+        <field name="name">project.project.trr</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+                        <div class="oe_button_box" name="button_box">
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_units"
+                                >
+                                <div class="o_form_field o_stat_info">
+                                    <field name="units_count" class="o_stat_value"/>
+<!--                                    <span class="o_stat_value">-->
+<!--                                    </span>-->
+                                    <span class="o_stat_text">Units</span>
+                                </div>
+                            </button>
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_units_draft"
+                                >
+                                <div class="o_form_field o_stat_info">
+                                    <field name="units_draft_count" class="o_stat_value"/>
+<!--                                    <span class="o_stat_value">-->
+<!--                                    </span>-->
+                                    <span class="o_stat_text">Draft Units</span>
+                                </div>
+                            </button>
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_units_request"
+                                >
+                                <div class="o_form_field o_stat_info">
+                                    <field name="units_request_count" class="o_stat_value"/>
+<!--                                    <span class="o_stat_value">-->
+<!--                                    </span>-->
+                                    <span class="o_stat_text">Request Available Units</span>
+                                </div>
+                            </button>
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_units_approve"
+                                >
+                                <div class="o_form_field o_stat_info">
+                                    <field name="units_approve_count" class="o_stat_value"/>
+<!--                                    <span class="o_stat_value">-->
+<!--                                    </span>-->
+                                    <span class="o_stat_text">Approve Units</span>
+                                </div>
+                            </button>
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_units_available"
+                                >
+                                <div class="o_form_field o_stat_info">
+                                    <field name="units_available_count" class="o_stat_value"/>
+<!--                                    <span class="o_stat_value">-->
+<!--                                    </span>-->
+                                    <span class="o_stat_text">Available Units</span>
+                                </div>
+                            </button>
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_units_reserved"
+                                >
+                                <div class="o_form_field o_stat_info">
+                                    <field name="units_reserved_count" class="o_stat_value"/>
+<!--                                    <span class="o_stat_value">-->
+<!--                                    </span>-->
+                                    <span class="o_stat_text">Reserved Units</span>
+                                </div>
+                            </button>
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_units_contracted"
+                                >
+                                <div class="o_form_field o_stat_info">
+                                    <field name="units_contracted_count" class="o_stat_value"/>
+<!--                                    <span class="o_stat_value">-->
+<!--                                    </span>-->
+                                    <span class="o_stat_text">Contracted Units</span>
+                                </div>
+                            </button>
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_units_blocked"
+                                >
+                                <div class="o_form_field o_stat_info">
+                                    <field name="units_blocked_count" class="o_stat_value"/>
+<!--                                    <span class="o_stat_value">-->
+<!--                                    </span>-->
+                                    <span class="o_stat_text">Blocked Units </span>
+                                </div>
+                            </button>
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_units_exception"
+                                >
+                                <div class="o_form_field o_stat_info">
+                                    <field name="units_exception_count" class="o_stat_value"/>
+<!--                                    <span class="o_stat_value">-->
+<!--                                    </span>-->
+                                    <span class="o_stat_text">Exceptions Units </span>
+                                </div>
+                            </button>
+                        </div>
+            <xpath expr="//field[@name='partner_id']" position="after">
+<!--                <field name="condition_terms"/>-->
+                <field name="property_account_income_id"/>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='emails']" position="after">
+                <page name="terms" string="Terms And Conditions" >
+                            <group name="terms_con">
+                                <field name="condition_terms"/>
+                                <field name="condition_terms_broker"/>
+                            </group>
+                        </page>
+            </xpath>
+
+        </field>
+    </record>
+
+
+
+</odoo>

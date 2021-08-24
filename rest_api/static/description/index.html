@@ -1,0 +1,536 @@
+<center style='color:#dc3545'><small>Odoo don't allow external links in Apps Store descriptions, therefore, some links may be broken on this page! (then, use 'Copy Link' and paste)</small></center>
+<br>
+
+<br>
+<div horizontal layout>
+  
+<div style="float: left; width: 33.333%;">
+<a href="mailto:https://app.swaggerhub.com/apis-docs/avs3/odoo_rest_api/1">
+<img style="float: left;" src="swagger-icon.png" width="48" height="48"
+title="Powered by Swagger"/>
+<p style="margin-top: 1.7%;"><span style="margin-left: 4px">
+Endpoints DOCUMENTATION,<br> online TESTS & EXAMPLES
+</span></p></a>
+</div>
+
+<div style="display: inline-block; width: 33.333%;">
+<a href="mailto:https://rest-api-demo.dsdatacloud.de">
+<img src="demo-icon.png" width="48" height="48"/>
+DEMO Server</a>
+</div>
+
+<div style="float: right; width: 33.333%;">
+<img style="float: left;" src="support-icon.png" width="48" height="48"
+title="Image Author: DesignContest - www.designcontest.com
+License: CC Attribution 4.0 - www.creativecommons.org/licenses/by/4.0"
+/>
+<p style="margin-top: 1.7%;">
+Support email (UTC+2):<br> <a href="mailto:avs3.ua@gmail.com">avs3.ua@gmail.com</a>
+</p>
+</div>
+  
+</div>
+<br>
+
+
+<hr />
+<ul class="fa-ul">
+<li><a href="#overview">OVERVIEW</a></li>
+<li><a href="#detailed_description">DETAILED DESCRIPTION</a></li>
+<li><a href="#installation_tips">INSTALLATION TIPS</a></li>
+<li><a href="#changelog">CHANGELOG</a></li>
+<li><a href="#support">Support</a></li>
+</ul>
+
+<br id="overview">
+<hr />
+<h1 style='color:#0081c3; text-shadow: 1px 1px 2px darkblue, 0 0 0.2em #875a7b;'>OVERVIEW</h1>
+<p>This module provide professional RESTful API (json) access to Odoo models with simple authentication and (optional) Redis token store.</p>
+<p style='background-color:#ffeef1'>The module may have a <b>predefined</b> (<b>statically</b> and <b>dynamically</b> customizable) tree-like <b>schema</b> of response Odoo fields for 'Read one', 'Read all' and 'Create one' methods. This allow <b>not</b> to fetch unnecessary fields (like a <b>heavy</b> image/binary fields or technical garbage fields) in <b>each request</b> or not to compose the list of desired fields in each request. Also that schemas can be used as a quick and clear model <b>reference guide</b> for your developers (backend, client side, etc.). See &quot;<a href="#example3">Example #3</a>&quot; below.</p>
+<p style='background-color:#ffeef1'>The schema of the response fields can have a <b>tree-like</b> structure with <b>any</b> level of <b>nesting</b>. So <b>you can read an object at once with absolutely all its inner data (including its lines with all inner data) in just one http request.</b> Therefore you don't need to make a two (or much more) requests to get one object (if would so, the possible interruptions or lags between that requests can be fatal to the integrity of your data). See &quot;<a href="#example1">Example #1</a>&quot; below.</p>
+<p>The schema of the request fields can have a <b>tree-like</b> structure with one (and more in some cases) level of <b>nesting</b>. So <b>you can easily update (or create) an object at once with all its lines (including all their data) in just one http request.</b> See &quot;<a href="#example2">Example #2</a>&quot; below.</p>
+<p>This module has a <b>high-load</b> ready feature: it uses a mechanism which allow to cope with intensive and concurrent reading and writing the same Odoo records.</p>
+<p>The previous features improves the integrity of your data, enhance the reliability of data processing and also reduce the size and complexity of code on your REST client side. These requirements are often necessary in <b>professional development</b>.</p>
+<p>Also this module allow to fetch any PDF report, attachment or binary data from Odoo.</p>
+<p>This module works with standard and custom Odoo models. It works with Community and Enterprise Odoo Edition and in Odoo.sh, also this API is CORS compatible.</p>
+<p><font style='background-color:#ffeef1'>The author of this module do not manipulate its price (<a href="https://apps.odoo.com/apps/modules/14.0/js_on_form_load">example</a>), don't cheat with itself purchasing and don't use any SEO techniques.</font></p>
+<p>All <b>features</b> and behaviour of this module are <b>identical</b> in all Odoo versions, so you will not have a problems when migrating.</p>
+<p>This module is the firstest REST API app in the Odoo apps store, it was published in June 2016.</p>
+<br>
+<p><b>By default, all Odoo models have a flat and non-predefined response schema.</b></p>
+<p><b>There are two possible ways to set up predefined schemas for any Odoo model - <a href="#setup_in_ui_mode">in UI mode</a> or by <a href="#setup_generating_file">generating a special file</a>.</b> The special files also <font style='background-color:#ffeef1'>allow to create a <a href="#custom_api_endpoint_example">custom API routes/endpoints</a>,</font> and in this case you can debug its code like an ordinary Python code using your favorite IDE.</p>
+<dl>
+<dt>Each Odoo model has the following API methods:</dt>
+<dd style='background-color:#edf9ff'><ul>
+<li>Read all (with optional filters, offset, limit, order, exclude_fields, include_fields)</li>
+<li>Read one (with optional exclude_fields, include_fields)</li>
+<li>Create one (with optional static default values)</li>
+<li>Update one/multi</li>
+<li>Delete one/multi</li>
+<li>Call any method of Odoo model, including workflow manipulations (till the Odoo v10)</li>
+</ul>
+</dd>
+<dt>Also the 'Call any method' feature allow to execute any standard model's methods, like:</dt>
+<dd style='background-color:#edf9ff'><ul>
+<li>copy()</li>
+<li>check_access_rights()</li>
+<li>check_access_rule()</li>
+<li>fields_get()</li>
+<li>etc.</li>
+</ul>
+</dd>
+<dt>Authentication consists of three methods:</dt>
+<dd style='background-color:#edf9ff'><ul>
+<li>Login in Odoo (using Odoo user name and password) and get access and refresh token</li>
+<li>Refresh access token</li>
+<li>Delete access token</li>
+</ul>
+</dd>
+</dl>
+<p>There are <a href="#authentication_workflows">two possible authentication workflows</a>.</p>
+<p>Thanks to Redis token store (disabled by default), your REST sessions are not stored in the Odoo database and also authentication is faster.<a id="simple_rest_client_example"></a></p>
+<br>
+
+<dl>
+<dt>Simple REST Client example (Python):</dt>
+<dd style='background-color:#edf9ff'>
+<pre>
+<font style='color:#7f0055'>import</font> requests
+<a></a>
+<font style='color:#719682'># Authentication</font>
+r <font style='color:#7f0055'>=</font> requests.get(<font style='color:#2a00ff'>'https://rest-api-demo.dsdatacloud.de/api/auth/get_tokens?username=demo&password=demo'</font>)
+access_token <font style='color:#7f0055'>=</font> r.json()[<font style='color:#2a00ff'>'access_token'</font>]
+<a></a>
+<font style='color:#719682'># GET - Read record</font>
+r <font style='color:#7f0055'>=</font> requests.get(
+    <font style='color:#2a00ff'>'https://rest-api-demo.dsdatacloud.de/api/sale.order/21'</font>,
+    headers <font style='color:#7f0055'>=</font> {<font style='color:#2a00ff'>'Access-Token'</font>: access_token})
+<font style='color:#7f0055'>print</font>(r.json())
+<a></a>
+<font style='color:#719682'># PUT - Update record</font>
+r <font style='color:#7f0055'>=</font> requests.put(
+    <font style='color:#2a00ff'>'https://rest-api-demo.dsdatacloud.de/api/res.partner/26?name=Tom Lenz&city=New York'</font>,
+    headers <font style='color:#7f0055'>=</font> {<font style='color:#2a00ff'>'Access-Token'</font>: access_token})
+<font style='color:#7f0055'>print</font>(r)
+</pre>
+<a id="custom_api_endpoint_example"></a>
+</dd>
+</dl>
+
+<br><br>
+
+<dl>
+<dt>Custom API route/endpoint example:</dt>
+<dd style='background-color:#edf9ff'>
+<pre>
+<font style='color:#7f0055'>from</font> .main <font style='color:#7f0055'>import *</font>
+<a></a>
+<font style='color:#7f0055'>class</font> ControllerREST(http.Controller):
+    <font style='color:#009725'>@http.route</font>(<font style='color:#2a00ff'>'/api/your.custom.endpoint'</font>, methods<font style='color:#7f0055'>=</font>[<font style='color:#2a00ff'>'GET'</font>], type<font style='color:#7f0055'>=</font><font style='color:#2a00ff'>'http'</font>, auth<font style='color:#7f0055'>=</font><font style='color:#2a00ff'>'none'</font>, cors<font style='color:#7f0055'>=</font>rest_cors_value)
+    <font style='color:#009725'>@check_permissions</font>
+    <font style='color:#7f0055'>def</font> api__your_custom_endpoint__GET(self, <font style='color:#7f0055'>**</font>kw):
+        <font style='color:#719682'># get Odoo env params</font>
+        cr, uid <font style='color:#7f0055'>=</font> request.cr, request.session.uid
+        <font style='color:#719682'># get any Odoo model object</font>
+        odoo_model_obj <font style='color:#7f0055'>=</font> request.env(cr, uid)[<font style='color:#2a00ff'>'res.partner'</font>]
+        <font style='color:#719682'># make your computations and/or actions, and if you need, fill the results dictionary</font>
+        your_custom_dict_data <font style='color:#7f0055'>=</font> {<font style='color:#2a00ff'>'your_vals'</font>: <font style='color:#2a00ff'>'...'</font>}
+        <font style='color:#719682'># send HTTP response</font>
+        <font style='color:#7f0055'>return</font> successful_response(status<font style='color:#7f0055'>=</font><font style='color:#cd4a8c'>200</font>, dict_data<font style='color:#7f0055'>=</font>your_custom_dict_data)
+</pre>
+</dd>
+</dl>
+
+<p id="example1"></p>
+<br>
+<br>
+<p style='color:#1c5a96; text-shadow: 0.5px 0.5px 1px #875a7b;'><b>Example #1: 'sale.order - Read one' - response json:</b></p>
+<div style='background-color:#edf9ff'>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"date_order"</span>: <span style="color: #0B7500;">"2016-06-02 18:41:42"</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"SO001"</span>,</li><li><span style="color: #204AD9;">"partner_id"</span>: {<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"city"</span>: <span style="color: #0B7500;">"City 1"</span>,</li><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">6</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"Customer 1"</span></li></ul>},</li><li><span style="color: #204AD9;">"<b>order_line</b>"</span>: [<ol class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"Product 1"</span>,</li><li><span style="color: #204AD9;">"price_unit"</span>: <span style="color: #A40000;">111</span>,</li><li><span style="color: #204AD9;">"product_uom_qty"</span>: <span style="color: #A40000;">11</span>,</li><li><span style="color: #204AD9;">"price_subtotal"</span>: <span style="color: #A40000;">1221</span>,</li><li><span style="color: #204AD9;">"<b>product_id</b>"</span>: {<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"barcode"</span>: <span style="color: #0B7500;">"2400000032632"</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"Product 1"</span>,</li><li><span style="color: #204AD9;">"type"</span>: <span style="color: #0B7500;">"consu"</span>,</li><li><span style="color: #204AD9;">"<b>attribute_line_ids</b>"</span>: [<ol class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"display_name"</span>: <span style="color: #0B7500;">"Attribute 1"</span>,</li><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">1</span></li></ul>},</li><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"display_name"</span>: <span style="color: #0B7500;">"Attribute 2"</span>,</li><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">2</span></li></ul>}</li></ol>],</li><li><span style="color: #204AD9;">"categ_id"</span>: {<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">1</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"All"</span></li></ul>},</li><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">2</span></li></ul>},</li><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">1</span>,</li><li><span style="color: #204AD9;">"tax_id"</span>: [<ol class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">6</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"ITAX X"</span></li></ul>},</li><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">7</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"Tax 15.00%"</span></li></ul>}</li></ol>]</li></ul>},</li><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"Product 2"</span>,</li><li><span style="color: #204AD9;">"price_unit"</span>: <span style="color: #A40000;">222</span>,</li><li><span style="color: #204AD9;">"product_uom_qty"</span>: <span style="color: #A40000;">22</span>,</li><li><span style="color: #204AD9;">"price_subtotal"</span>: <span style="color: #A40000;">4884</span>,</li><li><span style="color: #204AD9;">"<b>product_id</b>"</span>: {<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"barcode"</span>: <span style="color: #1A01CC;">null</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"Product 2"</span>,</li><li><span style="color: #204AD9;">"type"</span>: <span style="color: #0B7500;">"consu"</span>,</li><li><span style="color: #204AD9;">"<b>attribute_line_ids</b>"</span>: [],</li><li><span style="color: #204AD9;">"categ_id"</span>: {<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">1</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"All"</span></li></ul>},</li><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">3</span></li></ul>},</li><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">2</span>,</li><li><span style="color: #204AD9;">"tax_id"</span>: [<ol class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">7</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"Tax 15.00%"</span></li></ul>}</li></ol>]</li></ul>}</li></ol>],</li><li><span style="color: #204AD9;">"amount_tax"</span>: <span style="color: #A40000;">915.75</span>,</li><li><span style="color: #204AD9;">"state"</span>: <span style="color: #0B7500;">"manual"</span>,</li><li><span style="color: #204AD9;">"user_id"</span>: {<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">1</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"Admin"</span></li></ul>},</li><li><span style="color: #204AD9;">"create_date"</span>: <span style="color: #0B7500;">"2016-06-02 18:42:48"</span>,</li><li><span style="color: #204AD9;">"payment_term_id"</span>: {<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">2</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"15 Days"</span></li></ul>},</li><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">1</span>,</li><li><span style="color: #204AD9;">"amount_total"</span>: <span style="color: #A40000;">7020.75</span></li></ul>}</div>
+<p id="example2"></p>
+<br>
+<br>
+<p style='color:#1c5a96; text-shadow: 0.5px 0.5px 1px #875a7b;'><b>Example #2: 'res.partner - Update one' - request json:</b></p>
+<div style='background-color:#edf9ff'>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #A2A2A2;"># simple fields (non relational):</span></li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"TEST Name~~"</span>,</li><li><span style="color: #204AD9;">"street"</span>: <span style="color: #0B7500;">"TEST Street~~"</span>,</li><li><span style="color: #204AD9;">"street2"</span>: <span style="color: #0B7500;">"TEST Street2~~"</span>,</li><li><span style="color: #204AD9;">"city"</span>: <span style="color: #0B7500;">"TEST City~~"</span>,</li><li><span style="color: #204AD9;">"zip"</span>: <span style="color: #0B7500;">"123~~"</span>,</li><li><span style="color: #204AD9;">"phone"</span>: <span style="color: #0B7500;">"+123456789~~"</span>,</li><li><span style="color: #204AD9;">"email"</span>: <span style="color: #0B7500;">"a@b.com~~"</span>,</li><li><span style="color: #A2A2A2;"># many2one fields (existing 'id', not dictionary of new record!):</span></li><li><span style="color: #204AD9;">"state_id"</span>: <span style="color: #A40000;">6</span>,</li><li><span style="color: #204AD9;">"country_id"</span>: <span style="color: #A40000;">14</span>,</li><li><span style="color: #A2A2A2;"># one2many fields (list of dictionaries of records):</span></li><li><span style="color: #204AD9;">"bank_ids"</span>: [<ol class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #A2A2A2;"># this record will be updated (because 'id' is specified)</span></li><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">56</span>,</li><li><span style="color: #204AD9;">"acc_number"</span>: <span style="color: #0B7500;">"acc_number 1~~"</span>,</li><li><span style="color: #204AD9;">"bank_bic"</span>: <span style="color: #0B7500;">"bank_bic 1~~"</span></li></ul>},</li><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #A2A2A2;"># this record will be removed (because 'id' is specified and record is empty)</span></li><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">57</span></li></ul>},</li><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #A2A2A2;"># this record will be created (because 'id' is not specified but record is not empty)</span></li><li><span style="color: #204AD9;">"acc_number"</span>: <span style="color: #0B7500;">"acc_number 4"</span>,</li><li><span style="color: #204AD9;">"bank_bic"</span>: <span style="color: #0B7500;">"bank_bic 4"</span></li></ul>}</li></ol>],</li><li><span style="color: #A2A2A2;"># many2many fields (list of dictionaries of existing 'ids'):</span></li><li><span style="color: #204AD9;">"category_id"</span>: [<ol class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #A2A2A2;"># field's values will be replaced by this 'ids'</span></li><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">3</span></li></ul>},</li><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">4</span></li></ul>}</li></ol>]</li></ul>}</div>
+<p>For "x2many" fields in second and deeper levels of nesting, you can use the <a href="mailto:https://www.odoo.com/documentation/13.0/reference/orm.html#openerp-models-relationals-format">special Odoo format</a>.</p>
+<br id="detailed_description">
+<hr />
+<h1 style='color:#0081c3; text-shadow: 1px 1px 2px darkblue, 0 0 0.2em #875a7b;'>DETAILED DESCRIPTION</h1>
+<br>
+
+<p><b>See <a href="mailto:https://app.swaggerhub.com/apis-docs/avs3/odoo_rest_api/1">endpoints DOCUMENTATION, online TESTS & EXAMPLES</a> and also <a href="#simple_rest_client_example">simple REST Client Python example</a>.</b><a id="authentication_workflows"></a></p>
+
+<br>
+<p style='color:#1c5a96; text-shadow: 0.5px 0.5px 1px #875a7b;'><b>Two possible authentication workflows:</b></p>
+<h1></h1>
+<dt>Simplest authentication workflow:</dt>
+<dd style='background-color:#edf9ff'><ul>
+1. One time get infinite 'Access token' using method '/api/auth/get_tokens' with parameter 'access_lifetime=0'.<br>
+2. Use gotten access token in each request (in header).<br>
+3. If necessary, delete access token using method '/api/auth/delete_tokens'.
+</ul>
+</dd>
+<dt>Classical (and more complicated) authentication workflow:</dt>
+<dd style='background-color:#edf9ff'><ul>
+1. One time get 'Access token' using method '/api/auth/get_tokens'.<br>
+&emsp;This will return access token and refresh token with certain lifetimes (statically and dynamically customizable).<br>
+2. Use gotten access token in each request (in header).<br>
+3. When access token will expire - refresh it using method '/api/auth/refresh_token'.<br>
+4. If necessary, delete unexpired access token using method '/api/auth/delete_tokens'.
+</ul>
+</dd>
+
+<p id="setup_in_ui_mode"></p>
+<br>
+<br>
+<p style='color:#1c5a96; text-shadow: 0.5px 0.5px 1px #875a7b;'><b>First possible way to set up predefined schemas for any Odoo model - in UI mode:</b></p>
+<p>Activate the developer mode, go to the menu "Settings > Technical > Database Structure > Models", open desired model and go to "REST API" tab.<br> Here is the 'sale.order' example:</p>
+<div class="oe_demo oe_screenshot" style="border-radius: 7px !important;">
+<img src="screen-model-settings.png"/>
+</div>
+<br>
+<p>Here is the <a href="#syntax_of_schema">syntax of the schema</a> (also you can see the working schema in "<a href="#example3">Example #3</a>").</p>
+
+<p id="setup_generating_file"></p>
+<br>
+<br>
+<p style='color:#1c5a96; text-shadow: 0.5px 0.5px 1px #875a7b;'><b>Second possible way to set up predefined schemas for any Odoo model - by generating a special file:</b></p>
+<p>1. In terminal, go to the <code>controllers</code> folder and run <code>SCRIPT_add_model.sh</code> script (previously ensure you have execution rights on script and <code>write</code> permissions inside the folder and its files):</p>
+<pre style='background-color:#edf9ff'>
+$ cd &lt;your odoo addons path&gt;/rest_api/controllers/
+$ ./SCRIPT_add_model.sh
+</pre>
+<p>That script will ask you <code>desired model name</code> and will create a new model file - model__your_model_name.py</p>
+<p>2. In that new file, fill the three schemas of response Odoo fields for "Read one", "Read all" and "Create one" methods in three variables - <code>OUT__your_model_name__read_one__SCHEMA</code>, <code>OUT__your_model_name__read_all__SCHEMA</code> and <code>OUT__your_model_name__create_one__SCHEMA</code>.<a id="syntax_of_schema"></a></p>
+
+Here is the syntax of the schema (also you can see the working schema in "<a href="#example3">Example #3</a>"):
+<pre style='background-color:#edf9ff'>(
+    # simple fields (non relational):
+
+    &#39;simple_field_1&#39;,
+    &#39;simple_field_2&#39;,
+    ...
+
+    # many2one fields:
+
+    &#39;many2one_field_1&#39;,     # will return just &#39;id&#39;
+    OR
+    (&#39;many2one_field_1&#39;, (  # will return dictionary of inner fields
+        &#39;inner_field_1&#39;,
+        &#39;inner_field_2&#39;,
+        ...
+    )),
+    ...
+
+    # one2many fields:
+
+    (&#39;one2many_field_1&#39;, [(
+        &#39;inner_field_1&#39;,
+        &#39;inner_field_2&#39;,
+        ...
+    )]),
+    ...
+
+    # many2many fields:
+
+    (&#39;many2many_field_1&#39;, [(
+        &#39;inner_field_1&#39;,
+        &#39;inner_field_2&#39;,
+        ...
+    )]),
+    ...
+
+)</pre>
+<p>There can be any level of nesting of inner fields.</p>
+<p>If you'll want to add or remove some Odoo field in REST API in the future, you'll need just add or remove/comment out a field in this schema.</p>
+<p>3. If necessary (but not mandatory), change the values of some variables which are labeled by tag <code># editable</code> in that file. There are such variables:</p>
+<pre style='background-color:#edf9ff'>
+- default values in "Create one" method;
+- successful response codes in all methods;
+- etc.
+</pre>
+<p>4. Restart Odoo server.</p>
+<br>
+<p>The advantages of that method:</p>
+<ul>
+<li>you can create your custom API route/endpoint with your custom arbitrary code (for example call some Server Action, etc.),</li>
+<li>API controller in a separate file allow to debug its code like an ordinary Python code using your favorite IDE,</li>
+<li>you can create multiple versions of the same API resource (eg for different REST clients).</li>
+</ul>
+<br>
+<br>
+<p style='color:#1c5a96; text-shadow: 0.5px 0.5px 1px #875a7b;'><b>More examples of the request and response fields:</b></p>
+<p id="example3"></p>
+<br>
+<br>
+<p style='color:#1c5a96; text-shadow: 0.5px 0.5px 1px #875a7b;'><b>Example #3: 'sale.order - Read one' - response fields schema:</b></p>
+<pre style='background-color:#edf9ff'>(
+    # simple fields (non relational):
+    &#39;id&#39;,
+    &#39;name&#39;,
+    &#39;date_order&#39;,
+    &#39;create_date&#39;,
+    &#39;amount_tax&#39;,
+    &#39;amount_total&#39;,
+    &#39;state&#39;,
+    # many2one fields:
+    (&#39;partner_id&#39;, (
+        &#39;id&#39;,
+        &#39;name&#39;,
+        &#39;city&#39;,
+    )),
+    (&#39;user_id&#39;, (
+        &#39;id&#39;,
+        &#39;name&#39;,
+    )),
+    (&#39;payment_term_id&#39;, (
+        &#39;id&#39;,
+        &#39;name&#39;,
+    )),
+    # one2many fields:
+    (&#39;order_line&#39;, [(
+        &#39;id&#39;,
+        (&#39;product_id&#39;, (  # many2one
+            &#39;id&#39;,
+            &#39;name&#39;,
+            &#39;type&#39;,
+            &#39;barcode&#39;,
+            (&#39;categ_id&#39;, (  # many2one
+                &#39;id&#39;,
+                &#39;name&#39;,
+            )),
+            (&#39;attribute_line_ids&#39;, [(  # one2many
+                &#39;id&#39;,
+                &#39;display_name&#39;,
+            )]),
+        )),
+        &#39;name&#39;,
+        &#39;product_uom_qty&#39;,
+        &#39;price_unit&#39;,
+        (&#39;tax_id&#39;, [(  # many2many
+            &#39;id&#39;,
+            &#39;name&#39;,
+        )]),
+        &#39;price_subtotal&#39;,
+    )]),
+)</pre>
+<br>
+<br>
+<p style='color:#1c5a96; text-shadow: 0.5px 0.5px 1px #875a7b;'><b>Example #4: 'res.partner - Read all' - response json:</b></p>
+<div style='background-color:#edf9ff'>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"count"</span>: <span style="color: #A40000;">11</span>,</li><li><span style="color: #204AD9;">"results"</span>: [<ol class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">3</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"Admin"</span></li></ul>},</li><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">6</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"Customer 1"</span></li></ul>},</li><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">8</span>,</li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"Customer Restapi"</span></li></ul>},</li><br><li><span style="color: #A2A2A2;">...</span></li><br></ol>]</li></ul>}</div>
+<p id="example5"></p>
+<br>
+<br>
+<p style='color:#1c5a96; text-shadow: 0.5px 0.5px 1px #875a7b;'><b>Example #5: 'res.partner - Create one' - request json:</b></p>
+<div style='background-color:#edf9ff'>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #A2A2A2;"># simple fields (non relational):</span></li><li><span style="color: #204AD9;">"name"</span>: <span style="color: #0B7500;">"TEST Name"</span>,</li><li><span style="color: #204AD9;">"street"</span>: <span style="color: #0B7500;">"TEST Street"</span>,</li><li><span style="color: #204AD9;">"street2"</span>: <span style="color: #0B7500;">"TEST Street2"</span>,</li><li><span style="color: #204AD9;">"city"</span>: <span style="color: #0B7500;">"TEST City"</span>,</li><li><span style="color: #204AD9;">"zip"</span>: <span style="color: #0B7500;">"123"</span>,</li><li><span style="color: #204AD9;">"phone"</span>: <span style="color: #0B7500;">"+123456789"</span>,</li><li><span style="color: #204AD9;">"email"</span>: <span style="color: #0B7500;">"a@b.com"</span>,</li><li><span style="color: #A2A2A2;"># many2one fields (existing 'id', not dictionary of new record!):</span></li><li><span style="color: #204AD9;">"state_id"</span>: <span style="color: #A40000;">10</span>,</li><li><span style="color: #204AD9;">"country_id"</span>: <span style="color: #A40000;">235</span>,</li><li><span style="color: #A2A2A2;"># one2many fields (list of dictionaries of new records):</span></li><li><span style="color: #204AD9;">"bank_ids"</span>: [<ol class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"acc_number"</span>: <span style="color: #0B7500;">"acc_number 1"</span>,</li><li><span style="color: #204AD9;">"bank_bic"</span>: <span style="color: #0B7500;">"bank_bic 1"</span></li></ul>},</li><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"acc_number"</span>: <span style="color: #0B7500;">"acc_number 2"</span>,</li><li><span style="color: #204AD9;">"bank_bic"</span>: <span style="color: #0B7500;">"bank_bic 2"</span></li></ul>},</li><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"acc_number"</span>: <span style="color: #0B7500;">"acc_number 3"</span>,</li><li><span style="color: #204AD9;">"bank_bic"</span>: <span style="color: #0B7500;">"bank_bic 3"</span></li></ul>}</li></ol>],</li><li><span style="color: #A2A2A2;"># many2many fields (list of dictionaries of existing 'ids'):</span></li><li><span style="color: #204AD9;">"category_id"</span>: [<ol class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">1</span></li></ul>},</li><li>{<ul class="fa-ul" style="list-style-type: none; margin: 0 0 0 1px; border-left: 1px dotted #ccc; padding-left: 2em;"><li><span style="color: #204AD9;">"id"</span>: <span style="color: #A40000;">2</span></li></ul>}</li></ol>]</li></ul>}</div>
+<p>For "x2many" fields in second and deeper levels of nesting, you can use the <a href="mailto:https://www.odoo.com/documentation/13.0/reference/orm.html#openerp-models-relationals-format">special Odoo format</a>.</p>
+<br id="installation_tips">
+<hr />
+<h1 style='color:#0081c3; text-shadow: 1px 1px 2px darkblue, 0 0 0.2em #875a7b;'>INSTALLATION TIPS</h1>
+<br>
+<p>Install '<b>simplejson</b>' Python package.</p>
+<p style='color:#dc3545'><b>This module requires the 'db_name' and 'dbfilter' Odoo config parameters (or command line options) with only one database (without aliases)!</b>:</p>
+<pre style='background-color:#ffeef1'>
+    (config parameters)
+db_name = your_db_name
+dbfilter = your_db_name
+<a></a>
+    (or command line options)
+--database=your_db_name --db-filter=your_db_name
+</pre>
+<p style='color:#dc3545'><b>After the installation (or updating) of this module it need to restart Odoo server!</b></p>
+<dl>
+<dt>This module adds the following 'System Parameters' in Odoo:</dt>
+<dd style='background-color:#edf9ff'><ul>
+<li>rest_api.access_token_expires_in (600 seconds)</li>
+<li>rest_api.refresh_token_expires_in (7200 seconds)</li>
+<li>rest_api.cors_parameter_value_in_all_routes ('null')</li>
+<li>rest_api.u_escape_characters_for_unicode_in_responses (False)</li>
+<li>rest_api.use_redis_token_store (False)</li>
+<li>rest_api.redis_host (localhost)</li>
+<li>rest_api.redis_port (6379)</li>
+<li>rest_api.redis_db (0)</li>
+<li>rest_api.redis_password (None)</li>
+</ul>
+</dd>
+</dl>
+<p>If you want to use the Redis token store, you should set the Odoo system parameter <code>rest_api.use_redis_token_store = True</code>, and also you need to install, (optional) setup and run <code>Redis</code> server, something like this:</p>
+<pre style='background-color:#edf9ff'>
+    (choose your package manager)
+$ sudo apt install redis-server python3-redis
+$ sudo apt-get install redis-server python3-redis
+$ sudo yum install redis python3-redis
+$ sudo dnf install redis python3-redis
+    (run)
+$ redis-server
+</pre>
+<p>And then restart Odoo server.</p>
+<p>Useful Redis links:</p>
+<blockquote>
+<ul>
+<li><a href="https://pypi.python.org/pypi/redis">https://pypi.python.org/pypi/redis</a></li>
+<li><a href="https://redis.io/topics/quickstart">https://redis.io/topics/quickstart</a></li>
+</ul>
+</blockquote>
+<p id="curl_tests"></p>
+<br>
+<br>
+<p style='color:#1c5a96; text-shadow: 0.5px 0.5px 1px #875a7b;'><b>To test REST resources can be used 'Curl', like this</b>:</p>
+<pre style='background-color:#edf9ff'>(Linux syntax)
+<a></a>
+1. Login in Odoo and get access and refresh token:
+curl -i -H &quot;Content-Type: text/html&quot;   -X GET   http://localhost:8069/api/auth/get_tokens   -d &#39;{&quot;username&quot;:&quot;admin&quot;, &quot;password&quot;:&quot;admin&quot;}&#39;
+<a></a>
+2. Refresh access token:
+curl -i -H &quot;Content-Type: text/html&quot;   -X POST   http://localhost:8069/api/auth/refresh_token   -d &#39;{&quot;refresh_token&quot;:&quot;XXXXXXXXXXXXXXXXX&quot;}&#39;
+<a></a>
+3. Delete access token:
+curl -i -H &quot;Content-Type: text/html&quot;   -X POST   http://localhost:8069/api/auth/delete_tokens   -d &#39;{&quot;refresh_token&quot;:&quot;XXXXXXXXXXXXXXXXX&quot;}&#39;
+<a></a>
+4. res.partner - Read all (without filters):
+curl -i -H &quot;Content-Type: text/html&quot;   -X GET   http://localhost:8069/api/res.partner   -H &quot;Access-Token: XXXXXXXXXXXXXXXXX&quot;
+<a></a>
+5. res.partner - Read all (with two filters):
+curl -i -H &quot;Content-Type: text/html&quot;   -X GET   http://localhost:8069/api/res.partner   -H &quot;Access-Token: XXXXXXXXXXXXXXXXX&quot;   -d &#39;{&quot;filters&quot;: [[&quot;name&quot;, &quot;like&quot;, &quot;ompany&quot;], [&quot;id&quot;, &quot;&lt;=&quot;, 50]]}&#39;
+<a></a>
+6. res.partner - Read one:
+curl -i -H &quot;Content-Type: text/html&quot;   -X GET   http://localhost:8069/api/res.partner/3   -H &quot;Access-Token: XXXXXXXXXXXXXXXXX&quot;
+<a></a>
+7. res.partner - Create one:
+curl -i -H &quot;Content-Type: text/html&quot;   -X POST   http://localhost:8069/api/res.partner   -H &quot;Access-Token: XXXXXXXXXXXXXXXXX&quot;   -d &#39;{&quot;name&quot;: &quot;TEST Name&quot;, &quot;street&quot;: &quot;TEST Street&quot;, &quot;city&quot;: &quot;TEST City&quot;}&#39;
+<a></a>
+8. res.partner - Update one:
+curl -i -H &quot;Content-Type: text/html&quot;   -X PUT   http://localhost:8069/api/res.partner/2361   -H &quot;Access-Token: XXXXXXXXXXXXXXXXX&quot;   -d &#39;{&quot;name&quot;: &quot;TEST Name~~&quot;, &quot;street&quot;: &quot;TEST Street~~&quot;, &quot;city&quot;: &quot;TEST City~~&quot;}&#39;
+<a></a>
+9. res.partner - Delete multi:
+curl -i -H &quot;Content-Type: text/html&quot;   -X DELETE   http://localhost:8069/api/res.partner/57,58,59   -H &quot;Access-Token: XXXXXXXXXXXXXXXXX&quot;
+<a></a>
+10. res.partner - Call method &#39;address_get&#39; (without parameters):
+curl -i -H &quot;Content-Type: text/html&quot;   -X PUT   http://localhost:8069/api/res.partner/2361/address_get   -H &quot;Access-Token: XXXXXXXXXXXXXXXXX&quot;
+<a></a>
+11. res.partner - Call method &#39;_email_send&#39; (with parameters):
+curl -i -H &quot;Content-Type: text/html&quot;   -X PUT   http://localhost:8069/api/res.partner/2361/_email_send   -H &quot;Access-Token: XXXXXXXXXXXXXXXXX&quot;   -d &#39;{&quot;email_from&quot;: &quot;test@test.com&quot;, &quot;subject&quot;: &quot;TEST Subject&quot;, &quot;body&quot;: &quot;TEST Body&quot;}&#39;
+<a></a>
+12. report - Call method &#39;get_pdf&#39; (with parameters):
+curl -i -H &quot;Content-Type: text/html&quot;   -X GET   http://localhost:8069/api/report/get_pdf   -H &quot;Access-Token: XXXXXXXXXXXXXXXXX&quot;   -d &#39;{&quot;report_name&quot;: &quot;account.report_invoice&quot;, &quot;ids&quot;: [3]}&#39;
+</pre>
+<a id="python_examples_files_list"></a>
+<dl>
+<br>
+<dt style='color:#1c5a96; text-shadow: 0.5px 0.5px 1px #875a7b;'>There are also files in Python for examples and testing purpose:</dt>
+<dd style='background-color:#edf9ff'><ul>
+<li>/rest_api/tests/test__Auth_GetTokens.py</li>
+<li>/rest_api/tests/test__Create__OrderInvoice.py</li>
+<li>/rest_api/tests/test__Create__product.template.py</li>
+<li>/rest_api/tests/test__Create__res.partner.py</li>
+<li>/rest_api/tests/test__CreateWithAttributes__product.template.py</li>
+<li>/rest_api/tests/test__CreateWithImage__res.partner.py</li>
+<li>/rest_api/tests/test__CreateWithVendors__product.template.py</li>
+<li>/rest_api/tests/test__get_pdf__report.py</li>
+<li>/rest_api/tests/test__ReadAllWithFiltersInURL__res.partner.py</li>
+<li>/rest_api/tests/test__ReadAllWithFiltersOffsetLimitOrder__res.partner.py</li>
+<li>/rest_api/tests/test__ReadOneWithIncludeFieldsInURL__res.partner.py</li>
+<li>/rest_api/tests/test__Update__res.partner.py</li>
+<li>/rest_api/tests/test__Update__SO_TaxInLine.py</li>
+<li>/rest_api/tests/test__UpdateWithVendors__product.template.py</li>
+</ul>
+</dd>
+</dl>
+<br id="changelog">
+<hr />
+<h1 style='color:#0081c3; text-shadow: 1px 1px 2px darkblue, 0 0 0.2em #875a7b;'>CHANGELOG</h1>
+<br>
+<dl>
+
+<dt>version 1.14 (2020-12-10):</dt>
+<dd><ul>
+<li>removed cookie sessions from all REST responses</li>
+</ul>
+</dd>
+
+<dt>version 1.13 (2020-11-19):</dt>
+<dd><ul>
+<li>added new Odoo system parameter 'rest_api.cors_parameter_value_in_all_routes' (default 'null') to set up <b>CORS</b> parameter value in all REST routes</li>
+</ul>
+</dd>
+
+<dt>version 1.12 (2020-10-05):</dt>
+<dd><ul>
+<li>changed the <b>unicode</b> text <b>encoding</b> in responses. From now on, the unicode text will be <b>without '\u'</b> escape characters. This behavior can be changed with a new Odoo system parameter 'rest_api.u_escape_characters_for_unicode_in_responses'.</li>
+</ul>
+</dd>
+
+<dt>version 1.11 (2020-03-20):</dt>
+<dd><ul>
+<li>added simple way (in UI mode) to set up predefined schemas</li>
+</ul>
+</dd>
+
+<dt>version 1.10 (2019-11-16):</dt>
+<dd><ul>
+<li>added <b>default universal controller</b> (with flat and non-predefined response schema) for all Odoo models</li>
+</ul>
+</dd>
+
+<dt>version 1.9 (2019-05-11):</dt>
+<dd><ul>
+<li>added the ability to <b>dynamically</b> setup the lifetimes of access token and refresh token</li>
+</ul>
+</dd>
+
+<dt>version 1.8 (2019-03-31):</dt>
+<dd><ul>
+<li>added 'Update <b>multi</b>' and 'Delete <b>multi</b>' features</li>
+</ul>
+</dd>
+<dt>version 1.7 (2018-12-02):</dt>
+<dd><ul>
+<li>added the ability to send parameters of all requests through the URL arguments (GET requests already had this feature before)</li>
+</ul>
+</dd>
+<dt>version 1.6 (2018-08-26):</dt>
+<dd><ul>
+<li>added the ability to <b>not use the Redis</b> token store, from now on, this is the <b>default</b> behavior. Also added the 'rest_api' prefix in the system parameters created by this module.</li>
+</ul>
+</dd>
+<dt>version 1.5 (2018-03-10):</dt>
+<dd><ul>
+<li>added the ability to dynamically exclude or include fetching fields</li>
+</ul>
+</dd>
+<dt>version 1.4 (2017-12-10):</dt>
+<dd><ul>
+<li>added the ability to send parameters of GET requests through the URL arguments</li>
+</ul>
+</dd>
+<dt>version 1.3 (2017-10-25):</dt>
+<dd><ul>
+<li>added the ability to fetch any PDF report from Odoo</li>
+</ul>
+</dd>
+<dt>version 1.2 (2017-02-08):</dt>
+<dd><ul>
+<li>added the ability to customize response Odoo fields returned by 'Create one' method</li>
+</ul>
+</dd>
+<dt>version 1.1 (2017-01-03):</dt>
+<dd><ul>
+<li>added <b>call any method</b> of Odoo model (including workflow manipulations)</li>
+</ul>
+</dd>
+<dt>version 1.0 (2016-06-25):</dt>
+<dd><ul>
+<li>initial release (for Odoo v8/9)</li>
+</ul>
+</dd>
+</dl>
+<br id="support">
+<hr />
+<p>The support consists of <b>free lifetime</b> bug-fixing and keeping the actuality of this module's code according with all stable and old (since v8) Odoo versions.</p>
+
+<div horizontal layout>
+<img src="support-icon.png" width="48" height="48"
+title="Image Author: DesignContest - www.designcontest.com
+License: CC Attribution 4.0 - www.creativecommons.org/licenses/by/4.0"
+/>
+Support email (UTC+2): <a href="mailto:avs3.ua@gmail.com">avs3.ua@gmail.com</a>
+</div>

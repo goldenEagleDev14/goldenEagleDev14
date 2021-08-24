@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<data>
+
+     <record id="group_create_partner_employee" model="res.groups">
+                <field name="name">Create Partner (Employee)</field>
+            </record>
+
+
+
+</data>
+
+
+</odoo>

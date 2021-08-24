@@ -1,0 +1,56 @@
+<odoo>
+  <data>
+
+        <template id="report_customer_payment_document_inherit" inherit_id="add_real_estate.report_customer_payment_document">
+
+            <xpath expr="//table" position="replace">
+                                <table class="table table-bordered">
+                    <thead>
+                        <th class="text-center"><strong>م</strong></th>
+                        <th class="text-center"><strong>رقم الشيك</strong></th>
+                        <th class="text-center"><strong>قيمة الشيك</strong></th>
+                        <th class="text-center"><strong>استحقاق الشيك</strong></th>
+                        <th  class="text-center"><strong>البنك المحسوب عليه</strong></th>
+                        <th class="text-center"><strong>ملاحظات</strong></th>
+                    </thead>
+                    <tbody>
+
+                        <tr t-foreach="o.loan_line" t-as="line">
+                             <td>
+                                <span t-esc="line_index+1"/>
+                            </td>
+                            <td>
+                                <span t-esc="line.cheque"/>
+                            </td>
+							<td>
+                                <span t-esc="line.amount"/>
+                            </td>
+							<td>
+                                <span t-esc="line.payment_date"/>
+                            </td>
+							<td>
+                                <span t-esc="line.bank_name.name"/>
+                            </td>
+							<td>
+<!--								<t t-if="line.is_pay == True">-->
+<!--																	<span>&#10004;</span>-->
+
+<!--								</t>-->
+<!--								<t t-if="line.is_pay == False">-->
+<!--																									<span >&#10539;</span>-->
+
+
+<!--								</t>-->
+                                <span t-esc="line.note"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </xpath>
+
+        </template>
+
+
+  </data>
+</odoo>

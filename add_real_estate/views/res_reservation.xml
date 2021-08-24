@@ -1,0 +1,387 @@
+<odoo>
+    <data>
+        <record id="reservation_form_view" model="ir.ui.view">
+            <field name="name">res.reservation</field>
+            <field name="model">res.reservation</field>
+            <field name="arch" type="xml">
+                <form string="Reservation Form">
+                    <header>
+                        <button name="convert_to_draft" type="object" string="Set To Draft"
+                                attrs="{'invisible': [('state', 'not in', ['reserved','blocked'])]}"/>
+                        <button name="convert_to_draft" type="object" string="Set To Draft"
+                                attrs="{'invisible': [('state', 'not in', ['contracted'])]}"
+                                groups="add_real_estate.group_set_to_draft_Reservation"/>
+                        <button name="%(add_real_estate.action_cancel_res)d" string="Canceled" type="action"
+                                help="Canceled" class="oe_highlight"
+                                attrs="{'invisible': [('state', 'not in', ['reserved','draft'])]}"/>
+                        <!--                        <button name="convert_to_block" type="object" string="Canceled" attrs="{'invisible': [('state', 'not in', ['reserved','draft'])]}"/>-->
+                        <button name="convert_to_reserved" type="object" string="Convert To Reserved"
+                                attrs="{'invisible': [('state', '!=', 'draft')]}" status="draft"/>
+                        <button class="btn btn-primary" name="create_initial_contract" type="object"
+                                string="Create initial Contract"
+                                attrs="{'invisible': ['|',('is_create_contract', '=', True),('state', '!=', 'reserved')]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                                    name="action_view_contract_reservation"
+                            >
+                                <div class="o_form_field o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="counter_contract"/>
+                                    </span>
+                                    <span class="o_stat_text">Contracts</span>
+                                </div>
+                            </button>
+
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                                    name="action_view_contract_Accessories"
+                            >
+                                <div class="o_form_field o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="counter_amendments"/>
+                                    </span>
+                                    <span class="o_stat_text">Amendments</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+
+                            <h2>
+                                <field name="reservation_code" placeholder="Reservation Code"/>
+                            </h2>
+                            <h2>
+                                <field name="payment_code" invisible="1"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group colspan="1" string="Property Details">
+                                <field name="is_create_contract"/>
+                                <field name="custom_type"/>
+                                <field name="date" required="1"
+                                       attrs="{'readonly' : [('state', 'in', ['reserved','release'])]}"
+                                       optional="{'datepicker':{'minDate': 0}}"/>
+                                <field name="req_reservation_id"
+                                       attrs="{'readonly' : [('state', 'in', ['reserved','release'])]}"/>
+                                <field name="project_id"
+                                       attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"  required="1"/>
+                                <field name="phase_id"
+                                       attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}" required="1"/>
+                                <field name="property_id"
+                                       attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"
+                                       optional="{'no_quick_create': True, 'no_create_edit' : True,'on_open   ' : True}"
+                                       domain="[('state','=','available'),('phase_id','=',phase_id)]" required="1"/>
+                                <field name="property_code"/>
+                                <field name="finish_of_property_id"/>
+                                <field name="is_release" readonly="1"/>
+                                <field name="odoo_reservation_id" attrs="{'invisible' : [('is_release', '=',False)]}"/>
+                                <field name="property_price"/>
+                                <field name="payment_due"/>
+                                <field name="payment_lines" readonly="1" force_save="1"/>
+                                <field name="more_discount"/>
+                                <field name="amount_discount"/>
+                                <field name="net_price"/>
+                            </group>
+                            <group colspan="1" string="Sales Details">
+                                <field name="sales_type"
+                                       attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                                <field name="broker_id"
+                                       attrs="{'invisible' : [('sales_type', '=', 'direct')]}"
+                                       optional="{'no_create': True,'no_open': True}"
+                                       domain="[('is_broker','=',True)]"/>
+                                <field name="company_id"
+                                       attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+
+<!--                                <field name="is_eoi"/>-->
+
+                            </group>
+
+                        </group>
+                        <group>
+                            <group colspan="2" string="Payment Details">
+                                <field name="pay_strategy_id"
+                                       attrs="{'readonly' : ['|',('is_Custom_payment','=',True),('state', 'in',['reserved','release'] )]}"/>
+                                <field name="payment_strg_name"/>
+                                <field name="payment_term_discount"/>
+                                <field name="is_Custom_payment"/>
+                                <field name="Description_payment"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group colspan="1" string="Customer Details">
+                                <field name="customer_id"
+                                       attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                                <field name="address"
+                                       readonly="1"/>
+                                <field name="phone"
+                                       readonly="1"/>
+                                <field name="mobile"
+                                       readonly="1"/>
+                                <field name="email"
+                                       readonly="1"/>
+                                <field name="nationality"
+                                       readonly="1"/>
+                                <field name="id_def"
+                                       readonly="1"/>
+                                <field name="social_status"
+                                       readonly="1"/>
+                            </group>
+                            <group colspan="1" string="Sales Details">
+                                <field name="sale_person_2_id"
+                                       attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                                <field name="Sales_Teams_2_id"
+                                       attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                                <field name="manager_tesm_2_id"
+                                       attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                                <!--&lt;!&ndash;                            <field name="lead_id"/>&ndash;&gt;-->
+
+                            </group>
+
+                        </group>
+
+                        <group string="Attachments" style="color:#893b74;"/>
+                        <group>
+                            <field name="id_no"
+                                   attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                            <field name="id_type"
+                                   attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                            <field name="id_photo"
+                                   attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                        </group>
+                        <notebook>
+                            <page name="payment" string="Payment">
+                                <group colspan="2">
+                                    <field name="bank_name"
+                                           attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                                    <field name="start_cheque"
+                                           attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                                    <field name="end_cheque"
+                                           attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                                    <field name="date_start_installment"
+                                           attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                                    <button name="update_bank_data" type="object"
+                                            string="Update Bank and check Number"/>
+                                    <field name="amount_ins"
+                                           attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                                    <!--                            <field name="number_day"/>-->
+                                    <button name="update_ins_amount_data" type="object" string="Update Amount Ins"/>
+                                    <field name="receipt_date"
+                                           attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"/>
+                                    <!--                            <field name="number_day"/>-->
+                                    <button name="update_ins_receipt_date" type="object"
+                                            string="Update Receipt Date Ins"/>
+
+
+                                </group>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <button groups="add_real_estate.group_create_payment_Reservation"
+                                                name="create_payment_lines_selected" type="object"
+                                                string="Create Payment" class="btn btn-primary"/>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <button groups="add_real_estate.group_Delete_Reservation"
+                                                name="button_delete_lines_selected" type="object" string="Delete"
+                                                class="btn btn-primary"/>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <button groups="add_real_estate.group_Receive_Reservation"
+                                                name="button_receive_lines_selected" type="object" string="Receive"
+                                                class="btn btn-primary"/>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <button groups="add_real_estate.group_Print_Reservation" name="generate_report"
+                                                type="object" string="Print" class="btn btn-primary"/>
+                                    </li>
+                                </ul>
+                                <label for="is_select_all_print"/>
+
+                                <field name="is_select_all_print"/>
+                                <br/>
+                                <field name="is_select_all"/>
+
+                                <field name="payment_strg_ids"
+                                       widget="section_and_note_one2many"
+                                       mode="tree,kanban"
+                                       class="oe_inline oe_no_button"
+                                       context="{'default_project_id':project_id}"
+                                       attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"
+                                >
+                                    <tree string="payment"
+                                          editable="buttom"
+                                          colors="red:move_check == True;green:cancelled == True">
+                                        <field name="is_selected_to_action"/>
+                                        <field name="is_no_enter_total"/>
+                                        <field name="is_print"/>
+                                        <field name="payment_code" readonly="1"/>
+                                        <field name="receipt_date"/>
+                                        <field name="move_check"
+                                               invisible="1" optional="show"/>
+                                        <field name="project_id"
+                                               invisible="1" optional="show"/>
+                                        <field name="payment_method_id"
+                                               invisible="1" optional="show"/>
+                                        <field name="type"
+                                               invisible="1" optional="show"/>
+                                        <field name="cancelled"
+                                               invisible="1" optional="show"/>
+                                        <field name="description"
+                                               attrs="{'readonly':[('move_check','=',True)]}" optional="show"/>
+                                        <field name="amount"
+                                               attrs="{'readonly':[('move_check','=',True)]}" sum="Amount"
+                                               optional="show"/>
+                                        <field name="base_amount" forec_save="1" string="Amount Base" optional="hide"/>
+                                        <field name="amount_due"
+                                               readonly="1" sum="Amount Due" optional="show"/>
+                                        <field name="amount_pay"
+                                               readonly="1" sum="Pay" optional="show"/>
+                                        <field name="payment_date"
+                                               attrs="{'readonly':[('move_check','=',True)]}" optional="show"/>
+                                        <field name="journal_id"
+                                               domain="[('type','in',['bank', 'cash'])]"
+                                               string="Payment Method"
+                                               attrs="{'readonly' : [('move_check', '=', True)]}" optional="show"/>
+                                        <field name="state_payment"
+                                               string="State Payment" optional="show" required="1"/>
+
+                                        <field name="bank_name" attrs="{'readonly' : [('type','in',['cash'])]}"
+                                               optional="show"/>
+                                        <field name="cheque" attrs="{'readonly' : [('type','in',['cash'])]}"
+                                               optional="show"/>
+                                        <field name="deposite"
+                                               attrs="{'readonly':[('move_check','=',True)]}" optional="show"/>
+                                        <field name="is_maintainance" optional="show"/>
+                                        <field name="is_no_enter_total" optional="show"/>
+
+                                        <!--                                        <field name="add_extension"-->
+                                        <!--                                               attrs="{'readonly':[('move_check','=',True)]}"/>-->
+                                        <!--                                        <field name="maintainance_fees"-->
+                                        <!--                                               />-->
+                                        <field name="is_receive" optional="show"/>
+                                        <!--                                        <field name="move_id"-->
+                                        <!--                                               readonly="1"/>-->
+                                        <!--                                        <field name="cheque_status" invisible="1"/>-->
+                                        <field name="is_pay" readonly="1" optional="show"/>
+                                        <field name="bank_ids" widget="many2many_tags" optional="show"/>
+                                        <field name="payments_ids" widget="many2many_tags" optional="show"/>
+                                        <field name="state" optional="show"/>
+                                        <!--                                        <button type="object"-->
+                                        <!--                                                name="create_deposite_entry"-->
+                                        <!--                                                string="Pay"-->
+                                        <!--                                                class="oe_highlight"-->
+                                        <!--                                                />-->
+
+                                    </tree>
+                                </field>
+
+                                <group class="oe_right">
+                                    <group class="oe_subtotal_footer">
+                                        <field name="amount_total" class="oe_subtotal_footer_separator"/>
+                                        <field name="main_total" class="oe_subtotal_footer_separator"/>
+                                        <field name="amount_residual" class="oe_subtotal_footer_separator"/>
+                                        <field name="amount_cheques" class="oe_subtotal_footer_separator"
+                                               invisible="1"/>
+                                    </group>
+
+                                </group>
+
+                            </page>
+                            <page string="Notes">
+                                <group>
+                                    <field name="notes_cash"/>
+                                    <field name="notes_visa"/>
+                                    <field name="notes_cheque"/>
+                                    <field name="notes_bank"/>
+                                </group>
+                            </page>
+                            <page string="Cancel Reasons" attrs="{'invisible' : [('state', 'not in',['blocked'] )]}">
+                                <group>
+                                    <field name="reason"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="reservation_tree_view" model="ir.ui.view">
+            <field name="name">res.reservation.reservation.tree view</field>
+            <field name="model">res.reservation</field>
+            <field name="arch" type="xml">
+                <tree string="Reservation Form">
+                    <field name="date"/>
+                    <field name="custom_type"/>
+                    <field name="reservation_code"/>
+                    <!--                    <field name="name"/>-->
+                    <field name="customer_id"/>
+                    <field name="sale_person_2_id"/>
+                    <field name="sales_type"/>
+                    <field name="sales_type"/>
+                    <field name="broker_id"/>
+                    <field name="phase_id"/>
+                    <field name="property_id"/>
+                    <field name="property_price"/>
+                    <field name="net_price"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="reservation_filter_view" model="ir.ui.view">
+            <field name="name">res.reservation</field>
+            <field name="model">res.reservation</field>
+            <field name="arch" type="xml">
+                <search string="Search ">
+                    <field name="name" string="Reservation Code" filter_domain="[('name','ilike',self)]"/>
+                    <field name="property_id" string="Unit"/>
+
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="reservation_list_action">
+            <field name="name">Reservation Form</field>
+            <field name="res_model">res.reservation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'default_custom_type': 'Reservation',
+                }
+            </field>
+        </record>
+        <menuitem id="res_reservation"
+                  name="Reservation Form"
+                  parent="transaction_sub"
+                  action="reservation_list_action" sequence="2"/>
+
+        <!--        history Reservation-->
+
+        <record id="history_reservation_tree_view" model="ir.ui.view">
+            <field name="name">history.reservation.res.reservation.reservation.tree view</field>
+            <field name="model">history.reservation</field>
+            <field name="arch" type="xml">
+                <tree string="History Reservation">
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="unit_id"/>
+                    <field name="res_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="history_reservation_list_action">
+            <field name="name">History Reservations</field>
+            <field name="res_model">history.reservation</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+        <menuitem id="history_res_reservation"
+                  name="History Reservations"
+                  parent="transaction_sub"
+                  action="history_reservation_list_action" sequence="3"/>
+
+    </data>
+</odoo>

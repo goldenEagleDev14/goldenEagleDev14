@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+                <record id="action_server_module_convert_to_draft" model="ir.actions.server">
+            <field name="name">Convert Properties To Draft </field>
+            <field name="type">ir.actions.server</field>
+            <field name="binding_model_id" ref="product.model_product_product" />
+            <field name="model_id" ref="product.model_product_product" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    for rec in records:
+                        rec.convert_to_draft()
+            </field>
+        </record>
+        <record id="action_server_module_convert_to_available" model="ir.actions.server">
+            <field name="name">Convert Properties To Available </field>
+            <field name="type">ir.actions.server</field>
+            <field name="binding_model_id" ref="product.model_product_product" />
+            <field name="model_id" ref="product.model_product_product" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    for rec in records:
+                        rec.convert_to_available()
+            </field>
+        </record>
+
+        <record id="action_server_module_convert_to_blocked" model="ir.actions.server">
+            <field name="name">Convert Properties To Blocked </field>
+            <field name="type">ir.actions.server</field>
+            <field name="binding_model_id" ref="product.model_product_product" />
+            <field name="model_id" ref="product.model_product_product" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    for rec in records:
+                        rec.convert_to_block()
+            </field>
+        </record>
+
+                <record id="action_server_module_convert_to_reserved" model="ir.actions.server">
+            <field name="name">Convert Reservation To Reserved </field>
+            <field name="type">ir.actions.server</field>
+            <field name="binding_model_id" ref="add_real_estate.model_res_reservation" />
+            <field name="model_id" ref="add_real_estate.model_res_reservation" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    for rec in records:
+                        rec.convert_to_reserved()
+            </field>
+        </record>
+    </data>
+</odoo>

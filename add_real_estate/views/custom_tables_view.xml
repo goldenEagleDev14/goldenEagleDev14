@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+                        <!--Property exception-->
+        <record model="ir.ui.view" id="property_exception_form_view">
+            <field name="name">Exceptions</field>
+            <field name="model">property.exception</field>
+            <field name="arch" type="xml">
+                <form string="Unit Type">
+
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="property_exception_list_view">
+            <field name="name">Exception</field>
+            <field name="model">property.exception</field>
+            <field name="arch" type="xml">
+                <tree string="Exceptions">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="property_exception_action">
+            <field name="name">Exceptions</field>
+            <field name="res_model">property.exception</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+                <!--Property type  CAtegory-->
+        <record model="ir.ui.view" id="property_category_form_view">
+            <field name="name">Category</field>
+            <field name="model">property.category</field>
+            <field name="arch" type="xml">
+                <form string="Unit Type">
+
+                    <header></header>
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="property_category_list_view">
+            <field name="name">Category</field>
+            <field name="model">property.category</field>
+            <field name="arch" type="xml">
+                <tree string="Category">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="property_category_action">
+            <field name="name">Categories</field>
+            <field name="res_model">property.category</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--Property type  Building Unit Type-->
+        <record model="ir.ui.view" id="property_type_form_view">
+            <field name="name">Unit Type</field>
+            <field name="model">property.type</field>
+            <field name="arch" type="xml">
+                <form string="Unit Type">
+
+                    <header></header>
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="cate_id"/>
+                                <field name="sellable"/>
+                                <field name="multi_image"/>
+                            </group>
+
+                        </group>
+                                            <notebook>
+                        <page attrs="{'invisible':[('multi_image','!=',True)]}" name="product multi image" string="Property Multiple Images">
+                                <field name="images_type" nolabel="1" context="{'default_type_id': id, 'tree_view_ref':'add_real_estate.list_view_product_images', 'form_view_ref':'add_real_estate.form_view_product_images'}"/>
+
+                            </page>
+                    </notebook>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="property_type_list_view">
+            <field name="name">Unit Type</field>
+            <field name="model">property.type</field>
+            <field name="arch" type="xml">
+                <tree string="Building Unit Type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="property_type_action">
+            <field name="name">Unit Types</field>
+            <field name="res_model">property.type</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--Property Location  Building Unit Type-->
+        <record model="ir.ui.view" id="property_location_form_view">
+            <field name="name">Property Location</field>
+            <field name="model">property.location</field>
+            <field name="arch" type="xml">
+                <form string="Building Unit Type">
+
+                    <header></header>
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+
+                        </group>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="property_location_list_view">
+            <field name="name">Property Location</field>
+            <field name="model">property.location</field>
+            <field name="arch" type="xml">
+                <tree string="Building Unit Type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="property_location_action">
+            <field name="name">Property Location</field>
+            <field name="res_model">property.location</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+                <!--Property Finish type  Building Unit Type-->
+        <record model="ir.ui.view" id="property_finishing_type_form_view">
+            <field name="name">Property Finishing Type</field>
+            <field name="model">property.finished.type</field>
+            <field name="arch" type="xml">
+                <form string="Building Unit Type">
+
+                    <header></header>
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+
+                        </group>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="property_finishing_type_list_view">
+            <field name="name">Property Finishing Type</field>
+            <field name="model">property.finished.type</field>
+            <field name="arch" type="xml">
+                <tree string="Building Unit Type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="property_finishing_type_action">
+            <field name="name">Property Finishing Type</field>
+            <field name="res_model">property.finished.type</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+                <!--Property Design  Building Unit Type-->
+        <record model="ir.ui.view" id="property_design_form_view">
+            <field name="name">Property Design</field>
+            <field name="model">property.design</field>
+            <field name="arch" type="xml">
+                <form string="Building Unit Type">
+
+                    <header></header>
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+
+                        </group>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="property_design_list_view">
+            <field name="name">Property Design</field>
+            <field name="model">property.design</field>
+            <field name="arch" type="xml">
+                <tree string="Building Unit Type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="property_design_action">
+            <field name="name">Property Design</field>
+            <field name="res_model">property.design</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+                        <!--Reason Building Unit Type-->
+        <record model="ir.ui.view" id="cancel_reason_res_form_view">
+            <field name="name">Cancel Reasons</field>
+            <field name="model">cancel.reason.res</field>
+            <field name="arch" type="xml">
+                <form string="Cancel Reasons">
+
+                    <header></header>
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+
+                        </group>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="cancel_reason_res_list_view">
+            <field name="name">Cancel Reasons</field>
+            <field name="model">cancel.reason.res</field>
+            <field name="arch" type="xml">
+                <tree string="Reasons Canceled">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="cancel_reason_res_action">
+            <field name="name">Cancel Reasons</field>
+            <field name="res_model">cancel.reason.res</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+<!--        menu-->
+
+         <menuitem id="property_exception"
+                  name="Exceptions"
+                  parent="configuration_sub"
+                  action="property_exception_action"/>
+            <menuitem id="property_category"
+                  name="Categories"
+                  parent="configuration_sub"
+                  action="property_category_action"/>
+        <menuitem id="property_type"
+                  name="Unit Types"
+                  parent="configuration_sub"
+                  action="property_type_action"/>
+                <menuitem id="property_location_menu"
+                  name="Property Location"
+                  parent="configuration_sub"
+                  action="property_location_action"/>
+                <menuitem id="property_finishing_type_menu"
+                  name="Finishing Type"
+                  parent="configuration_sub"
+                  action="property_finishing_type_action"/>
+                <menuitem id="property_design_menu"
+                  name="Property Design"
+                  parent="configuration_sub"
+                  action="property_design_action"/>
+                <menuitem id="cancel_reason_res_menu"
+                  name="Cancel Reasons"
+                  parent="configuration_sub"
+                  action="cancel_reason_res_action"/>
+
+    </data>
+</odoo>

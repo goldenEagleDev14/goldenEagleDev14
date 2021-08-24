@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+    <record id="view_dev_loan_installment_form" model="ir.ui.view">
+        <field name="name">view.dev.loan.installment.form</field>
+        <field name="model">dev.loan.installment</field>
+        <field name="arch" type="xml">
+            <form string="Loan" create="false" edit="false" >
+                <header>
+                    <button name="action_paid_installment" states="unpaid" string="Pay"
+                            class="btn-primary" type="object" groups="account.group_account_invoice"/>
+                            
+					<field name="state" widget="statusbar" statusbar_visible="unpaid,paid"/>
+				</header>
+                <sheet>
+                    <label for="name" class="oe_edit_only"/>
+                	<h1><field name="name" readonly="1"/></h1>
+                    <group>
+                        <group>
+                            <field name="client_id" readonly="1"/>
+                            <field name="loan_id" readonly="1"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="date" readonly="1"/>
+                            <field name="payment_date" readonly="1" attrs="{'invisible':[('state','!=','paid')]}"/>
+                            <field name="amount" readonly="1"/>
+                            <field name="interest" readonly="1"/>
+                            <field name="total_amount" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="accounting" string='Accounting' groups="account.group_account_invoice">
+                            <group>
+                                <group>
+                                    <field name="interest_account_id"/>
+                                    <field name="installment_account_id"/>
+                                </group>
+                                <group>
+                                    <field name="loan_payment_journal_id"/>
+                                    <field name="journal_entry_id" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_dev_loan_installment_tree" model="ir.ui.view">
+        <field name="name">view.dev.loan.installment.tree</field>
+        <field name="model">dev.loan.installment</field>
+        <field name="arch" type="xml">
+            <tree string="Loan Installments" create="false" edit="false" decoration-success="state=='paid'">
+                <field name="name"/>
+                <field name="client_id"/>
+                <field name="loan_id"/>
+                <field name="date"/>
+                <field name="amount"/>
+                <field name="interest"/>
+                <field name="total_amount"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="filter_dev_loan_installment" model="ir.ui.view">
+        <field name="name">filter.dev.loan.installment</field>
+        <field name="model">dev.loan.installment</field>
+        <field name="arch" type="xml">
+            <search string="Search Loan Installment">
+                <field name="name" string="Loan" filter_domain="[('name','ilike',self)]"/>
+                <filter string="Paid" name="state" domain="[('state','=','paid')]" help="Paid Loan"/>
+                <filter string="Unpaid" name="state" domain="[('state','=','unpaid')]" help="Unpaid Loan"/>
+                <group expand="0" string="Group By">
+                    <filter string="Borrower" name="client_id" context="{'group_by':'client_id'}"/>
+                    <filter string="Loan" name="loan_id" context="{'group_by':'loan_id'}"/>
+                    <filter string="Date" name="date" context="{'group_by':'date'}"/>
+                    <filter string="States" name="state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_dev_loan_installment" model="ir.actions.act_window">
+        <field name="name">Loan Installment</field>
+        <field name="res_model">dev.loan.installment</field>
+        <field name="domain">[('loan_id.state','not in',['draft','reject','cancel'])]</field>
+        <field name="context">{'search_default_loan_id':1}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    
+    <menuitem name="Loan Installment" id="menu_dev_loan_installment" parent="dev_loan_management.menu_dev_loan_request_main" action="action_dev_loan_installment" sequence="3"/>
+    
+    <menuitem name="Loan Installment" id="menu_dev_loan_installment_account" parent="dev_loan_management.menu_account_loan_main" action="action_dev_loan_installment" sequence="2"/>
+    
+    
+    
+</odoo>

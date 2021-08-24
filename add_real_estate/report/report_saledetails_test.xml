@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="payment_request_report_template">
+ <t t-foreach="request_reservation" t-as="req">
+    <t t-call="web.html_container">
+                			            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600')
+            </style>
+			                                <t t-call="add_real_estate.header_footer_template"/>
+    <t t-call="web.external_layout">
+
+        <div class="page" style="font-size: 14px;font-family: 'Cairo';" dir="rtl">
+
+            					<div class="text-right">
+						<h3>
+							<span t-esc="req['company_name_arabic']"/>
+						</h3>
+                        <div class="container part1 text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                <span t-esc="req['user_name_arabic']"/>
+                            </div>
+                            <div class="col-6 text-left">
+                                أذن رقم  :-
+                                <span t-esc="req['payment_code']"/>
+
+                            </div>
+                        </div>
+                    </div>
+					</div>
+            <br/>
+                        <div class="text-center">
+                <t t-if="req['state_payment'] == 'cash'">
+                             <span style="border-bottom: 1px solid black;padding-bottom: 3px;font-weight: bolder;">ايصال استلام نقدية</span>
+                </t>
+                <t t-if="req['state_payment'] == 'visa'">
+                            <span style="border-bottom: 1px solid black;padding-bottom: 3px;font-weight: bolder;">ايصال ايداع نقدي / تحويل بنكى </span>
+                </t>
+                <t t-if="req['state_payment'] == 'bank'">
+                            <span style="border-bottom: 1px solid black;padding-bottom: 3px;font-weight: bolder;">ايصال ايداع نقدي / تحويل بنكى </span>
+                </t>
+                <t t-if="req['state_payment'] == 'cheque'">
+                    <span style="border-bottom: 1px solid black;padding-bottom: 3px;font-weight: bolder;">ايصال استلام شيكات</span>
+                </t>
+
+            </div>
+					<div class="container part1 text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                التاريخ :-
+                                <span t-esc="req['date']"/>
+
+                            </div>
+                            <div class="col-6 text-left">
+                                مبلغ :-
+                                # <span t-esc="req['amount']"/> #
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container part2 text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                استلمت من السيد /
+                                <span t-esc="req['customer']"/>
+                            </div>
+                                            <t t-if="req['state_payment'] == 'cheque'">
+                                                <div class="col-6 text-left">
+                                عدد :-
+                                1
+								شيك
+
+                            </div>
+                                            </t>
+
+                        </div>
+                    </div>
+                    <div class="container part3 text-right">
+                        <div class="row">
+                            <div class="col-12">
+                                مبلغ و قدره :
+                                <span t-esc="req['amount_to_text']"/>
+                            </div>
+                        </div>
+                    </div>
+					<div class="container part4 text-right">
+                        <div class="row">
+<!--                            <div class="col-6">-->
+<!--                                عن الوحده رقم :-->
+<!--                                 <span t-esc="req['property']"/>-->
+
+<!--                            </div>-->
+                            <div class="col-6">
+                                بمشروع :
+                                 <span t-esc="req['project']"/>
+
+                            </div>
+                        </div>
+                    </div>
+
+            <br/>
+            <t t-if="req['state_payment'] == 'cheque'">
+                                                        <table class="table table-bordered" style="border-collapse: collapse; border: 2px solid black;">
+                    <thead style="border-collapse: collapse; border: 2px solid black;">
+                        <th class="text-center"><strong>م</strong></th>
+                        <th class="text-center"><strong>نوع الدفعه</strong></th>
+                        <th class="text-center"><strong>رقم الشيك</strong></th>
+                        <th class="text-center"><strong>قيمة الشيك</strong></th>
+                        <th class="text-center"><strong>استحقاق الشيك</strong></th>
+                        <th  class="text-center"><strong>البنك المحسوب عليه</strong></th>
+<!--                        <th class="text-center"><strong>ملاحظات</strong></th>-->
+                    </thead>
+                    <tbody style="border-collapse: collapse; border: 2px solid black;">
+                             <td>
+                                <span t-esc="1"/>
+                            </td>
+                            <td>
+                                <span t-esc="req['description']"/>
+                            </td>
+                            <td>
+                                <span t-esc="req['cheque']"/>
+                            </td>
+							<td>
+                                <span t-esc="req['amount']"/>
+                            </td>
+							<td>
+                                <span t-esc="req['date']"/>
+                            </td>
+							<td>
+                                <span t-esc="req['bank_name']"/>
+                            </td>
+                    </tbody>
+                </table>
+
+            </t>
+
+<hr style="font-size: 20px;font-family: 'Cairo'; color: black;" />
+                                <div class="container last text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                محاسب :
+                            </div>
+                            <div class="col-6">
+اعتماد :
+
+
+                            </div>
+                        </div>
+                    </div>
+
+        </div>
+    </t>
+</t>
+    </t>
+</template>
+
+
+
+    <template id="payment_reservation_report_template">
+ <t t-foreach="request_reservation" t-as="req">
+    <t t-call="web.html_container">
+        			            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600')
+            </style>
+			                                <t t-call="add_real_estate.header_footer_template"/>
+    <t t-call="web.external_layout">
+
+        <div class="page" style="font-size: 14px;font-family: 'Cairo';" dir="rtl">
+					<div class="text-right">
+						<h3>
+							<span t-esc="req['company_name_arabic']"/>
+						</h3>
+                        <div class="container part1 text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                <span t-esc="req['user_name_arabic']"/>
+                            </div>
+                            <div class="col-6 text-left">
+                                أذن رقم  :-
+                                <span t-esc="req['payment_code']"/>
+
+                            </div>
+                        </div>
+                    </div>
+					</div>
+            <div class="text-center">
+                <t t-if="req['state_payment'] == 'cash'">
+                             <span style="border-bottom: 1px solid black;padding-bottom: 3px;font-weight: bolder;">ايصال استلام نقدية</span>
+                </t>
+                <t t-if="req['state_payment'] == 'visa'">
+                            <span style="border-bottom: 1px solid black;padding-bottom: 3px;font-weight: bolder;">ايصال استلام فيزا </span>
+                </t>
+                <t t-if="req['state_payment'] == 'bank'">
+                            <span style="border-bottom: 1px solid black;padding-bottom: 3px;font-weight: bolder;">ايصال ايداع نقدي / تحويل بنكى </span>
+                </t>
+                <t t-if="req['state_payment'] == 'cheque'">
+                    <span style="border-bottom: 1px solid black;padding-bottom: 3px;font-weight: bolder;">ايصال استلام شيكات</span>
+                </t>
+
+            </div>
+            <br/>
+            <br/>
+            <br/>
+					<div class="container part1 text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                التاريخ :-
+                                <span t-esc="req['receipt_date']"/>
+                            </div>
+                            <div class="col-6 text-left">
+                                مبلغ :-
+                                # <span t-esc="req['amount']"/> #
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container part2 text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                استلمت من السيد /
+                                <span t-esc="req['customer']"/>
+                            </div>
+                                            <t t-if="req['state_payment'] == 'cheque'">
+                                                <div class="col-6 text-left">
+                                عدد :-
+                                1
+								شيك
+
+                            </div>
+                                            </t>
+
+                        </div>
+                    </div>
+                    <div class="container part3 text-right">
+                        <div class="row">
+                            <div class="col-12">
+                                مبلغ و قدره :
+                                <span t-esc="req['amount_to_text']"/>
+                            </div>
+                        </div>
+                    </div>
+					<div class="container part4 text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                عن الوحده رقم :
+                                 <span t-esc="req['property']"/>
+
+                            </div>
+                            <div class="col-6 text-left">
+                                بمشروع :
+                                 <span t-esc="req['project']"/>
+
+                            </div>
+                        </div>
+                    </div>
+
+            					<div class="container part5 text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                ملاحظات :
+                                             <t t-if="req['state_payment'] == 'cash'">
+                                                              <span t-esc="req['notes_cash']"/>
+                </t>
+                <t t-if="req['state_payment'] == 'visa'">
+                                                          <span t-esc="req['notes_visa']"/>
+                </t>
+                <t t-if="req['state_payment'] == 'bank'">
+                                                         <span t-esc="req['notes_bank']"/>
+                </t>
+                <t t-if="req['state_payment'] == 'cheque'">
+                                                     <span t-esc="req['notes_cheque']"/>
+                </t>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+            <t t-if="req['state_payment'] == 'cheque'">
+
+                            <table class="table table-bordered" style="border-collapse: collapse; border: 2px solid black;">
+                    <thead style="border-collapse: collapse; border: 2px solid black;">
+                        <th style="border: 2px solid black;" class="text-center"><strong>م</strong></th>
+                        <th style="border: 2px solid black;" class="text-center"><strong>الكود</strong></th>
+                        <th style="border: 2px solid black;" class="text-center"><strong>نوع الدفعه</strong></th>
+                        <th style="border: 2px solid black;" class="text-center"><strong>رقم الشيك</strong></th>
+                        <th style="border: 2px solid black;" class="text-center"><strong>قيمة الشيك</strong></th>
+                        <th style="border: 2px solid black;" class="text-center"><strong>استحقاق الشيك</strong></th>
+                        <th style="border: 2px solid black;"  class="text-center"><strong>البنك</strong></th>
+<!--                        <th class="text-center"><strong>ملاحظات</strong></th>-->
+                    </thead>
+                    <tbody style="border-collapse: collapse; border: 2px solid black;">
+                             <td style="border: 2px solid black;">
+                                <span t-esc="1"/>
+                            </td>
+                        <td style="border: 2px solid black;">
+                                                            <span t-esc="req['payment_code']"/>
+                        </td>
+                            <td style="border: 2px solid black;">
+                                <span t-esc="req['description']"/>
+                            </td>
+                            <td style="border: 2px solid black;">
+                                <span t-esc="req['cheque']"/>
+                            </td>
+							<td style="border: 2px solid black;">
+                                <span t-esc="req['amount']"/>
+                            </td>
+							<td style="border: 2px solid black;">
+                                <span t-esc="req['date']"/>
+                            </td>
+							<td style="border: 2px solid black;">
+                                <span t-esc="req['bank_name']"/>
+                            </td>
+                    </tbody>
+                </table>
+            </t>
+            <hr style="font-size: 20px;font-family: 'Cairo'; color: black;" />
+                                <div class="container last text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                محاسب :
+                            </div>
+                            <div class="col-6">
+اعتماد :
+
+
+                            </div>
+                        </div>
+                    </div>
+
+        </div>
+    </t>
+</t>
+    </t>
+</template>
+
+</data>
+</odoo>

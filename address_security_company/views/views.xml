@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="address_security_company.list">
+      <field name="name">address_security_company list</field>
+      <field name="model">address_security_company.address_security_company</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="address_security_company.action_window">
+      <field name="name">address_security_company window</field>
+      <field name="res_model">address_security_company.address_security_company</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="address_security_company.action_server">
+      <field name="name">address_security_company server</field>
+      <field name="model_id" ref="model_address_security_company_address_security_company"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="address_security_company" id="address_security_company.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="address_security_company.menu_1" parent="address_security_company.menu_root"/>
+    <menuitem name="Menu 2" id="address_security_company.menu_2" parent="address_security_company.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="address_security_company.menu_1_list" parent="address_security_company.menu_1"
+              action="address_security_company.action_window"/>
+    <menuitem name="Server to list" id="address_security_company" parent="address_security_company.menu_2"
+              action="address_security_company.action_server"/>
+-->
+  </data>
+</odoo>

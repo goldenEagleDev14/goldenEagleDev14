@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="report_request_reservation_document">
+			<t t-call="web.external_layout">
+			<t t-set="o" t-value="o.with_context(lang=o.customer_id.lang)"/>
+									        <div class="header" >
+            <div class="text-center">
+
+                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 60px;min-width:200px"
+                         alt="Logo"/>
+				thomas
+			</div>
+			</div>
+				<div class="page" style="  font-size: 17px;">
+
+					<table class="report_table">
+						<tr>
+							<th align="center">
+								Request Reservation # <span  t-field="o.name"/>
+							</th>
+						</tr>
+					</table>
+					<br/>
+					<div> Date : <span t-field="o.date"/>  </div>
+<!--					بيانات العميل-->
+					<div class="container">
+					  <div class="row">
+						<div class="col-3">
+client Information :
+						</div>
+						<div class="col-7">
+
+						</div>
+						<div class="col-3 float-right" style="direction: rtl;padding-left: 50px;">
+  بيانات العميل :
+						</div>
+					  </div>
+					</div>
+					<br/>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3">
+Name
+						</div>
+						<div class="col-7 text-center"  >
+<span t-field="o.customer_id"/>
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 105px;">
+ الاسم
+						</div>
+					  </div>
+					</div>
+					<br/>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3">
+Mobile No
+						</div>
+						<div class="col-7 text-center">
+<span t-field="o.mobile"/>
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 60px;">
+  رقم التليفون
+						</div>
+					  </div>
+					</div>
+					<br/>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3">
+E-mail
+						</div>
+						<div class="col-7 text-center">
+<span t-field="o.email"/>
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 40px;">
+  البريد الالكترونى
+						</div>
+					  </div>
+					</div>
+					<br/>
+					<br/>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3">
+Unit Information :
+						</div>
+						<div class="col-7">
+
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 40px;">
+ : بيانات الوحدة
+						</div>
+					  </div>
+					</div>
+					<br/>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3">
+Unit No.
+						</div>
+						<div class="col-7 text-center"	>
+							<div style="border: 1px solid black;width: 400px" class="text-center" >
+								<span t-field="o.property_code"  />
+							</div>
+
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 70px;">
+رقم الوحدة
+						</div>
+					  </div>
+					</div>
+<br/>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3">
+ Type
+						</div>
+						<div class="col-7 text-center">
+							<div style="border: 1px solid black;width: 400px" class="text-center" >
+								<span t-field="o.property_id.type_of_property_id"  />
+							</div>
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 70px;">
+نموذج الوحدة
+						</div>
+					  </div>
+					</div>
+<br/>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3">
+Unit Price
+						</div>
+						<div class="col-7 text-center">
+							<div style="border: 1px solid black;width: 400px" class="text-center" >
+								<span t-field="o.property_id.final_unit_price"  />
+							</div>
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 70px;">
+سعر الوحدة
+						</div>
+					  </div>
+					</div>
+					<br/>
+					<br/>
+<!--Finishing-->
+					<div class="container">
+					  <div class="row">
+						<div class="col-3" >
+Finishing
+						</div>
+						<div class="col-7">
+
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 100px;">
+التشطيب
+						</div>
+					  </div>
+					</div>
+<br/>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3" style="padding-left: 30px;">
+							<span style="padding-right: 40px;">Fully Finished</span>
+
+
+						</div>
+						<div class="col-1">
+							<span t-if="o.property_id.is_finish != True" style="border: 1px solid black;width: 10px ; height:10px" class="text-center" >
+							<span >&#10539;</span>
+						</span>
+							<span t-if="o.property_id.is_finish != False" style="border: 1px solid black;width: 10px ; height:10px " class="text-center" >
+								<span>&#10004;</span>
+						</span>
+						</div>
+						  						<div class="col-5">
+
+						</div>
+						  						<div class="col-1">
+						<span t-if="o.property_id.is_finish != True" style="border: 1px solid black;width: 10px ; height:10px" class="text-center" >
+							<span >&#10539;</span>
+						</span>
+						<span t-if="o.property_id.is_finish != False" style="border: 1px solid black;width: 10px ; height:10px " class="text-center" >
+								<span>&#10004;</span>
+						</span>
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 90px;">
+ <span >كامل</span>
+
+						</div>
+					  </div>
+					</div>
+					<br/>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3" style="padding-left: 30px;">
+<span style="padding-right: 40px;">Care And Shell</span>
+						</div>
+						  <div class="col-1">
+						<span t-if="o.property_id.is_finish != True" style="border: 1px solid black;width: 10px ; height:10px" class="text-center" >
+								<span>&#10004;</span>
+						</span>
+														<span t-if="o.property_id.is_finish != False" style="border: 1px solid black;width: 10px ; height:10px" class="text-center" >
+													<span >&#10539;</span>
+
+														</span>
+						</div>
+						<div class="col-5">
+
+						</div>
+						  <div class="col-1">
+						<span t-if="o.property_id.is_finish != True" style="border: 1px solid black;width: 10px ; height:10px" class="text-center" >
+								<span>&#10004;</span>
+						</span>
+														<span t-if="o.property_id.is_finish != False" style="border: 1px solid black;width: 10px ; height:10px" class="text-center" >
+							<span >&#10539;</span>
+
+						</span>
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 35px;">
+<span >بدون تشطيب</span>
+
+						</div>
+					  </div>
+					</div>
+					<br/>
+					<div class="container">
+					  <div class="row">
+						<div class="col-3">
+<span style="padding-left: 20px;">Pool</span>
+						</div>
+						<div class="col-1">
+						<span t-if="o.property_id.is_pool != True" style="border: 1px solid black;width: 10px ; height:10px" class="text-center" >
+							<span >&#10539;</span>
+						</span>
+														<span t-if="o.property_id.is_pool != False" style="border: 1px solid black;width: 10px ; height:10px" class="text-center" >
+														<span>&#10004;</span>
+
+														</span>
+						</div>
+						  <div class="col-5">
+
+						</div>
+						  <div class="col-1">
+						<span t-if="o.property_id.is_pool != True" style="border: 1px solid black;width: 10px ; height:10px" class="text-center" >
+							<span >&#10539;</span>
+						</span>
+							  <span t-if="o.property_id.is_pool != False" style="border: 1px solid black;width: 10px ; height:10px" class="text-center" >
+														<span>&#10004;</span>
+							  </span>
+						</div>
+						<div class="col-3" style="direction: rtl;padding-left: 35px;">
+حمام السباحة
+						</div>
+					  </div>
+					</div>
+<br/>
+<br/>
+<!--		Last		-->
+					<div class="container">
+					  <div class="row">
+						<div class="col-4 text-center" >
+Client
+						</div>
+						<div class="col-4 text-center" >
+Sales
+						</div>
+						<div class="col-4 text-center"  >
+Broker
+						</div>
+					  </div>
+					</div>
+				</div>
+			</t>
+		</template>
+
+		<template id="report_request_reservation_test">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="add_real_estate.report_request_reservation_document" />
+				</t>
+			</t>
+		</template>
+    <template id="web.external_layout_standard">
+        <div class="header" >
+            <div class="text-center" >
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 60px;min-width:200px"
+                         alt="Logo"/>
+			</div>
+        </div>
+
+        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer o_standard_footer" style="  font-size: 13px;">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <ul class="list-unstyled mb4">
+                    <li t-if="company.phone" >
+                        <span t-field="company.phone"/>
+                    </li>
+                    <li t-if="company.email" >
+                        <span t-field="company.email"/>
+                    </li>
+                    <li t-if="company.website" >
+                        <span t-field="company.website"/>
+                    </li>
+                    <li t-if="company.street" >
+                        <span t-field="company.street"/>
+                    </li>
+                </ul>
+
+                <div name="financial_infos">
+                    <span t-field="company.report_footer"/>
+                </div>
+
+                <div t-if="report_type == 'pdf'" class="text-muted">
+                    Page:
+                    <span class="page"/>
+                    /
+                    <span class="topage"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+	</data>
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+                <record model="ir.actions.server" id="action_server_module_run_confirm_employee">
+            <field name="name">Run Confirm Employee</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="binding_model_id" ref="model_res_partner" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                      action =  records.seecedd_confirm_employee()
+            </field>
+        </record>
+<!--                <record id="action_server_module_run_confirm_employee" model="ir.actions.server">-->
+<!--            <field name="name">Run Confirm Employee deeeeeeeeeeeeeee</field>-->
+<!--            <field name="model_id" ref="base.model_res_partner"/>-->
+<!--            <field name="binding_model_id" ref="base.model_res_partner"/>-->
+<!--            <field name="binding_view_types">list</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">-->
+<!--                if records:-->
+<!--                        records.run_confirm_employee()-->
+<!--            </field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

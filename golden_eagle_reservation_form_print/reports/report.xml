@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <report
+                id="golden_eadle_reservation_form_report"
+                model="res.reservation"
+                report_type="qweb-pdf"
+                string="Reservation Print"
+                menu="True"
+                name="golden_eagle_reservation_form_print.golden_eagle_reservation_form_tmpl"
+                file="golden_eagle_reservation_form_print.golden_eagle_reservation_form_tmpl"
+        />
+
+    </data>
+</odoo>

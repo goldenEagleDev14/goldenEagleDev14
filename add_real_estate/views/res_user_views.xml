@@ -1,0 +1,19 @@
+<odoo>
+  <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_user_form_name_branch" model="ir.ui.view">
+            <field name="name">res.user.branch</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group/field[@name='partner_id']" position="after">
+                    <field name="name_Branch"  />
+                </xpath>
+
+
+            </field>
+        </record>
+
+  </data>
+</odoo>

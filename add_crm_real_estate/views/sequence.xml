@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data >
+        <record id="sequence_market_plan_custom" model="ir.sequence">
+            <field name="name">Marketing Plan code</field>
+            <field name="code">marketing.plan.code.sequence</field>
+            <field name="prefix">MP/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+<!--            <field eval="True" name="company_id"/>-->
+            <field name="padding">5</field>
+        </record>
+
+    </data>
+</odoo>

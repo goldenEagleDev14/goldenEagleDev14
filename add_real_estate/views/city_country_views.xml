@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<odoo>
+
+
+        <record id="res_country_state_project" model="ir.ui.view">
+            <field name="name">res.country.state.project</field>
+            <field name="model">res.country.state</field>
+            <field name="inherit_id" ref="base.view_country_state_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='country_id']" position="before">
+                    <field name="projects_ids" widget="many2many_tags" required="1"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="city_action">
+            <field name="name">Cities</field>
+            <field name="res_model">res.country.state</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="cities_menu"
+            name="Cities"
+            parent="building_structure_sub"
+            action="city_action"
+            sequence="10"/>
+
+    <record model="ir.actions.act_window" id="counties_action">
+            <field name="name">Countries</field>
+            <field name="res_model">res.country</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="counties_menu"
+            name="Countries"
+            parent="building_structure_sub"
+            action="counties_action"
+            sequence="11"/>
+
+
+
+</odoo>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_payterm_form_inherit">
+            <field name="name">rspayterm.form</field>
+            <field name="model">account.payment.term</field>
+            <field name="inherit_id" ref="account.view_payment_term_form"/>
+            <field name="arch" type="xml">
+                <field name="active"
+                       position="after">
+                    <field name="virtual"/>
+                    <button name="cr_computation"
+                            type="object"
+                            string="Compute"
+                            class="oe_edit_only"/>
+                    <br/>
+                    <field name="computed"
+                           invisible="1"/>
+                </field>
+<!--                <field name="virtual" position="after">-->
+<!--                    <field name="payment_term_discount"/>-->
+<!--                </field>-->
+                                <xpath expr="//field[@name='virtual']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                        <field name="virtual"/>
+                        <field name="payment_term_discount"/>
+                        <field name="payment_detail_ids"
+                               />
+                </xpath>
+                <xpath expr="/form/*" position="before">
+                    <header>
+                        <button name="copy_payment"
+                                string="New Copy of Payment"
+                                type="object"
+                                class="oe_highlight"/>
+                        <button name="approved_payment"
+                                string="Approved"
+                                type="object"
+                                class="oe_highlight" attrs="{'invisible':[('state','=','approved')]}"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,approved"/>
+                    </header>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_payterm_line_form_inherit">
+            <field name="name">rspayterm.form.line</field>
+            <field name="model">account.payment.term.line</field>
+            <field name="inherit_id" ref="account.view_payment_term_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='days']" position="after">
+                    <field name="journal_id"
+                           domain="[('type','in',['bank', 'cash'])]"
+                           widget="selection"
+                           string="Payment Method"/>
+                    <field name="payment_description"/>
+                    <field name="deposit"/>
+                    <field name="add_extension"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="rspayment-strategy_details_form_view">
+            <field name="name">rspayment_strategy_details.form</field>
+            <field name="model">rs.payment_strategy_details</field>
+            <field name="arch" type="xml">
+                <form string="Payment Strategy Detail">
+
+                    <sheet>
+                        <group>
+                            <field name="calculate_by"/>
+                        </group>
+                        <group>
+                            <group string="Basic Information">
+                                <field name="payment_line_type_id" required='1'/>
+                                <field name="name"
+                                       force_save="1" readonly="1"/>
+                                <field name="deposit"/>
+                                <field name="add_extension"/>
+                                <field name="inst_percentage"/>
+                                <field name="number_of_inst"/>
+                                <field name="payment_strategy_id"
+                                       invisible="1"/>
+                            </group>
+                            <group string="Calculator" groups="add_real_estate.group_payment_term_calculator">
+                                <field name="unit_price"
+                                       attrs="{'required' : [('calculate_by', '=', 'value')]}"/>
+                                <field name="amount"
+                                       attrs="{'required' : [('calculate_by', '=', 'value')]}"/>
+                                <field name="calc_no_inst"
+                                       attrs="{'required' : [('calculate_by', '=', 'value')]}"/>
+                                <field name="inst_value"/>
+                            </group>
+                            <group string="Installment Range">
+                                <field name="journal_id"
+                                       domain="[('type','in',['bank', 'cash'])]"
+                                       widget="selection"
+                                       string="Payment Method"
+                                       required="1"/>
+                                <field name="inst_range"
+                                       widget="radio"/>
+                                <field name="by_days"
+                                       attrs="{'invisible' : [('inst_range', '=', 2)],'required' : [('inst_range', '=', 1)]}"/>
+                                <field name="by_period"
+                                       attrs="{'invisible' : [('inst_range', '=', 1)],'required' : [('inst_range', '=', 2)]}"/>
+                                <!--<field name="date" attrs="{'invisible' : [('by_period', '!=', 5)]}"/>-->
+                                <field name="shift_by"
+                                       attrs="{'invisible' : [('inst_range', '=', 1)]}"/>
+                                <field name="shifting_days"
+                                       attrs="{'invisible' : ['|', ('inst_range', '=', 1), ('shift_by', '=', 2)]}"/>
+                                <field name="shifting_months"
+                                       attrs="{'invisible' : ['|', ('inst_range', '=', 1), ('shift_by', '=', 1)]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="rspayment_strategy_details_tree_view">
+            <field name="name">rspayment_strategy_details.tree</field>
+            <field name="model">rs.payment_strategy_details</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Strategy Details">
+                    <field name="name"/>
+                    <field name="number_of_inst"/>
+                    <field name="inst_percentage"/>
+                    <field name="by_period"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="rsproject_strategy_details_list_action">
+            <field name="name">Strategy Details</field>
+            <field name="res_model">rs.payment_strategy_details</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="payment_strg_view_form" model="ir.ui.view">
+            <field name="name">Payment.Strg view</field>
+            <field name="model">payment.strg.request</field>
+            <field name="arch" type="xml">
+                <form string="Payment Strategy Detail">
+                    <header attrs="{'invisible' : ['|',('type', '!=', 'bank')]}">
+                        <button name="under_collection_deposit"
+                                type="object"
+                                attrs="{'invisible' : ['|','|',('deposite', '=', False),('cheque_status','!=','received'),('is_bank_transfer', '=', False)]}"
+                                string="Under Collection"
+                                class="oe_highlight"/>
+
+                        <button string="Collection"
+                                name="penalty_fees_check"
+                                type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible' : ['|',('is_bank_transfer', '=', False),('collected_journal_entry_id', '!=', False)]}"/>
+
+                        <button string="Reject"
+                                name="rejected_check"
+                                type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible' : ['|','|',('rejected', '=', True),('cheque_status','=','collection'),('is_bank_transfer', '=', False)]}"/>
+
+                        <field name="cheque_status"
+                               widget="statusbar"
+                               statusbar_visible="received,under_collection,rejected,collection"
+                               attrs="{'invisible' : [('is_bank_transfer', '=', False)]}"/>
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="payment_code" style="color:#893b74;"/>
+                            <h1>
+                                <field name="payment_code" readonly="1"/>
+                                <field name="deposite" invisible="1"/>
+                            </h1>
+                        </div>
+
+                        <label for="description" style="color:#893b74;"/>
+                        <field name="description"/>
+
+                        <group string="Reservation Details" style="color:#893b74;"/>
+                        <group col="4">
+                            <field name="is_bank_transfer" invisible="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="reserve_id" readonly="1"/>
+                            <field name="sale_order_id" readonly="1"/>
+                            <field name="project_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="property_ids" readonly="1" widget="many2many_tags"/>
+                        </group>
+                        <group string="Payment Details" style="color:#893b74;"/>
+                        <group col="4">
+                            <field name="cus_bank"/>
+                            <field name="cheque"/>
+                            <field name="payment_date"/>
+                            <field name="bank_name"/>
+<!--                            <field name="days_diff" readonly="1"/>-->
+                            <field name="journal_id" domain="[('type','in',['bank', 'cash'])]"
+                                   options="{'no_create': True}" string="Payment Method" readonly="1"/>
+                            <field name="type" readonly="1"/>
+                            <field name="add_extension" readonly="1"/>
+                            <field name="cancelled" readonly="1"/>
+                            <field name="maintainance_fees" readonly="1"/>
+                            <field name="payment_method_id" invisible="1"/>
+                            <field name="under_collected_journal_entry_id"
+                                   attrs="{'invisible' : ['|',('type', '!=', 'bank')]}" readonly="1"/>
+                            <field name="collected_journal_entry_id"
+                                   attrs="{'invisible' : ['|',('type', '!=', 'bank')]}" readonly="1"/>
+                            <field name="penalty_journal_entry_id"
+                                   attrs="{'invisible' : [('apply_penalty', '=', False)]}" readonly="1"/>
+                            <field name="rejected" invisible="1"/>
+                            <field name="apply_penalty" invisible="1"/>
+                            <field name="deduction_amount" invisible="1"/>
+
+                        </group>
+                        <group>
+                            <field name="rejection_action" readonly="1"
+                                   attrs="{'invisible' : ['|',('type', '!=', 'bank'),('cheque_status','!=','rejected')]}"/>
+                            <field name="rejection_cash_payment_id" readonly="1"
+                                   attrs="{'invisible' : ['|',('type', '!=', 'bank'),
+                                    ('cheque_status','!=','rejected'),('rejection_action','!=','transfer')]}"/>
+                        </group>
+                        <group class="oe_subtotal_footer oe_right">
+                            <h1>
+                                <field name="amount" readonly="1"/>
+                            </h1>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="payment_strg_tree_view" model="ir.ui.view">
+            <field name="name">payment.strg tree</field>
+            <field name="model">payment.strg.request</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Strategy Details">
+                                        <field name="project_id" invisible="1"/>
+                    <field name="reserve_id" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="description"/>
+                    <field name="payment_date"/>
+                    <field name="partner_id" invisible="1"/>
+                    <field name="customer_id"/>
+                    <field name="property_ids"/>
+<!--                    <field name="days_diff"/>-->
+                    <field name="journal_id" string="Payment Method"/>
+                    <field name="type"/>
+                    <field name="cancelled"/>
+                    <field name="amount" sum="Total"/>
+                    <field name="cheque_status"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+
+    </data>
+</odoo>

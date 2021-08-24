@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+    <template id="print_dev_loan_template">
+		    <t t-call="dev_loan_management.dev_loan_external_layout">
+                <div class="page" style="color:#000">
+                    <style>
+                        .table{
+                            'width':100%;
+                        }
+                        .right_table td{
+                            padding:3px;
+                            text-transform: capitalize;
+                        }
+                        .detail_table td{
+                            font-size:15px;
+                            padding:3px;
+                            text-transform: capitalize;
+                            text-align:center;
+                            border:1px solid #d9d9db;
+                        }
+                        .main_table{
+                            width:100%;
+                        }
+                        .main_table th{
+                            padding:5px;
+                            background:#e3e4e5;
+                            border-bottom:1px solid black;
+                        }
+                        .main_table td{
+                            padding:5px;
+                        }
+                        .main_table .success{
+                            background:#7adbb0;
+                        }
+                    </style>
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h3><span t-esc="o.name"/></h3>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt16 mb16">
+                        <div class="col-6" style="font-size:15px">
+                            <b>Borrower Detail</b>
+                            <div t-field="o.client_id"
+                                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                        </div>
+                        <div class="col-6" style="font-size:15px">
+                            <table class="right_table" style="border:0px solid #FFF">
+                                <t t-if="o.request_date">
+                                <tr>
+                                    <td style="width:43%"><b>Request Date</b></td>
+                                    <td style="width:2%"> : </td>
+                                    <td style="width:55%">
+                                        <span t-field="o.request_date" t-options ='{"format": "dd-MM-yyyy"}' />
+                                    </td>
+                                </tr>
+                                </t>
+                                <t t-if="o.disbursement_date">
+                                    <tr>
+                                        <td><b>Disbursement Date</b></td>
+                                        <td> : </td>
+                                        <td>
+                                            <span t-field="o.disbursement_date" t-options ='{"format": "dd-MM-yyyy"}' />
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td><b>Loan Type</b></td>
+                                    <td> : </td>
+                                    <td><span t-esc="o.loan_type_id.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Installment Type</b></td>
+                                    <td> : </td>
+                                    <td><span t-esc="o.installment_type"/></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Loan Term</b></td>
+                                    <td> : </td>
+                                    <td><span t-esc="o.loan_term"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row mt16 mb16">
+                        <div class="col-12">
+                            <table class="detail_table" style="width:100%">
+                                <tr>
+                                    <td style="width:25%"><b>Loan Amount</b></td>
+                                    <td style="width:25%"><b>Interest Rate</b></td>
+                                    <td style="width:25%"><b>Interest Mode</b></td>
+                                    <td style="width:25%"><b>Interest Amount</b></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span t-field="o.loan_amount" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.interest_rate"/>
+                                    </td>
+                                    <td><span t-esc="o.interest_mode"/></td>
+                                    <td>
+                                        <span t-field="o.total_interest" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row mt16 mb16">
+                        <div class="col-12">
+                            <table class="main_table" style="font-size:15px">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Date</th>
+                                        <th class="text-right">Principal Amount</th>
+                                        <th class="text-right">Interest Amount</th>
+                                        <th class="text-right">EMI(Installment)</th>
+                                    </tr>
+                               </thead>
+                               <tbody>
+                                    <t t-foreach="o.installment_ids" t-as="line">
+                                        <t t-if="line.state == 'paid'">
+                                            <tr class="success">
+                                                <td><span t-field="line.name"/></td>
+                                                <td>
+                                                    <span t-field="line.date" t-options ='{"format": "dd-MM-yyyy"}' />
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="line.amount" t-field-options='{"widget": "monetary", "display_currency": "line.currency_id"}'/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="line.interest" t-field-options='{"widget": "monetary", "display_currency": "line.currency_id"}'/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="line.total_amount" t-field-options='{"widget": "monetary", "display_currency": "line.currency_id"}'/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="line.state != 'paid'">
+                                            <tr>
+                                                <td><span t-field="line.name"/></td>
+                                                <td><span t-field="line.date" t-options ='{"format": "dd-MM-yyyy"}' /></td>
+                                                <td class="text-right">
+                                                    <span t-field="line.amount" t-field-options='{"widget": "monetary", "display_currency": "line.currency_id"}'/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="line.interest" t-field-options='{"widget": "monetary", "display_currency": "line.currency_id"}'/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="line.total_amount" t-field-options='{"widget": "monetary", "display_currency": "line.currency_id"}'/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+    </template>
+
+    <template id="report_print_loan_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="dev_loan_management.print_dev_loan_template" />
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

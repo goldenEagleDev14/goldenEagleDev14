@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+	<record id="view_dev_installment_reminder_config_form" model="ir.ui.view">
+        <field name="name">view.dev.installment.reminder.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="50"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+	        <xpath expr="//div[hasclass('settings')]" position="inside">
+	            <div class="app_settings_block" data-string="Loan" data-key="dev_loan_management">
+	            	<h2>Intallment Reminder Before Days</h2>
+                    <div class="col-xs-12 col-md-6 o_setting_box" data-key="hr">
+                        <div class="o_setting_left_pane">
+                            <group>
+                                <field name="ins_reminder_days" readonly="0"/>
+                            </group>
+                        </div>
+                    </div>
+	            </div>
+	        </xpath>
+		</field>
+	</record>
+
+    <record id="action_loan_config" model="ir.actions.act_window">
+        <field name="name">Loan</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="view_dev_installment_reminder_config_form"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'dev_loan_management'}</field>
+    </record>
+
+    <menuitem id="menu_loan_setting" name="Settings" parent="dev_loan_management.menu_dev_loan_configration" action="action_loan_config" sequence="1" />
+
+
+</odoo>

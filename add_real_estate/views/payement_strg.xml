@@ -1,0 +1,59 @@
+<odoo>
+  <data>
+        <record id="payment_strg_tree_1" model="ir.ui.view">
+            <field name="name">payment.strg tree</field>
+            <field name="model">payment.strg</field>
+            <field name="arch" type="xml">
+                <tree string="Instalment Lines" >
+                                        <field name="is_add_unit" invisible="1" />
+                                        <field name="reserve_id" />
+                    <field name="unit_id"/>
+                                        <field name="payment_code" />
+                                        <field name="payment_date"
+                                               optional="show"/>
+                    <field name="description"
+                                                optional="show"/>
+                                                            <field name="base_amount"  string="Amount Base" optional="show"/>
+
+<!--                                        <field name="amount"-->
+<!--                                                sum="Amount" optional="show"/>-->
+<!--                                        <field name="base_amount" forec_save="1" string="Amount Base" optional="hide"/>-->
+<!--                                        <field name="amount_due"-->
+<!--                                               readonly="1" sum="Amount Due" optional="show"/>-->
+<!--                                        <field name="amount_pay"-->
+<!--                                               readonly="1" sum="Pay" optional="show"/>-->
+<!--                                        <field name="payment_date"-->
+<!--                                                 optional="show"/>-->
+<!--                                        <field name="journal_id"-->
+
+<!--                                               string="Payment Method"-->
+<!--                                                 optional="show"/>-->
+<!--                                        <field name="state_payment"-->
+<!--                                               string="State Payment"  optional="show" required="1"/>-->
+
+<!--                                        <field name="bank_name"   optional="show"/>-->
+<!--                                        <field name="cheque"   optional="show"/>-->
+<!--                                        <field name="deposite"-->
+<!--                                                 optional="show"/>-->
+<!--                                        <field name="is_maintainance"  optional="show"/>-->
+<!--                                        <field name="is_no_enter_total"  optional="show"/>-->
+<!--                                        <field name="is_receive"   optional="show"/>-->
+<!--                                        <field name="is_pay" readonly="1"   optional="show"/>-->
+<!--                                        <field name="bank_ids" widget="many2many_tags"   optional="show" />-->
+<!--                                        <field name="payments_ids" widget="many2many_tags"   optional="show" />-->
+<!--                                        <field name="state"    optional="show" />-->
+                </tree>
+            </field>
+        </record>
+
+      <record id="payment_strg_action" model="ir.actions.act_window">
+          <field name="name">Instalment Lines</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">payment.strg</field>
+          <field name="view_mode">tree</field>
+      </record>
+      <!-- This Menu Item must have a parent and an action -->
+      <menuitem id="payment_strg_menu" name="Instalment Lines" parent="add_real_estate.payment_sub" action="payment_strg_action" sequence="10"/>
+
+  </data>
+</odoo>

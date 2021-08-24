@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<odoo>
+            <record id="crm_lead_from_marketing_new" model="ir.actions.act_window">
+        <field name="name">Welcome Care</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">form,tree</field>
+        <field name="domain"></field>
+        <field name="context"></field>
+    </record>
+        <record id="market_plan_form" model="ir.ui.view">
+            <field name="name">market.plan.forn</field>
+            <field name="model">market.plan</field>
+            <field name="arch" type="xml">
+                <form string="marketing Plan">
+                    <header>
+                        <button string="Create Welcome Card" name="%(add_crm_real_estate.crm_lead_from_marketing_new)d" type="action"
+                        class="oe_highlight"
+                        context="{'search_default_market_plan_id': active_id,
+                                  'default_market_plan_id': active_id,
+
+                                  }"
+                />
+                </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_lead_view" type="object"
+                                class="oe_stat_button" icon="fa-calendar"
+                                context="{'search_default_market_plan_id': active_id}">
+                                <div class="o_stat_info">
+                                    <field name="actual_lead_count" class="o_stat_value"/>
+                                    <span class="o_stat_text" attrs="{'invisible': [('actual_lead_count', '&lt;', 2)]}"> Actual Leads</span>
+                                    <span class="o_stat_text" attrs="{'invisible': [('actual_lead_count', '&gt;', 1)]}"> Actual Lead</span>
+                                </div>
+                            </button>
+                            <button name="action_lead_visit_view" type="object"
+                                class="oe_stat_button" icon="fa-calendar"
+                                context="{'search_default_market_plan_id': active_id}">
+                                <div class="o_stat_info">
+                                    <field name="visit_lead_count" class="o_stat_value"/>
+                                    <span class="o_stat_text" attrs="{'invisible': [('visit_lead_count', '&lt;', 2)]}"> Visit Leads</span>
+                                    <span class="o_stat_text" attrs="{'invisible': [('visit_lead_count', '&gt;', 1)]}"> Visit Lead</span>
+                                </div>
+                            </button>
+                        </div>
+                            <h3>
+                                <span>Marketing Plan Name :</span>
+                            </h3>
+
+                            <!-- Select next number header (only invoices) -->
+<!--                            <span class="o_form_label" attrs="{'invisible': [('invoice_sequence_number_next_prefix', '=', False)]}">First Number:</span>-->
+
+                            <!-- Number -->
+                            <h1 class="mt0">
+                                <field name="name" readonly="True" attrs="{'invisible':[('name', '=', '/')]}"/>
+                            </h1>
+                        <group>
+                                <group>
+<!--                                    <field name="activity_ids" widget="one2many">-->
+<!--                        <tree string="activity_ids">-->
+<!--                            <field name="display_name"/>-->
+<!--                            <field name="date_deadline"/>-->
+<!--                        </tree>-->
+<!--                        <form string="Values">-->
+<!--                            <field name="display_name"/>-->
+<!--                            <field name="date_deadline"/>-->
+<!--                        </form>-->
+<!--                    </field>-->
+<!--                            <field name="name"/>-->
+                            <field name="platform_id"/>
+                            <field name="category_id"/>
+                            <field name="type_id"/>
+                            <field name="target_id"/>
+                            <field name="ads_name"/>
+                            <field name="ads_link"/>
+                            <field name="ads_marketing_cost"/>
+                            </group>
+                            <group>
+<!--                                <field name="visit_lead_count"/>-->
+                                <field name="lead_cost"/>
+                                <field name="planned_leads"/>
+                                <field name="actual_leads"/>
+                                <field name="start_palnned_date"/>
+                                <field name="end_palnned_date"/>
+                                <field name="start_actual_date"/>
+                                <field name="end_actual_date"/>
+                                <field name="owner_id"/>
+                                <field name="project_id"/>
+                                <field name="lead_type_id"/>
+                            </group>
+                        </group>
+
+                    </sheet>
+                                        <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="market_plan_tree_view_leads_inherite" model="ir.ui.view">
+            <field name="name">market.plan.tree.lead.inherite</field>
+            <field name="model">market.plan</field>
+            <field name="arch" type="xml">
+                    <tree string="Marketing Plan" >
+                                                <field name="name"/>
+                                                <field name="platform_id"/>
+                            <field name="category_id"/>
+                            <field name="type_id"/>
+                            <field name="target_id"/>
+                            <field name="ads_name"/>
+                            <field name="ads_link"/>
+                            <field name="ads_marketing_cost"/>
+                            <field name="lead_cost"/>
+                            <field name="planned_leads"/>
+                            <field name="actual_leads"/>
+                            <field name="start_palnned_date"/>
+                            <field name="end_palnned_date"/>
+                            <field name="start_actual_date"/>
+                            <field name="end_actual_date"/>
+                            <field name="owner_id"/>
+                            <field name="project_id"/>
+                            <field name="lead_type_id"/>
+
+                </tree>
+            </field>
+        </record>
+            <record id="view_market_plan_filter" model="ir.ui.view">
+            <field name="name">account.invoice.select</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <search string="Search Invoice">
+                    <group expand="0" string="Group By">
+                        <filter string="Start Palnned Date" name="startpalnneddate" context="{'group_by': 'start_palnned_date'}"/>
+                        <filter string="End Palnned Date" name="endpalnneddate" context="{'group_by': 'end_palnned_date'}"/>
+                        <filter string="Start Actual Date" name="startactualdate" context="{'group_by': 'start_actual_date'}"/>
+                        <filter string="End Actual Date" name="endactualdate" context="{'group_by': 'end_actual_date'}"/>
+<!--                        <filter string="Due Date" name="duedate" context="{'group_by': 'invoice_date_due'}"/>-->
+                    </group>
+               </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="market_plan_action">
+            <field name="name">Marketing Plan</field>
+            <field name="res_model">market.plan</field>
+            <field name="view_mode">tree,form</field>
+                        <field name="search_view_id" ref="view_market_plan_filter"/>
+<!--            <field name="domain">[('type','=','opportunity')]</field>-->
+<!--            <field name="context">{-->
+<!--                    'default_type': 'opportunity',-->
+<!--                    'search_default_assigned_to_me': 1-->
+<!--            }</field>-->
+<!--            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>-->
+        </record>
+
+        <menuitem id="market_plan_menu"
+            name="Marketing Plan "
+            parent="crm.crm_menu_root"
+            action="market_plan_action"
+            sequence="5"/>
+
+
+<!--sub menu    -->
+        <!-- This Menu Item must have a parent and an action -->
+    <record id="platform_plan_action" model="ir.actions.act_window">
+        <field name="name">Platforms</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">platform.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="platform_plan_menu" name="Platforms" parent="crm.crm_menu_config" action="platform_plan_action" sequence="10"/>
+
+        <record id="category_plan_action" model="ir.actions.act_window">
+        <field name="name">Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">category.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="category_plan_menu" name="Categories" parent="crm.crm_menu_config" action="category_plan_action" sequence="10"/>
+
+            <record id="type_plan_action" model="ir.actions.act_window">
+        <field name="name">Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">type.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="type_plan_menu" name="Types" parent="crm.crm_menu_config" action="type_plan_action" sequence="10"/>
+
+            <record id="target_plan_action" model="ir.actions.act_window">
+        <field name="name">Targets</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">target.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="target_plan_menu" name="Targets" parent="crm.crm_menu_config" action="target_plan_action" sequence="10"/>
+
+            <record id="lead_type_plan_action" model="ir.actions.act_window">
+        <field name="name">leads type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">lead.type.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="lead_type_plan_menu" name="leads type" parent="crm.crm_menu_config" action="lead_type_plan_action" sequence="10"/>
+
+
+</odoo>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+    <record id="view_dev_loan_loan_form" model="ir.ui.view">
+        <field name="name">view.dev.loan.loan.form</field>
+        <field name="model">dev.loan.loan</field>
+        <field name="arch" type="xml">
+            <form string="Loan">
+                <header>
+                    <button name="action_confirm_loan" states="draft" string="Confirm"
+                            class="btn-primary" type="object" groups="dev_loan_management.group_loan_user"/>
+                            
+                    <button name="compute_installment" states="draft" string='Calculate Installment' type="object"
+                        class="btn-primary" groups="dev_loan_management.group_loan_user" />
+                        
+                    <button name="action_set_to_draft" type="object" states="reject" string='Set to Draft' 
+                            groups="dev_loan_management.group_loan_user"/>
+                            
+                            
+                    <button name="action_approve_loan" states="confirm" string="Approve"
+                            class="btn-primary" type="object" groups="dev_loan_management.group_loan_manager"/>
+                    
+                    <button name="%(action_dev_loan_reject_form)d" states="confirm" string="Reject"
+                             type="action" groups="dev_loan_management.group_loan_manager"/>
+                    
+                    <button name="action_disburse_loan" states="approve" string="Disburse Loan"
+                            class="btn-primary" type="object" groups="account.group_account_invoice"/>
+                            
+                    <button name="action_open_loan" states="disburse" string="Open Loan"
+                            class="btn-primary" type="object" groups="account.group_account_invoice"/>
+                            
+                            
+					<field name="state" widget="statusbar" statusbar_visible="draft,confirm,approve"/>
+				</header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_get_attachment_view" class="oe_stat_button" icon="fa-file-text-o" type="object">
+                            <field name="attachment_number" widget="statinfo" string="Documents" options="{'reload_on_button': true}"/>
+                        </button>
+                    </div>
+                    <label for="name" class="oe_edit_only"/>
+                	<h1><field name="name" readonly="1"/></h1>
+                    <group>
+                        <group>
+                            <field name="client_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="loan_type_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="request_date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="disbursement_date" 
+                                attrs="{'invisible':[('state','not in',('disburse','open','close'))]}" readonly="1"/>
+                            <field name="approve_date" attrs="{'invisible':[('state','in',('draft','confirm','cancel'))]}" readonly="1"/>
+                            <field name="user_id" readonly="1"/>
+                            <field name="company_id" readonly="1"/>
+                            <field name="loan_url" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="loan_term" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="loan_amount" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="total_interest"/>
+                            <field name="paid_amount"/>
+                            <field name="remaing_amount"/>
+                        </group>
+                        <group>
+                            <field name="is_interest_apply" invisible="1"/>
+                            <field name="installment_type" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="interest_rate" readonly="1" attrs="{'invisible':[('is_interest_apply','=',False)]}"/>
+                            <field name="interest_mode" readonly="1" attrs="{'invisible':[('is_interest_apply','=',False)]}"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string='Installments'>
+                            <field name="installment_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="amount" sum="amount"/>
+                                    <field name="interest" sum="interest"/>
+                                    <field name="total_amount" string='EMI (Installment)' sum="total_amount"/>
+                                    <field name="state"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="loan_state" invisible="1"/>
+                                    <button name="action_paid_installment" 
+                                        attrs="{'invisible':['|',('loan_state','!=','open'),('state','=','paid')]}" string="Pay"
+                                        class="btn-primary" type="object" groups="account.group_account_invoice"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string='Proof'>
+                            <group>
+                                <field name="proof_ids" widget="many2many_tags" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            </group>
+                            <field name="loan_document_ids" mode="kanban" context="{'default_res_id': active_id,'default_res_model': 'dev.loan.loan','res_model':'dev.loan.loan','res_name':name}" domain="[('res_id','=',active_id),('res_model','=','dev.loan.loan')]" readonly="1">
+                                <kanban>
+                                    <field name="name"/>
+                                    <field name="res_id"/>
+                                    <field name="res_model"/>
+                                    <field name="datas"/>
+                                    <field name="id"/>
+                                    <field name="mimetype"/>
+                                    <templates>
+		                                <t t-name="kanban-box">
+		                                    <div class="oe_kanban_global_click" style="max-width: 200px">
+		                                        <div class="o_kanban_record_top">
+		                                        	<img t-att-src="kanban_image('ir.attachment', 'datas', record.id.raw_value)" height="100" width="182" class="oe_avatar oe_kanban_avatar_smallbox mb0"/>
+		                                        	
+		                                            <a t-if="! read_only_mode" type="delete" class="text-danger">
+		                                                <i class="fa fa-times"/>
+		                                            </a>
+		                                        </div>
+		                                        <div class="oe_kanban_details" style="text-align:center">
+									                <p><h5><field name="name"/></h5></p>
+									                <field name="res_id"/><field name="res_model"/>
+											    </div>
+		                                    </div>
+		                                </t>
+		                            </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                        <page string='Accounting' groups="account.group_account_invoice"
+                            attrs="{'invisible':[('state','in',['draft','confirm','approve','cancel','reject'])]}">
+                            <group>
+                                <group>
+                                    <field name="loan_account_id" attrs="{'readonly':[('state','!=','approve')]}"/>
+                                    <field name="disburse_journal_id" attrs="{'readonly':[('state','!=','approve')]}"/>
+                                </group>
+                                <group>
+                                    <field name="disburse_journal_entry_id" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string='Notes'>
+                            <br/>
+                            <field name="notes" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </page>
+                        <page string='Reject Reason' attrs="{'invisible':[('state','!=','reject')]}">
+                            <group>
+                                <field name="reject_user_id" readonly="1"/>
+                            </group>
+                            <br/>
+                            <field name="reject_reason" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+			        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+			        <field name="message_ids" widget="mail_thread"/>
+			    </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_dev_loan_loan_tree" model="ir.ui.view">
+        <field name="name">view.dev.loan.loan.tree</field>
+        <field name="model">dev.loan.loan</field>
+        <field name="arch" type="xml">
+            <tree string="Loan Request" decoration-success="state=='close'" decoration-danger="state=='reject'" decoration-muted="state=='cancel'">
+                <field name="name"/>
+                <field name="client_id"/>
+                <field name="loan_type_id"/>
+                <field name="request_date"/>
+                <field name="loan_amount" sum="loan_amount"/>
+                <field name="interest_mode"/>
+                <field name="interest_rate"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    
+    
+    <record id="filter_dev_loan_loan" model="ir.ui.view">
+        <field name="name">filter.dev.loan.loan</field>
+        <field name="model">dev.loan.loan</field>
+        <field name="arch" type="xml">
+            <search string="Search Loan">
+            	<field name="client_id" operator="child_of"/>
+                <field name="name" string="Loan" filter_domain="[('name','ilike',self)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Borrower" name="client_id" context="{'group_by':'client_id'}"/>
+                    <filter string="States" name="state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+
+    <record id="action_dev_loan_loan" model="ir.actions.act_window">
+        <field name="name">Loan Request</field>
+        <field name="res_model">dev.loan.loan</field>
+        <field name="domain">[('state','in',['draft','reject','cancel'])]</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    
+    <record id="action_dev_loan_loan_approve" model="ir.actions.act_window">
+        <field name="name">Loan Request</field>
+        <field name="res_model">dev.loan.loan</field>
+        <field name="domain">[('state','not in',['draft','reject','cancel'])]</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+	<!--  Menu Items-->
+    
+    <menuitem name="Loan" parent="menu_dev_loan_main" id="menu_dev_loan_request_main" sequence="2" groups="dev_loan_management.group_loan_user"/>
+    
+    <menuitem name="Loan Request" id="menu_dev_loan_request" parent="dev_loan_management.menu_dev_loan_request_main" action="action_dev_loan_loan" sequence="1"/>
+    
+    <menuitem name="Loan Request to Approve" id="menu_dev_loan_request_approve" parent="dev_loan_management.menu_dev_loan_request_main" action="action_dev_loan_loan_approve" sequence="2" />
+    
+    
+     <menuitem name="Loans" parent="account.menu_finance" id="menu_account_loan_main" sequence="3" groups="account.group_account_invoice"/>
+    
+    <menuitem name="Loan Request" id="menu_dev_account_loan" parent="dev_loan_management.menu_account_loan_main" action="action_dev_loan_loan_approve" sequence="1"/>
+    
+<!--    <menuitem name="Loan Request to Approve" id="menu_dev_loan_request_approve" parent="dev_loan_management.menu_dev_loan_request_main" action="action_dev_loan_loan_approve" sequence="2"/>-->
+    
+    
+    
+</odoo>

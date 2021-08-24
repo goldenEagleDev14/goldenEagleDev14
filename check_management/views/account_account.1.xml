@@ -1,0 +1,21 @@
+[
+
+('state', 'attrs', "{'readonly':[('state','!=','draft')]}"),
+('company_id', 'domain', "['|', ('company_id', '=', False), ('company_id', '=', company_id)]"),
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','!=','draft')]}"),
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','!=','draft')]}"),
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','!=','draft')]}"),
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','!=','draft')]}"),
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','!=','draft')]}"), 
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','!=','draft')]}"),
+('batch_state', 'attrs', "{'readonly':[('batch_state','=','draft'),('state','=','posted')]}"),
+('state', 'attrs', "{'readonly':[('batch_state','=','draft'),('state','=','posted')]}"), 
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','in',['collected','done'])]}"),
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','in',['collected','done'])]}"),
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','!=','draft')]}"),
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','!=','draft')]}"), 
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','!=','draft')]}"),
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','!=','draft')]}"), 
+('state', 'attrs', "{'invisible':[('state','in',['collect','done'])],'readonly':[('state','!=','draft')]}")
+
+]

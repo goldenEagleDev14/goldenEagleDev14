@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+          <!-- Inherit Form View to Modify it -->
+          <record id="view_employee_form_create_partner" model="ir.ui.view">
+              <field name="name">hr.employee</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hr.view_employee_form"/>
+              <field name="arch" type="xml">
+
+                  <xpath expr="//button[1]" position="after">
+                        <button name="create_partner_new" type="object" string="Create Partner" group="add_create_partner_in_employee.group_create_partner_employee" attrs="{'invisible': [('address_home_id', '!=', False)]}"/>
+                  </xpath>
+
+              </field>
+          </record>
+  </data>
+</odoo>

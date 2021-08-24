@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Form View -->
+        <record id="form_rejected_check_view" model="ir.ui.view">
+            <field name="name">form rejected check view</field>
+            <field name="model">rejected.check</field>
+            <field name="arch" type="xml">
+                <form string="rejected check">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="rejection_action"
+                                       required="1" readonly="0"/>
+                                <field name="payment_strg_id"
+                                       readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="sale_order_id"
+                                       readonly="1"/>
+                                <field name="customer_id"
+                                       readonly="1"/>
+                                <field name="rejected"
+                                       invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="journal_id"
+                                       attrs="{'required' : [('rejection_action', '=', 'transfer')],'invisible' : [('rejection_action', '!=', 'transfer')], 'readonly': 0}"
+                                       widget="selection"/>
+
+                            </group>
+                        </group>
+                        <group col="4">
+                            <field name="days_diff" invisible="1"/>
+                            <field name="apply_penalty" invisible="1" />
+                            <field name="deduction_amount" readonly="1"
+                                   attrs="{'invisible' : [('apply_penalty', '=', False)]}"/>
+                            <field name="penalty_journal_id"
+                                   attrs="{'invisible' : [('apply_penalty', '=', False)], 'readonly': 0}"/>
+                            <field name="penalty_date"
+                                   attrs="{'invisible' : [('apply_penalty', '=', False)], 'readonly': 0}"/>
+                        </group>
+                        <footer>
+                            <button name="button_rejected_check"
+                                    type="object"
+                                    string="Reject"
+                                    ttrs="{'invisible' : [('rejected', '!=', False)]}"
+                                    class="oe_highlight"/>
+                            <button name="ignore"
+                                    string="Ignore"
+                                    type="object"
+                                    class="btn-primary"
+                                    groups="sky_height.group_sky_height_penalty_fees"
+                                    attrs="{'invisible' : [('apply_penalty', '=', False)]}"/>
+
+                        </footer>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

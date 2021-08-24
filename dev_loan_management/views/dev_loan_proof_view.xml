@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+    <record id="view_dev_loan_proof_form" model="ir.ui.view">
+        <field name="name">view.dev.loan.proof.form</field>
+        <field name="model">dev.loan.proof</field>
+        <field name="arch" type="xml">
+            <form string="Proofs">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="is_required"/>
+                        </group>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_dev_loan_proof_tree" model="ir.ui.view">
+        <field name="name">view.dev.loan.proof.tree</field>
+        <field name="model">dev.loan.proof</field>
+        <field name="arch" type="xml">
+            <tree string="Loan Proofs" editable="bottom">
+                <field name="name"/>
+                <field name="is_required"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_dev_loan_proof" model="ir.actions.act_window">
+        <field name="name">Loan Proof</field>
+        <field name="res_model">dev.loan.proof</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+	<!--  Menu Items-->
+    
+    
+    <menuitem name="Loan Proofs" id="menu_dev_loan_proof" parent="dev_loan_management.menu_dev_loan_configration" action="action_dev_loan_proof" sequence="3"/>
+</odoo>

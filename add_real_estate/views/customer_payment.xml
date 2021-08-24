@@ -1,0 +1,96 @@
+<odoo>
+    <data>
+        <record id="customer_payment_form_view" model="ir.ui.view">
+            <field name="name">customer.payment</field>
+            <field name="model">customer.payment</field>
+            <field name="arch" type="xml">
+                <form string="Customer Payment">
+                    <header>
+                        <button name="approved" type="object" string="Approved" attrs="{'invisible': [('state', '!=', 'draft')]}" status="draft"/>
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <div class="oe_title" >
+
+                            <h2><field name="name" placeholder="Payment Name" readonly="1"/></h2>
+                    </div>
+                        <group>
+                            <group colspan="2" >
+                            <field name="date" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <field name="state_payment" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <field name="journal_id" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <field name="partner_id" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <field name="reservation_id"  attrs="{'readonly': [('state', '!=', 'draft')]}" domain="[ ('customer_id', '=', partner_id),('state', 'in', ['reserved','contracted'])]"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="bank_name" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <field name="start_cheque" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <field name="end_cheque" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <button name="update_bank_data"    attrs="{'readonly': [('state', '!=', 'draft')]}" type="object" string="Update Bank and check Number"  />
+                        </group>
+                        <group colspan="2">
+                            <field name="is_select_all" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+
+                        </group>
+
+                        <notebook>
+                            <page name="payment" string="Payment">
+
+                                <field name="loan_line"
+                                       widget="one2many_list"
+                                       nolabel="1"
+                                       class="oe_inline oe_no_button"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                >
+                                    <tree string="Payment"
+                                          editable="buttom">
+                                        <field name="is_pay"/>
+                                        <field name="payment_date"/>
+                                        <field name="description"/>
+                                        <field name="state_payment"/>
+                                        <field name="type"/>
+                                        <field name="bank_name"/>
+                                        <field name="cheque"/>
+<!--                                        <field name="payment_strg_id"/>-->
+                                        <field name="is_main"/>
+                                        <field name="installment_line_id"/>
+                                        <field name="amount"/>
+                                        <field name="amount_due" readonly="1" force_save="1" />
+                                    </tree>
+                                </field>
+                            </page>
+                                                    </notebook>
+                        <group colspan="2">
+                            <field name="total_amount"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="customer_payment_tree_view" model="ir.ui.view">
+            <field name="name">customer.paymentres.reservation.reservation.tree view</field>
+            <field name="model">customer.payment</field>
+            <field name="arch" type="xml">
+                <tree string="Customer Payment">
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="journal_id"/>
+                            <field name="partner_id"/>
+                            <field name="reservation_id"/>
+                            <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="customer_payment_list_action">
+            <field name="name">Customer Payment</field>
+            <field name="res_model">customer.payment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="customer_payment_menu_item"
+                  name="Customer Payments"
+                  parent="payment_sub"
+                  action="customer_payment_list_action" sequence="2" groups="add_real_estate.group_customer_payment_menuitem"/>
+
+    </data>
+</odoo>

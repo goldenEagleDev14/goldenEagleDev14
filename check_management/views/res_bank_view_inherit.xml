@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="discount_check_bank_view_id" model="ir.ui.view">
+            <field name="name">discount check view</field>
+            <field name="model">res.bank</field>
+            <field name="inherit_id" ref="base.view_res_bank_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//form" position="inside">
+
+                    <notebook>
+
+                            <page string="Discount Check Configuration">
+                                <group>
+                                    <group>
+                                        <field name="available_pool"/>
+                                        <field name="central_percentage"/>
+                                        <field name="loan_percentage"/>
+                                        <field name="account_id"/>
+                                    </group>
+                                    <group>
+                                        <field name="is_warning" string="Validation For Warning ?"/>
+                                        <field name="min_num_of_days" string="Minmum Numbers Of Days"/>
+                                        <field name="max_num_of_days" string="Maxmum Numbers Of Days"/>
+
+                                    </group>
+                                </group>
+                            </page>
+                    </notebook>
+                    <!-- Add your fields or attributes here -->
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

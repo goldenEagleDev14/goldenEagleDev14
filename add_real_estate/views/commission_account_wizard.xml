@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="excel_Dowload" model="ir.ui.view">
+            <field name="name">Dowload</field>
+            <field name="model">report.excel</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="file_name" invisible="1"/>
+                            <field name="excel_file" widget="binary" filename="file_name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_commission_account_tax_wizard_form" model="ir.ui.view">
+            <field name="name">commission.account.wizard.form</field>
+            <field name="model">commission.account.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Commission account">
+                    <sheet>
+                        <h3>
+                            Generate  Commission account Report
+                        </h3>
+                        <group>
+                            <group>
+                                <field name="date_from" />
+                                <field name="date_to" />
+                            </group>
+                            <group>
+                                <field name="commission_types_id" />
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_account_invoice_tax_search"
+                                string="Generate  Commission account Report" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_commission_account_wizard_action" model="ir.actions.act_window">
+            <field name="name"> Commission account Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">commission.account.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_commission_account_tax_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <!-- This Menu Item Must have a parent -->
+        <menuitem id="menu_commission_account_report" name="Commission account Report Exel"
+                  parent="menu_sale_commissions" action="view_commission_account_wizard_action"
+                  sequence="13"/>
+
+
+    </data>
+</odoo>

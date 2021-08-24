@@ -1,0 +1,19 @@
+<odoo>
+  <data>
+
+
+
+      <record id="view_payment_term_line_tree_percentage" model="ir.ui.view">
+          <field name="name">account.payment.term.line.percentage</field>
+          <field name="model">account.payment.term.line</field>
+          <field name="inherit_id" ref="account.view_payment_term_line_tree"/>
+          <field name="arch" type="xml">
+
+              <xpath expr="//field[@name='value_amount']" position="before">
+                  <field name="percentage"/>
+              </xpath>
+
+          </field>
+      </record>
+  </data>
+</odoo>

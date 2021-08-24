@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+            <template id="reservation_id_template" inherit_id="add_real_estate.report_reservation_document">
+                   <xpath expr="//div[@class='for_inheit']" position="replace">
+                       <div style="font-weight: bolder;">
+                        <span>اولا :- </span>
+                        <span t-field="o.company_id.company_details"/>
+                       </div>
+
+                   </xpath>
+
+            </template>
+
+
+    </data>
+</odoo>

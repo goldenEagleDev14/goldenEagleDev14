@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="merge_customer_wizard_form_view" model="ir.ui.view">
+            <field name="name">merge.customer.wizard.form</field>
+            <field name="model">merge.customer.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+<!--                    <field name="account_type" invisible="1"/>-->
+<!--                    <field name="company_id" invisible="1"/>-->
+                    <group>
+                        <group>
+                            <field name="date" string="Date" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="payment_method_id" readonly="1"/>
+                            <field name="journal_id" readonly="1"/>
+                            <field name="parent_id" readonly="1"/>
+                            <field name="reservation_id" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                                                        <field name="amount_duo" readonly="1"/>
+
+                        </group>
+                    </group>
+                    <notebook>
+                            <page>
+                                <field name="merge_ids" widget="one2many" nolabel="1"
+                                context="{'default_payment_type': 'inbound',
+                                          'default_partner_type': 'customer',
+                                          'default_partner_id': partner_id,
+                                          'default_journal_id': journal_id,
+                                          }">
+                                <tree string="Merge Customer" editable="bottom">
+<!--                                    <field name="name"/>-->
+                                    <field name="payment_type"/>
+                                    <field name="partner_type"/>
+                                    <field name="partner_id"/>
+                                    <field name="journal_id"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                    <field name="payment_date"/>
+                                    <field name="payment_method_id" domain="[('payment_type','=','inbound')]"/>
+<!--                                <field name="due_date" attrs="{'required':[('type','!=','cash')]}"/>-->
+<!--                                <field name="actual_date" attrs="{'required':[('type','!=','cash')]}"/>-->
+                                    <field name="due_date" attrs="{'invisible':[('payment_method_code','!=','batch_payment')],
+                                                       'required':[('payment_method_code','=','batch_payment')]}"/>
+
+                                    <field name="amount"/>
+                                    <field name="payment_method_code" invisible="1"/>
+                                    <field name="bank_name"  attrs="{'invisible':[('payment_method_code','!=','batch_payment')],
+                                                       'required':[('payment_method_code','=','batch_payment')]}"
+                                    />
+                                    <field name="check_number" attrs="{'invisible':[('payment_method_code','!=','batch_payment')],
+                                                       'required':[('payment_method_code','=','batch_payment')]}"
+                                    />
+
+                                </tree>
+                                <form string="Merge Customer">
+                                    <field name="payment_type"/>
+                                    <field name="partner_type"/>
+                                    <field name="partner_id"/>
+                                    <field name="journal_id"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="payment_date"/>
+                                    <field name="due_date"/>
+                                    <field name="amount"/>
+                                    <field name="payment_method_id"/>
+                                    <field name="payment_method_code" invisible="1"/>
+                                    <field name="bank_name"  attrs="{'invisible':[('payment_method_code','!=','batch_payment')],
+                                                       'required':[('payment_method_code','=','batch_payment')]}"
+                                    />
+                                    <field name="check_number" attrs="{'invisible':[('payment_method_code','!=','batch_payment')],
+                                                       'required':[('payment_method_code','=','batch_payment')]}"
+                                    />
+                                </form>
+                                </field>
+                            </page>
+                        </notebook>
+
+                    <footer>
+                        <button string="Confirm" name="confirm_merge_customer" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="merge_customer_wizard_action" model="ir.actions.act_window">
+            <field name="name">Merge Customer</field>
+            <field name="res_model">merge.customer.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+<!--   Vendor Payment      -->
+        <record id="merge_vendor_wizard_form_view" model="ir.ui.view">
+            <field name="name">merge.vendor.wizard.form</field>
+            <field name="model">merge.vendor.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+<!--                    <field name="account_type" invisible="1"/>-->
+<!--                    <field name="company_id" invisible="1"/>-->
+                    <group>
+                        <group>
+                            <field name="date" string="Date" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="payment_method_id" readonly="1"/>
+                            <field name="journal_id" readonly="1"/>
+                            <field name="parent_id" readonly="1"/>
+                            <field name="reservation_id" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                            <field name="amount_duo" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                            <page>
+                                <field name="merge_ids" widget="one2many" nolabel="1"
+                                context="{'default_payment_type': 'outbound',
+                                          'default_partner_type': 'supplier',
+                                          'default_partner_id': partner_id,
+                                          'default_journal_id': journal_id,
+                                          }">
+                                <tree string="Merge Vendor" editable="bottom">
+<!--                                    <field name="name"/>-->
+                                    <field name="payment_type"/>
+                                    <field name="partner_type"/>
+                                    <field name="partner_id"/>
+                                    <field name="journal_id"/>
+                                    <field name="company_id" invisible="1"/>
+                                                                        <field name="type" invisible="1"/>
+
+                                    <field name="payment_date"/>
+                                                                        <field name="payment_method_id" domain="[('payment_type','=','outbound')]"/>
+
+<!--                                    <field name="due_date" attrs="{'required':[('type','!=','cash')]}"/>-->
+<!--                                    <field name="actual_date" attrs="{'required':[('type','!=','cash')]}"/>-->
+                                    <field name="due_date" attrs="{'invisible':[('payment_method_code','!=','check_printing')],
+                                                       'required':[('payment_method_code','=','check_printing')]}"/>
+                                    <field name="amount"/>
+                                    <field name="payment_method_code" invisible="1"/>
+                                    <field name="multi_check_payment" invisible="1"/>
+                                    <field name="cheque_books_id"  attrs="{'invisible':[('payment_method_code','!=','check_printing')],
+                                                       'required':[('payment_method_code','=','check_printing')]}"
+                                    />
+                                    <field name="cheque_number" attrs="{'invisible':[('payment_method_code','!=','check_printing')],
+                                                       'required':[('payment_method_code','=','check_printing')]}"
+                                    />
+
+                                </tree>
+                                <form string="Merge Vendor">
+                                    <field name="payment_type"/>
+                                    <field name="partner_type"/>
+                                    <field name="partner_id"/>
+                                    <field name="journal_id"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="payment_date"/>
+                                    <field name="due_date"/>
+                                    <field name="amount"/>
+                                    <field name="payment_method_id" domain="[('payment_type','=','outbound')]"/>
+                                    <field name="payment_method_code" invisible="1"/>
+                                    <field name="multi_check_payment" invisible="1"/>
+                                    <field name="cheque_books_id"  attrs="{'invisible':[('payment_method_code','!=','check_printing')],
+                                                       'required':[('payment_method_code','=','check_printing')]}"
+                                    />
+                                    <field name="cheque_number" attrs="{'invisible':[('payment_method_code','!=','check_printing')],
+                                                       'required':[('payment_method_code','=','check_printing')]}"
+                                    />
+                                </form>
+                                </field>
+                            </page>
+                        </notebook>
+
+                    <footer>
+                        <button string="Confirm" name="confirm_merge_vendor" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="merge_vendor_wizard_action" model="ir.actions.act_window">
+            <field name="name">Merge Vendor</field>
+            <field name="res_model">merge.vendor.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

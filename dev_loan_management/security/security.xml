@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+    <record model="ir.module.category" id="category_dev_loan">
+        <field name="name">Loan</field>
+        <field name="description">Helps you handle your Loan Access.</field>
+        <field name="sequence">2</field>
+    </record>
+    
+    <record id="group_loan_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="dev_loan_management.category_dev_loan"/>
+        <field name="comment">user will have access own Loan Details.</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    
+    <record id="group_loan_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="comment">user will access all loan Details.</field>
+        <field name="category_id" ref="dev_loan_management.category_dev_loan"/>
+        <field name="implied_ids" eval="[(4, ref('dev_loan_management.group_loan_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+    
+    
+    <record id="rule_dev_loan_loan_company" model="ir.rule">
+        <field name="name">Customer Loan Multi Company</field>
+        <field name="model_id" ref="model_dev_loan_loan"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+    
+    <record id="rule_dev_loan_installment_company" model="ir.rule">
+        <field name="name">Customer Loan Installment Multi Company</field>
+        <field name="model_id" ref="model_dev_loan_installment"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+    
+    <record id="group_user_see_own_loan" model="ir.rule">
+        <field name="name">View Own Borrower Loan</field>
+        <field ref="model_dev_loan_loan" name="model_id"/>
+        <field name="domain_force">[('user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_loan_user'))]"/>
+    </record>
+    
+    <record id="group_manager_see_all_loan" model="ir.rule">
+        <field name="name">View All Borrower Loans</field>
+        <field ref="model_dev_loan_loan" name="model_id"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('group_loan_manager'))]"/>
+    </record>
+    
+
+    </data>
+</odoo>

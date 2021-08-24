@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+        
+        <template id="dev_external_layout_boxed_loan">
+            <div class="header">
+                <div class="o_boxed_header">
+                    <div class="row mb8">
+                        <div class="col-6">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
+                        </div>
+                        <div class="col-6 text-right mb4">
+                            <h4 class="mt0" t-field="company.report_header"/>
+                            <div style="color:#000">
+                                <strong t-field="company.partner_id.name"/>
+                            </div>
+                            <div name="company_address" class="mb4" style="color:#000">
+                                <span class="company_address" t-field="company.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-call="web.address_layout"/>
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer o_boxed_footer">
+                <div class="text-center" style="color:#000">
+                    <ul class="list-inline mb4">
+                        <li t-if="company.phone" class="list-inline-item">Tel: <span t-field="company.phone"/> |</li>
+                        <li t-if="company.email" class="list-inline-item">Mail: <span t-field="company.email"/> |</li>
+                        <li t-if="company.website" class="list-inline-item">Web: <span t-field="company.website"/> |</li>
+                        <li t-if="company.vat" class="list-inline-item"><t t-esc="company.country_id.vat_label or 'TIN'"/>: <span t-field="company.vat"/></li>
+                    </ul>
+                    <div t-field="company.report_footer" style="color:#000"/>
+                    <div>
+                        Page: <span class="page"/> / <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+        </template>
+        
+        <template id="dev_loan_external_layout">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+
+            <t t-call="dev_loan_management.dev_external_layout_boxed_loan"><t t-raw="0"/></t>
+        </template>
+		
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <report
+                id="golden_eoi_form_report"
+                model="request.reservation"
+                report_type="qweb-pdf"
+                string="GE EOI "
+                menu="True"
+                name="golden_eoi_form_pdf.golden_eoi_form_tmpl_base"
+                file="golden_eoi_form_pdf.golden_eoi_form_tmpl_base"
+        />
+
+    </data>
+</odoo>

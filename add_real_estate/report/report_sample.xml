@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<odoo>
+<data noupdate="0">
+        <report 
+            id="report_request_reservation_id"
+            string="Request Reservation"
+            model="request.reservation"
+            report_type="qweb-pdf"
+            file="add_real_estate.report_request_reservation_test"
+            name="add_real_estate.report_request_reservation_test"
+        />
+            <report
+            id="report_reservation_base"
+            string="Reservation"
+            model="res.reservation"
+            report_type="qweb-pdf"
+            file="add_real_estate.report_reservation"
+            name="add_real_estate.report_reservation"
+        />
+    <report
+            id="report_payment_base"
+            string="Payments"
+            model="res.reservation"
+            report_type="qweb-pdf"
+            file="add_real_estate.report_payment"
+            name="add_real_estate.report_payment"
+        />
+
+     <report
+            id="report_customer_payment_base"
+            string="Customer Payments"
+            model="customer.payment"
+            report_type="qweb-pdf"
+            file="add_real_estate.report_customer_payment"
+            name="add_real_estate.report_customer_payment"
+        />
+
+    <report
+                id="payment_request_report_id"
+                model="request.reservation"
+                string="Payment Request Report"
+                name="add_real_estate.payment_request_report_template"
+                file="add_real_estate.payment_request_report_template"
+                report_type="qweb-pdf"
+                menu="False"
+        />
+
+        <report
+                id="payment_reservation_report_id"
+                model="res.reservation"
+                string="Payment Reservation Report"
+                name="add_real_estate.payment_reservation_report_template"
+                file="add_real_estate.payment_reservation_report_template"
+                report_type="qweb-pdf"
+                menu="False"
+        />
+
+</data>
+</odoo>
+

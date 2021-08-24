@@ -1,0 +1,48 @@
+<odoo>
+  <data>
+
+        <record model="ir.actions.act_window" id="payment_list_action_partner">
+            <field name="name">Payments</field>
+            <field name="res_model">account.payment</field>
+            <field name="view_mode">tree,form</field>
+                        <field name="view_id" ref="account.view_account_payment_tree"/>
+
+        </record>
+<!--              <record id="payment_list_action_partner" model="ir.actions.act_window">-->
+<!--            <field name="name">Payments</field>-->
+<!--            <field name="res_model">account.payment</field>-->
+<!--            <field name="view_mode">tree,form</field>-->
+<!--            <field name="view_id" ref="account.view_account_payment_tree"/>-->
+<!--        </record>-->
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.smart</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                        <div class="oe_button_box" name="button_box">
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_partner_reservation"
+                                >
+                                <div class="o_form_field o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="counter_reservation"/>
+                                    </span>
+                                    <span class="o_stat_text">Reservation</span>
+                                </div>
+                            </button>
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_partner_payment"
+                                >
+                                <div class="o_form_field o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="counter_payment"/>
+                                    </span>
+                                    <span class="o_stat_text">Payments</span>
+                                </div>
+                            </button>
+                        </div>
+
+            </field>
+        </record>
+  </data>
+</odoo>

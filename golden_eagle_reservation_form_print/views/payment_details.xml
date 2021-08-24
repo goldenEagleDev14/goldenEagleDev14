@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <!-- Inherit Form View to Modify it -->
+       <record id="rspayment_strategy_details_is_installment_form" model="ir.ui.view">
+           <field name="name">rspayment_strategy_details.is.installment.form</field>
+           <field name="model">rs.payment_strategy_details</field>
+           <field name="inherit_id" ref="add_real_estate.rspayment-strategy_details_form_view"/>
+           <field name="arch" type="xml">
+
+               <xpath expr="//field[@name='deposit']" position="after">
+                   <field name="is_installment"/>
+               </xpath>
+
+           </field>
+       </record>
+
+    </data>
+</odoo>

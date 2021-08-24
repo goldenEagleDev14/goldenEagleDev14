@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- transfering request-->
+
+
+        <record id="view_warning_discount_form" model="ir.ui.view">
+            <field name="name">Warning Discount</field>
+            <field name="model">warning.discount.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <label for="pool_exceed"
+                           attrs="{'invisible':[('pool_exceed','=',False)]}"
+                           string="Available Pool Exceed !"/>
+                    <br/>
+                    <div style="right:50px;width:100%;">
+                        <field name="pool_exceed" style="font-size:16px;color:blue" readonly="1"
+                               attrs="{'invisible':[('pool_exceed','=',False)]}"
+                        />
+
+                    </div>
+                    <label for="min_limit"
+                           attrs="{'invisible':[('min_limit','=',False)]}"
+                           string="Minmum Limit problem !"/>
+                    <br/>
+                    <div style="right:50px;width:100%;">
+                        <field name="min_limit" style="font-size:16px;color:blue" readonly="1"
+                               attrs="{'invisible':[('min_limit','=',False)]}"
+                        />
+
+                    </div>
+                    <label for="max_limit"
+                           attrs="{'invisible':[('max_limit','=',False)]}"
+                           string="Maxmum Limit problem !"/>
+                    <br/>
+                    <div style="right:50px;width:100%;">
+                        <field name="max_limit" style="font-size:16px;color:blue" readonly="1"
+                               attrs="{'invisible':[('max_limit','=',False)]}"
+                        />
+
+                    </div>
+                    <label for="centeral_percentage"
+                           attrs="{'invisible':[('centeral_percentage','=',False)]}"
+                           string="centeral percentage problem !"/>
+                    <br/>
+                    <div style="right:50px;width:100%;">
+                        <field name="centeral_percentage" style="font-size:16px;color:blue" readonly="1"
+                               attrs="{'invisible':[('centeral_percentage','=',False)]}"
+                        />
+
+                    </div>
+
+
+                    <footer>
+
+                        <button name="force_discount_check" type="object"
+                                context="{'force_discount_wizard':True}"
+                                string="Force Discount" class="btn-default" />
+
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

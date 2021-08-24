@@ -1,0 +1,165 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="account_payment_inherit_form_id" model="ir.ui.view">
+            <field name="name">account payment</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='cancel']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//header" position="inside">
+
+                    <button attrs="{'invisible':['|',('state','not in',['posted']),('payment_method_code','!=','check_printing')]}"
+                            name="refund_payable"
+                            type="object" context="{'refund':1}" string="Refund"/>
+
+                    <button attrs="{'invisible':['|',('state','not in',['deliver']),('payment_method_code','!=','check_printing')]}"
+                            name="refund_payable"
+                            type="object" context="{'refund_delivery':1}" string="Refund Delivery"/>
+
+
+                    <button attrs="{'invisible':['|',('payment_type','in',['transfer','inbound']),
+                                    ('state','!=','draft'),('hide_del','=',True)
+                                    ]}"
+                            name="post" type="object" context="{'delivery_aml':1}" string="Delivery Check"/>
+                    <button attrs="{'invisible':['|',('payment_type','in',['transfer','inbound']),
+                    ('state','!=','draft'),('hide_bank','=',True)]}" name="post"
+
+                            type="object" context="{'bank_aml':1}" string="Bank Withdrawal"/>
+
+
+                    <button attrs="{'invisible':['|',('state','not in',['posted','refunded_under_collection']),('payment_method_code','!=','batch_payment')]}"
+                            name="refund_notes"
+                            type="object" context="{'ref_notes_batch':1}" string="Refund Notes"/>
+                </xpath>
+                <xpath expr="//field[@name='check_number']" position="after">
+
+                    <!-- Add your fields or attributes here -->
+                    <field name="hide_bank" invisible="1"/>
+                    <field name="hide_del" invisible="1"/>
+                    <field name="cheque_books_id"
+                           string="Check Book"
+
+                           attrs="{'invisible':[('payment_method_code','!=','check_printing')],
+                           'readonly':[('state','!=','draft')],
+                           'required':[('payment_method_code','in',['check_printing'])]}"
+                           options="{'limit': 10, 'create': false, 'create_edit': false}"
+                           widget="selection"
+                    />
+
+
+                    <field name="bank_name" attrs="{'invisible':[('payment_method_code','!=','batch_payment')],
+                                                       'readonly':[('state','!=','draft')],
+                                                       'required':[('payment_method_code','=','batch_payment')]}"/>
+                    <field name="check_number" attrs="{'invisible':[('payment_method_code','!=','batch_payment')],
+                                                        'readonly':[('state','!=','draft')],
+                                                        'required':[('payment_method_code','=','batch_payment')]}"/>
+                    <field name="check_type" attrs="{'invisible':[('payment_method_code','!=','batch_payment')],
+                                                    'readonly':[('state','!=','draft')]}"/>
+                    <field name="ref_coll_batch" string="[Refund/Collect] Date"
+                           attrs="{'invisible':[('payment_method_code','!=','batch_payment')]}" readonly="1"/>
+                    <field name="move_date" attrs="{'invisible':[('payment_method_code','!=','batch_payment')],'readonly':[('state','in',['draft','under_coll','collected'])]}" string="Notes Refund Date"/>
+
+                    <field name="multi_check_payment" invisible="1"/>
+                    <field name="cheque_number_rel"
+                           string="Check Number"
+                           attrs="{'invisible':['|',('payment_method_code','!=','check_printing'),('multi_check_payment','=',True)],
+
+                          }"
+                           readonly="1"
+                    />
+
+                    <field name="cheque_number"
+                           string="Check Number"
+                           attrs="{'invisible':['|',('payment_method_code','!=','check_printing'),('multi_check_payment','=',False)],
+                            'readonly':[('state','!=','draft')],
+                           'required':[('payment_method_code','=','check_printing')]}"
+                    />
+
+                    <field name="active_cheque"
+                           string="Cheque number"
+                           invisible="1"
+
+                    />
+                    <field name="active_cheque_number"
+                           string="Check Number"
+                           attrs="{'invisible':[('payment_method_code','!=','check_printing')],
+                           'readonly':[('active_cheque','=',True)],
+                           }"
+                           invisible="1"
+                    />
+
+                </xpath>
+                <xpath expr="//field[@name='check_number']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/sheet" position="inside">
+                    <notebook>
+                        <page string="Dates">
+                            <group>
+                                <group>
+                                    <field name="due_date"
+                                           string="Due Date"
+                                           attrs="{'invisible':[('payment_method_code','not in',['check_printing','batch_payment'])],
+                                    'readonly':[('state','!=','draft')],
+                                    'required':[('payment_method_code','in',['batch_payment','check_printing'])]
+                                    }"
+                                    />
+                                    <field name="delivery_date"
+                                           attrs="{'invisible':[('payment_method_code','not in',['check_printing'])],
+                                    'readonly':[('state','not in',['posted'])],
+
+                                    }"
+                                    />
+                                </group>
+                                <group>
+                                 <field name="actual_date"
+                                           string="Actual Date"
+                                           attrs="{'invisible':[('payment_method_code','not in',['check_printing','batch_payment'])],
+                                           'readonly':[('state','in',['collected','cancel','refunded_from_notes','check_refund'])],
+                           'required':[('payment_method_code','in',['batch_payment','check_printing'])]}"
+
+                                    />
+                                    
+                                    <field name="withdrawal_date"
+                                           attrs="{'invisible':[('payment_method_code','not in',['check_printing'])],
+                                    'readonly':[('state','not in',['deliver'])],
+
+
+                                    }"
+                                    />
+
+
+                                   
+                                </group>
+                                <group>
+                                    <field name="refund_date"
+                                           attrs="{'invisible':[('payment_method_code','not in',['check_printing'])],
+                                    'readonly':[('state','not in',['posted'])],}"/>
+
+                                    <field name="refund_delivery_date"
+                                           attrs="{'invisible':['|',('payment_type','!=','outbound'),('payment_method_code','not in',['check_printing',''])],
+                                           'readonly':[('state','!=','deliver')]}"
+
+
+                                    />
+                                </group>
+                            </group>
+
+                        </page>
+                    </notebook>
+
+                </xpath>
+
+
+            </field>
+        </record>
+    </data>
+</odoo>

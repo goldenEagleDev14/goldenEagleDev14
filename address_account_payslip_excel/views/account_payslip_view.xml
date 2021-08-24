@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="account_payslip_form_view" model="ir.ui.view">
+            <field name="name">account.payslip.form.view.</field>
+            <field name="model">account.payslip</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="report"/>
+                            <field name="payslip_run_id" invisible="1"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="account_payslip_action" model="ir.actions.act_window">
+            <field name="name"> Account payslip Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.payslip</field>
+            <field name="view_mode">tree,form</field>
+            <!--        <field name="help" type="html">-->
+            <!--          <p class="oe_view_nocontent_create">-->
+            <!--            &lt;!&ndash; Add Text Here &ndash;&gt;-->
+            <!--          </p><p>-->
+            <!--            &lt;!&ndash; More details about what a user can do with this object will be OK &ndash;&gt; -->
+            <!--          </p>-->
+            <!--        </field>-->
+        </record>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="account_payslip_menu" name="Payslip Excel Report" parent="account.menu_finance_reports"
+                  action="account_payslip_action"/>
+    </data>
+</odoo>

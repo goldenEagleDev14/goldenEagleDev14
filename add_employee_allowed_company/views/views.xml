@@ -1,0 +1,81 @@
+<odoo>
+    <data>
+        <record id="view_hr_employee_form_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="allowed_companies" widget="many2many_tags"
+                           options="{'no_create_edit':True,'no_create':True}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                        eval="[('module', '=', 'hr'), ('name', '=', 'hr_employee_comp_rule')]"
+                />
+            </function>
+            <value eval="{'noupdate': False}"/>
+        </function>
+
+        <record id="hr.hr_employee_comp_rule" model="ir.rule">
+            <field name="domain_force">['|', ('company_id', '=', False),
+                '|', ('allowed_companies', 'in', company_ids),
+                ('company_id', 'in', company_ids)]
+            </field>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                        eval="[('module', '=', 'hr_contract'), ('name', '=', 'ir_rule_hr_contract_multi_company')]"
+                />
+            </function>
+            <value eval="{'noupdate': False}"/>
+        </function>
+
+        <record id="hr_contract.ir_rule_hr_contract_multi_company" model="ir.rule">
+            <field name="domain_force">['|', ('company_id', '=', False),
+                ('company_id', 'in', company_ids)]
+            </field>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                        eval="[('module', '=', 'base'), ('name', '=', 'res_partner_rule')]"
+                />
+            </function>
+            <value eval="{'noupdate': False}"/>
+        </function>
+
+        <record id="base.res_partner_rule" model="ir.rule">
+            <field name="domain_force">['|', '|', ('partner_share', '=', False), ('company_id', 'in', company_ids), '|',
+                ('allowed_companies', 'in', company_ids),
+                ('company_id', '=', False)]
+            </field>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                        eval="[('module', '=', 'centione_hr_end_service'), ('name', '=', 'hr_termination_rule')]"
+                />
+            </function>
+            <value eval="{'noupdate': False}"/>
+        </function>
+
+        <record id="centione_hr_end_service.hr_termination_rule" model="ir.rule">
+            <field name="domain_force">['|', ('company_id', '=', False),
+                '|', ('allowed_companies', 'in', company_ids),
+                ('company_id', 'in', company_ids)]
+            </field>
+        </record>
+
+    </data>
+</odoo>

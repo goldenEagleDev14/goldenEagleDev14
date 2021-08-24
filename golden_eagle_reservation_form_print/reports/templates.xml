@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="golden_eagle_reservation_form_tmpl">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="golden_template.golden_logo"/>
+
+                    <t t-call="web.external_layout">
+                        <style>
+                            p, span, div, tr, td {color:#000 !important}
+                            .dir-rtl{direction:rtl;text-align:right}
+                            table td, table th{border: 1px solid; padding:5px}
+                            .under-line{text-decoration: underline;}
+                            #reserve-no{text-align:right;}
+                            #reserve-no span{border:1px solid; padding:5px 10px;}
+                            .footer-table tr td:first-child {width:50%}
+                        </style>
+
+                        <div class="page pt-1">
+                            <div id="reserve-no">
+                                <span>Res.NO</span>
+                                <span t-field="o.reservation_code"/>
+                            </div>
+                            <div class="static-data text-center">
+                                <h1>Central 33</h1>
+                                <h4>New Capital</h4>
+                                <h4>إستماره حجز وحدة (تجارية / إدارية) – Form Reservation Unit</h4>
+                            </div>
+                            <div name="customer-info" class="dir-rtl">
+                                <div class="under-line">أوال :- بيانات العميل:</div>
+                                <table class="w-100">
+                                    <tr>
+                                        <td>ألاسم:
+                                            <span t-esc="o.customer_id.name"/>
+                                        </td>
+                                        <td>الجنسيىة:
+                                            <span t-esc="o.nationality"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>العنوان:
+                                            <span t-esc="o.address"/>
+                                        </td>
+                                        <td>رقم الهاتف:
+                                            <span t-esc="o.phone"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>الرقم القومي/جواز السفر:
+                                            <span t-esc="o.id_def"/>
+                                        </td>
+                                        <td>تاريخ الاصدار :
+                                            <span t-esc="o.customer_id.id_def_date"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>الوظيفة:
+                                            <span t-esc="o.customer_id.function"/>
+                                        </td>
+                                        <td>جهة العمل:
+                                            <span t-esc="o.customer_id.work_place"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">البريد الاكتروني:
+                                            <span t-esc="o.email"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div name="customer-info" class="dir-rtl">
+                                <div class="under-line">ثانيا :- بيانات الوحدة :</div>
+                                <table class="w-100">
+                                    <tr>
+                                        <td colspan="2">نموذج الوحدة (إداري / تجاري) :
+                                            <span
+                                                    t-esc="o.property_id.type_of_property_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>رقم الوحدة:
+                                            <span t-esc="o.property_code"/>
+                                        </td>
+                                        <td>الدور:
+                                            <span t-esc="o.property_id.property_level.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">البالغ مساحتها تحت العجز و الزياده:
+                                            <span
+                                                    t-esc="o.property_id.sellable"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">إجمالي قيمة الوحدة:
+                                            <span
+                                                    t-esc="o.company_id.currency_id.ar_amount_to_text(o.net_price)"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="dir-rtl">
+                                <div class="under-line">ثالثا:- طريقة وشروط السداد:</div>
+                                <t t-set="paid" t-value="0.0"/>
+                                <t t-set="by_peroid" t-value=""/>
+                                <t t-set="period" t-value="0"/>
+                                <t t-set="payment_method" t-value=""/>
+                                <t t-set="method_param" t-value=""/>
+
+                                <t t-foreach="o.payment_strg_ids" t-as="line">
+                                    <t t-if="line.deposite">
+                                        <t t-set="paid" t-value="paid + line.amount"/>
+                                        <t t-set="payment_method" t-value="line.state_payment"/>
+
+                                        <t t-if="line.state_payment == 'cheque'">
+                                            <t t-set="method_param" t-value="line.cheque"/>
+                                        </t>
+                                        <t t-elif="line.state_payment == 'bank'">
+                                            <t t-set="method_param" t-value="line.bank_name.name"/>
+                                        </t>
+
+
+                                    </t>
+                                </t>
+                                <t t-foreach="o.pay_strategy_id.payment_detail_ids" t-as="line">
+                                    <t t-if="line.is_installment">
+                                        <t t-set="by_peroid" t-value="line.by_period"/>
+
+                                        <t t-if="by_peroid == '4'">
+                                            <t t-set="period" t-value="line.number_of_inst / 1"/>
+                                        </t>
+                                        <t t-elif="by_peroid == '3'">
+                                            <t t-set="period" t-value="line.number_of_inst / 2"/>
+                                        </t>
+                                        <t t-elif="by_peroid == '2'">
+                                            <t t-set="period" t-value="line.number_of_inst / 4"/>
+                                        </t>
+                                    </t>
+                                </t>
+
+                                <div t-if="by_peroid">
+                                    <span>وقد سددت مقدم تعاقد مبلع وقدره:</span>
+                                    <span t-esc="paid"/>
+                                    <span>بقيمة (</span>
+                                    <span t-esc="paid / o.net_price * 100"/>
+                                    <span>%)</span>
+                                    <span>من اجمالي ثمن الوحدة.</span>
+                                    <br/>
+                                    <span>علي ان يتم سداد باقي ثمن الوحدة (</span>
+                                    <span t-esc="100 - paid / o.net_price * 100"/>
+                                    <span>%)</span>
+                                    <span>علي اقساط</span>
+                                    <t t-if="by_peroid == '4'">
+                                        <span>سنوية</span>
+                                    </t>
+                                    <t t-elif="by_peroid == '3'">
+                                        <span>نصف سنوية</span>
+                                    </t>
+                                    <t t-elif="by_peroid == '2'">
+                                        <span>ربع سنوية</span>
+                                    </t>
+                                    <span>من تاريخ الدفعة المقدمة ولمدة</span>
+                                    <span t-esc="period"/>
+                                    <span>سنوات.</span>
+                                </div>
+                                <div>
+                                    <table class="w-100">
+                                        <tr>
+                                            <td>المبلغ المسدد</td>
+                                            <td colspan="5">
+                                                <span t-esc="o.company_id.currency_id.ar_amount_to_text(paid)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>طريقة السداد</td>
+                                            <td>
+                                                نقدا
+                                                <t t-if="payment_method == 'cash'">
+                                                    &#10004;
+                                                </t>
+                                            </td>
+                                            <td>
+                                                شيك رقم
+                                                <t t-if="payment_method == 'cheque'">
+                                                    &#10004;
+                                                    <br/>
+                                                    <span t-esc="method_param"/>
+                                                </t>
+                                            </td>
+                                            <td>فيزا رقم
+                                                <t t-if="payment_method == 'visa'">
+                                                    &#10004;
+                                                </t>
+                                            </td>
+                                            <td>
+                                                إيداع بنكي
+                                                <t t-if="payment_method == 'bank'">
+                                                    &#10004;
+                                                    <span t-esc="method_param"/>
+                                                </t>
+                                            </td>
+                                            <td>تحويل بنكي
+                                                <t t-if="payment_method == 'bank'">
+                                                    &#10004;
+                                                    <span t-esc="method_param"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="dir-rtl">
+                                <div class="under-line">رابعاً:- شروط الحجز:</div>
+                                <div>
+                                    <t t-esc="o.project_id.condition_terms"/>
+                                </div>
+                            </div>
+                            <div class="dir-rtl" style="page-break-inside: avoid;">
+                                <table class="w-50 footer-table">
+                                    <tr>
+                                        <td>
+                                            توقيع العميل
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>مسؤول المبيعات</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>شركة الوسيط العقاري</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>مدير المبيعات</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>التاريخ</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<odoo>
+  <data>
+      <!-- Inherit Form View to Modify it -->
+      <record id="res_partner_form_id_work_place_form" model="ir.ui.view">
+          <field name="name">res.partner.form.id.work_place.form</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="add_real_estate.inherit_view_partner_form"/>
+          <field name="arch" type="xml">
+
+              <xpath expr="//field[@name='id_def']" position="after">
+                  <field name="id_def_date"/>
+                  <field name="work_place"/>
+              </xpath>
+
+          </field>
+      </record>
+  </data>
+</odoo>

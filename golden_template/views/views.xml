@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="edit_project_inherit_photo" model="ir.ui.view">
+            <field name="name">edit.project.inherit.photo</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[hasclass('oe_title')]" position="before">
+                        <div>
+                            <field name="pro_logo" widget="image" class="oe_avatar"/>
+                        </div>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

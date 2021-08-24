@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+    
+    <record id="view_dev_interest_certificate_form" model="ir.ui.view">
+         <field name="name">view.dev.interest.certificate.form</field>
+         <field name="model">dev.interest.certificate</field>
+         <field name="arch" type="xml">
+            <form string="Interest Certificate">
+                <group>
+                    <group>
+                        <field name="client_id"/>
+                    </group>
+                    <group>
+                        <field name="loan_id" domain="[('client_id','=',client_id),('state','in',['open','close'])]"/>
+                    </group>
+                    <group>
+                        <field name="start_date"/>
+                    </group>
+                    <group>
+                        <field name="end_date"/>
+                    </group>
+                </group>
+                
+                <footer>
+                    <button name="action_print_pdf" string="Print" type="object" class="btn-primary"/>
+                    or
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+         </field>
+    </record>
+    
+    <record id="action_dev_interest_certificate" model="ir.actions.act_window">
+        <field name="name">Interest Certificate</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dev.interest.certificate</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    
+    <menuitem name="Interest Certificate" id="menu_dev_interest_certificate" parent="dev_loan_management.menu_dev_installment_report" action="action_dev_interest_certificate" sequence="2"/>
+
+</odoo>

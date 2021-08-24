@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="property_level_tree" model="ir.ui.view">
+            <field name="name">property.level.tree</field>
+            <field name="model">property.level</field>
+            <field name="arch" type="xml">
+                <tree string="Property Level">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="property_level_action" model="ir.actions.act_window">
+            <field name="name">Property Level</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">property.level</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create New Level
+              </p><p>
+                <!-- More details about what a user can do with this object will be OK -->
+              </p>
+            </field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="property_level_menu" name="Levels"
+                  parent="add_real_estate.configuration_sub"
+                  action="property_level_action"
+                  sequence="2"/>
+
+
+
+       <!-- Inherit Form View to Modify it -->
+       <record id="rs_property_product_level_form" model="ir.ui.view">
+           <field name="name">rs_property.product.level.form</field>
+           <field name="model">product.product</field>
+           <field name="inherit_id" ref="add_real_estate.rs_property_product2_form_view2"/>
+           <field name="arch" type="xml">
+
+               <xpath expr="//field[@name='type_of_property_id']" position="after">
+                   <field name="property_level"/>
+               </xpath>
+
+           </field>
+       </record>
+
+    </data>
+</odoo>

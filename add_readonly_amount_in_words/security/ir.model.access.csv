@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_add_readonly_amount_in_words_add_readonly_amount_in_words,add_readonly_amount_in_words.add_readonly_amount_in_words,model_add_readonly_amount_in_words_add_readonly_amount_in_words,base.group_user,1,1,1,1
