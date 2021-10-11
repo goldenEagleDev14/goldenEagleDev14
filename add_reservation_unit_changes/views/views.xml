@@ -1,0 +1,35 @@
+<odoo>
+  <data>
+    <!-- Inherit Form View to Modify it -->
+    <record id="property_reservation_form" model="ir.ui.view">
+        <field name="name">property_reservation_form</field>
+        <field name="model">res.reservation</field>
+        <field name="inherit_id" ref="add_real_estate.reservation_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='property_code']" position="after">
+              <field name="property_area"/>
+              <field name="property_garage" attrs="{'invisible': [('property_garage', '!=', 'False')]}"/>
+            </xpath>
+
+        </field>
+    </record>
+      <!-- Inherit Form View to Modify it -->
+      <record id="property_product2_form_view2_inherit" model="ir.ui.view">
+          <field name="name">property_product2_form_view2_inherit</field>
+          <field name="model">product.product</field>
+          <field name="inherit_id" ref="add_real_estate.rs_property_product2_form_view2"/>
+          <field name="arch" type="xml">
+
+              <xpath expr="//field[@name='sellable']" position="after">
+                  <field name="load_percentage"/>
+                  <field name="net_sellable_bua"/>
+              </xpath>
+              <xpath expr="//field[@name='sellable']" position="attributes">
+                  <attribute name="string">Growth Sellable BUA</attribute>
+              </xpath>
+
+          </field>
+      </record>
+  </data>
+</odoo>
