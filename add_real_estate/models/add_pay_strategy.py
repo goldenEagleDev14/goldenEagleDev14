@@ -22,6 +22,8 @@ class AccountPaymentTermLine(models.Model):
     journal_id = fields.Many2one('account.journal', _('Journal'))
     payment_description = fields.Char(string="Description")
     deposit = fields.Boolean('Deposit')
+    is_garage = fields.Boolean('Is Garage')
+    is_garage_main = fields.Boolean('Is Garage & Maintnance')
     add_extension = fields.Boolean('Extension')
     value_amount = fields.Float(string='Value', digits=(20, 15), help="For percent enter a ratio between 0-100.")
     percentage = fields.Float(string="Percentage",  required=False,compute="_compute_percentage" )
@@ -128,11 +130,15 @@ class AccountPaymentTerm(models.Model):
                     tmp['payment_description'] = payment.name
                     tmp['deposit'] = payment.deposit
                     tmp['add_extension'] = payment.add_extension
+                    tmp['is_garage'] = payment.is_garage
+                    tmp['is_garage_main'] = payment.is_garage_main
                 else:
                     tmp['journal_id'] = payment.journal_id.id
                     tmp['payment_description'] = payment.name
                     tmp['deposit'] = payment.deposit
                     tmp['add_extension'] = payment.add_extension
+                    tmp['is_garage'] = payment.is_garage
+                    tmp['is_garage_main'] = payment.is_garage_main
                     tmp['days'] = 0
                     selection = payment.by_period
                     if selection == "1":
@@ -186,6 +192,8 @@ class AccountPaymentTerm(models.Model):
                     tmp['payment_description'] = detail_obj['payment_description']
                     tmp['deposit'] = detail_obj['deposit']
                     tmp['add_extension'] = detail_obj['add_extension']
+                    tmp['is_garage'] = detail_obj['is_garage']
+                    tmp['is_garage_main'] = detail_obj['is_garage_main']
                     computations_list.append(tmp)
             for computation in computations_list:
                 obj = self.env['account.payment.term.line'].sudo().create(computation)
@@ -243,6 +251,8 @@ class RsPaymentStrategyDetails(models.Model):
     payment_type = fields.Selection([('cash', _('Cash')), ('bank', _('Bank'))], _('Payment Type'))
     journal_id = fields.Many2one('account.journal', _('Journal'))
     deposit = fields.Boolean('Deposit')
+    is_garage = fields.Boolean('Is Garage')
+    is_garage_main = fields.Boolean('Is Garage & Maintnance')
     add_extension = fields.Boolean('Maintenance & Insurance')
 
     shift_by = fields.Selection([("1", _('Days')),
@@ -493,7 +503,9 @@ class PaymentStrg(models.Model):
     amount_due = fields.Float(_('Amount Due'), digits=(16, 4),compute="_compute_amount_due")
     amount_pay = fields.Float(_('Amount Pay'), digits=(16, 4))
     is_part = fields.Boolean(string="part",  )
-    is_maintainance = fields.Boolean(string=" maintainance & Insurance ",  )
+    is_maintainance = fields.Boolean(string=" maintainance & Insurance ",)
+    is_garage = fields.Boolean(string="Is Garage",)
+    is_garage_main = fields.Boolean(string="Is Garage&maintanance",)
     def _compute_amount_due(self):
         for rec in self:
             rec.amount_due = rec.amount - rec.amount_pay

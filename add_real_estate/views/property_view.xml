@@ -75,7 +75,7 @@
                                     <field name="location_of_property_id" attrs="{'readonly': [('state', 'in', ['blocked','contracted','reserved'])]}"/>
                                     <field name="design_of_property_id" attrs="{'readonly': [('state', 'in', ['blocked','contracted','reserved'])]}"/>
                                 </group>
-                                <group colspan="1">
+                                <group name="garage" colspan="1">
                                     <field name="is_garage" attrs="{'readonly': [('state', 'in', ['blocked','contracted','reserved'])]}"/>
                                     <field name="price_garage_for_one" attrs="{'invisible': [('is_garage', '=', False)],'readonly': [('state', 'in', ['blocked','contracted','reserved'])],'required': [('is_garage', '=', True)]}"/>
                                     <field name="number_of_garage" attrs="{'invisible': [('is_garage', '=', False)],'readonly': [('state', 'in', ['blocked','contracted','reserved'])],'required': [('is_garage', '=', True)]}"/>

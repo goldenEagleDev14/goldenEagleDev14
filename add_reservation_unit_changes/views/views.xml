@@ -28,6 +28,19 @@
               <xpath expr="//field[@name='sellable']" position="attributes">
                   <attribute name="string">Growth Sellable BUA</attribute>
               </xpath>
+              <xpath expr="//field[@name='price_garden_new']" position="after">
+<!--                  <group>-->
+                      <field name="is_duplex" attrs="{'readonly': [('state', 'in', ['blocked','contracted','reserved'])]}"/>
+                      <field name="first_floor_area" attrs="{'invisible': [('is_duplex', '=', False)],'readonly': [('state', 'in', ['blocked','contracted','reserved'])],'required': [('is_duplex', '=', True)]}"/>
+                      <field name="first_floor_prices" attrs="{'invisible': [('is_duplex', '=', False)],'readonly': [('state', 'in', ['blocked','contracted','reserved'])],'required': [('is_duplex', '=', True)]}"/>
+                      <field name="total_first" attrs="{'invisible': [('is_duplex', '=', False)]}"/>
+                      <field name="ground_floor_area" attrs="{'invisible': [('is_duplex', '=', False)],'readonly': [('state', 'in', ['blocked','contracted','reserved'])],'required': [('is_duplex', '=', True)]}"/>
+                      <field name="ground_floor_prices" attrs="{'invisible': [('is_duplex', '=', False)],'readonly': [('state', 'in', ['blocked','contracted','reserved'])],'required': [('is_duplex', '=', True)]}"/>
+                      <field name="total_ground" attrs="{'invisible': [('is_duplex', '=', False)]}"/>
+
+
+<!--                  </group>-->
+              </xpath>
 
           </field>
       </record>

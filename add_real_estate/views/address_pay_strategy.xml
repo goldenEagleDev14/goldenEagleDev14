@@ -58,6 +58,8 @@
                            string="Payment Method"/>
                     <field name="payment_description"/>
                     <field name="deposit"/>
+                    <field name="is_garage"/>
+                    <field name="is_garage_main"/>
                     <field name="add_extension"/>
                 </xpath>
 
@@ -80,6 +82,8 @@
                                 <field name="name"
                                        force_save="1" readonly="1"/>
                                 <field name="deposit"/>
+                                <field name="is_garage"/>
+                                <field name="is_garage_main"/>
                                 <field name="add_extension"/>
                                 <field name="inst_percentage"/>
                                 <field name="number_of_inst"/>

@@ -201,16 +201,18 @@
                                 <br/>
                                 <field name="is_select_all"/>
 
-                                <field name="payment_strg_ids"
+                                <notebook>
+                                    <page name="lines" string="lines">
+                                        <field name="payment_strg_ids"
                                        widget="section_and_note_one2many"
                                        mode="tree,kanban"
                                        class="oe_inline oe_no_button"
                                        context="{'default_project_id':project_id}"
-                                       attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}"
-                                >
+                                       attrs="{'readonly' : [('state', 'in',['contracted','release'] )]}">
                                     <tree string="payment"
                                           editable="buttom"
                                           colors="red:move_check == True;green:cancelled == True">
+                                        <field name="id" widget="handle"/>
                                         <field name="is_selected_to_action"/>
                                         <field name="is_no_enter_total"/>
                                         <field name="is_print"/>
@@ -252,6 +254,8 @@
                                         <field name="deposite"
                                                attrs="{'readonly':[('move_check','=',True)]}" optional="show"/>
                                         <field name="is_maintainance" optional="show"/>
+                                        <field name="is_garage" optional="show"/>
+                                        <field name="is_garage_main" optional="show"/>
                                         <field name="is_no_enter_total" optional="show"/>
 
                                         <!--                                        <field name="add_extension"-->
@@ -266,6 +270,8 @@
                                         <field name="bank_ids" widget="many2many_tags" optional="show"/>
                                         <field name="payments_ids" widget="many2many_tags" optional="show"/>
                                         <field name="state" optional="show"/>
+                                        <button name="copy" string="Duplicate" type="object"/>
+
                                         <!--                                        <button type="object"-->
                                         <!--                                                name="create_deposite_entry"-->
                                         <!--                                                string="Pay"-->
@@ -274,6 +280,10 @@
 
                                     </tree>
                                 </field>
+
+
+                                    </page>
+                                </notebook>
 
                                 <group class="oe_right">
                                     <group class="oe_subtotal_footer">

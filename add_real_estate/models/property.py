@@ -260,7 +260,7 @@ class ProductProduct(models.Model):
     final_unit_price = fields.Float(string="Final Unit Price ",  required=False, compute="_compute_final_unit_price")
     def _compute_final_unit_price(self):
         for rec in self:
-            rec.final_unit_price = rec.unit_price + rec.finishing_price + rec.pool_price + rec.plot_price + rec.price_garden_new + rec.garage_price
+            rec.final_unit_price = rec.unit_price + rec.finishing_price + rec.pool_price + rec.plot_price + rec.price_garden_new
     def update_state_to_available(self):
         for rec in self:
             rec.sudo().write({'state': 'available','resp_user_id':False})

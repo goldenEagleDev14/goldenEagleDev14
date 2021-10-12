@@ -416,6 +416,8 @@ class requestReservation(models.Model):
                                    'deposite': payment_line.deposit,
                                    'cheque_status': cheque_status,
                                    'add_extension': payment_line.add_extension,
+                                   'is_garage': payment_line.is_garage,
+                                   'is_garage_main': payment_line.is_garage_main,
                                    # 'payment_method_id': payment_methods.id and payment_methods[0].id or False,
                                    'property_ids': [(6,0,[rec.property_id.id])],
                                     "is_maintainance": payment_line.add_extension
@@ -915,3 +917,5 @@ class requestReservation(models.Model):
 
     reason = fields.Many2one(comodel_name="cancel.reason.res", string="Reason", required=False, )
     date_cancel_unit = fields.Datetime(string="Cancel Date", required=False, )
+
+    # def button_dupliacte(self):
